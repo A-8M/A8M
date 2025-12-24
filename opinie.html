@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A8M - Opinie</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:#fff; }
+header, footer { padding:15px 20px; background:#111; text-align:center; }
+a { color:#ff4a4a; text-decoration:none; }
+.container { max-width:800px; margin:auto; padding:40px 20px; }
+textarea { width:100%; padding:10px; border-radius:8px; border:none; }
+button { padding:10px 20px; background:#ff4a4a; border:none; color:#fff; border-radius:8px; cursor:pointer; margin-top:10px; }
+.review-item { background:#222; padding:10px; margin:10px 0; border-radius:8px; color:#fff; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>A8M</h1>
+  <nav>
+    <a href="index.html">Strona główna</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Opinie</h2>
+  <div id="review-form">
+    <textarea id="user-review" placeholder="Napisz swoją opinię..." rows="4"></textarea>
+    <button onclick="submitReview()">Dodaj opinię</button>
+  </div>
+  <div id="reviews-list"></div>
+</div>
+
+<footer>
+  <p>© 2025 A8M | <a href="mailto:email@email.com">✉️ Gmail</a></p>
+</footer>
+
+<script>
+let reviewSubmitted = false;
+
+function submitReview(){
+  if(reviewSubmitted){
+    alert("Możesz dodać tylko jedną opinię!");
+    return;
+  }
+
+  const text = document.getElementById('user-review').value.trim();
+  if(text===''){
+    alert("Nie możesz dodać pustej opinii!");
+    return;
+  }
+
+  const reviewDiv = document.createElement('div');
+  reviewDiv.textContent = text;
+  reviewDiv.className = 'review-item';
+  document.getElementById('reviews-list').appendChild(reviewDiv);
+
+  reviewSubmitted = true;
+  document.getElementById('user-review').disabled = true;
+  document.querySelector('#review-form button').disabled = true;
+}
+</script>
+
+</body>
+</html>

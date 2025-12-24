@@ -11,8 +11,8 @@ body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:
 /* HEADER */
 header {
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   padding:15px 20px;
   background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
   color:#fff;
@@ -40,14 +40,11 @@ header {
   background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
-/* Hamburger menu - widoczny na desktopie, ukryty na małych ekranach */
+/* Hamburger - widoczny zawsze */
 #hamburger {
   display:block;
   font-size:28px;
   cursor:pointer;
-  position:fixed;
-  top:20px;
-  left:20px;
   z-index:999;
   background:#ff1a1a;
   color:#fff;
@@ -130,7 +127,6 @@ footer a { color:#fff; text-decoration:none; }
 
 /* Responsywność */
 @media(max-width:700px){
-  #hamburger { display:none; } /* na małych ekranach hamburger znika */
   header { flex-direction:column; align-items:center; padding:10px 15px; }
   .header-center h1 { font-size:1.6rem; }
   .header-center p { font-size:0.9rem; }
@@ -238,12 +234,6 @@ document.getElementById('cart-icon').addEventListener('click', showCart);
 document.getElementById('close-cart').addEventListener('click', hideCart);
 document.getElementById('cart-overlay').addEventListener('click', hideCart);
 
-function checkout(){
-  if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
-  alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
-}
-
-// Hamburger menu
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuOverlay = document.getElementById('menu-overlay');
@@ -258,7 +248,6 @@ menuOverlay.addEventListener('click', () => {
   menuOverlay.classList.remove('active');
 });
 
-// Podmenu dla produktów
 mobileMenu.querySelectorAll('li > a').forEach(link => {
   const parentLi = link.parentElement;
   if(parentLi.querySelector('.submenu')){
@@ -275,7 +264,14 @@ mobileMenu.querySelectorAll('.submenu a').forEach(link => {
     menuOverlay.classList.remove('active');
   });
 });
+
+function checkout(){
+  if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
+  alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
+}
 </script>
 
 </body>
 </html>
+
+

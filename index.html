@@ -40,7 +40,7 @@ header {
   background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
-/* Hamburger - widoczny zawsze */
+/* Hamburger */
 #hamburger {
   display:block;
   font-size:28px;
@@ -51,23 +51,39 @@ header {
   padding:6px 10px;
   border-radius:5px;
   transition: transform 0.2s;
+  position:fixed;
+  top:15px;
+  right:20px;
 }
 #hamburger:hover { transform:scale(1.2); }
 
-/* Overlay menu */
+/* Overlay */
 #menu-overlay {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.5); opacity:0; visibility:hidden; transition:opacity 0.3s; z-index:90;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  opacity:0;
+  visibility:hidden;
+  transition: opacity 0.3s;
+  z-index:90;
 }
 #menu-overlay.active { opacity:1; visibility:visible; }
 
 /* Mobile Menu */
 #mobile-menu {
-  position:fixed; top:0; left:-280px; width:280px; height:100%;
-  background:#222; padding:60px 20px; transition:left 0.35s; z-index:101; overflow-y:auto;
+  position:fixed;
+  top:0; left:-280px;
+  width:280px; height:100%;
+  background:#222;
+  padding:60px 20px;
+  transition:left 0.35s;
+  z-index:100;
+  overflow-y:auto;
   border-right:2px solid #ff1a1a;
 }
 #mobile-menu.active { left:0; }
+
 #mobile-menu ul { list-style:none; padding:0; margin:0; }
 #mobile-menu li { margin-bottom:20px; position:relative; }
 #mobile-menu a { text-decoration:none; color:#fff; font-size:18px; font-weight:bold; display:block; transition:color 0.2s; }
@@ -145,8 +161,10 @@ footer a { color:#fff; text-decoration:none; }
   <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
 </header>
 
+<!-- Hamburger i overlay -->
 <div id="hamburger">&#9776;</div>
 <div id="menu-overlay"></div>
+
 <nav id="mobile-menu">
   <ul>
     <li>
@@ -199,6 +217,7 @@ footer a { color:#fff; text-decoration:none; }
 </footer>
 
 <script>
+// Koszyk
 let cart=[];
 function addToCart(name,price,size,img){
   const existing=cart.find(item=>item.name===name && item.size===size);
@@ -229,11 +248,11 @@ function changeQty(index,delta){ cart[index].qty+=delta; if(cart[index].qty<=0) 
 function removeFromCart(index){ cart.splice(index,1); updateCart(); }
 function showCart(){ document.getElementById('cart-popup').classList.add('active'); document.getElementById('cart-overlay').classList.add('active'); document.body.style.overflow='hidden'; }
 function hideCart(){ document.getElementById('cart-popup').classList.remove('active'); document.getElementById('cart-overlay').classList.remove('active'); document.body.style.overflow='auto'; }
-
 document.getElementById('cart-icon').addEventListener('click', showCart);
 document.getElementById('close-cart').addEventListener('click', hideCart);
 document.getElementById('cart-overlay').addEventListener('click', hideCart);
 
+// Hamburger menu
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuOverlay = document.getElementById('menu-overlay');
@@ -273,5 +292,4 @@ function checkout(){
 
 </body>
 </html>
-
 

@@ -6,52 +6,51 @@
 <title>A8M - Streetwear</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body {
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:#0d0d0d;
-  color:#fff;
-  overflow-x:hidden;
-}
+body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:#fff; overflow-x:hidden; }
 
 /* HEADER */
 header {
-  position: relative;
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:25px 20px;
-  background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
-  z-index:10;
+  justify-content:space-between; 
+  padding:15px 20px;
+  background:#0d0d0d; 
+  border-bottom:2px solid #ff1a1a; 
 }
+
 header img {
-  height:30px; /* mniejsze logo na komputerze */
-  margin-right:10px;
+  height:40px;   
+  width:auto;    
+  max-width:150px; 
 }
-header h1 {
+
+.header-text {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex-grow:1; 
+}
+
+.header-text h1 {
   margin:0;
   font-size:2rem;
-  letter-spacing:2px;
-  font-weight:700;
 }
-header p {
-  position:absolute;
-  bottom:5px;
+
+.header-text p {
+  margin:0;
   font-size:1rem;
   color:#f0f0f0;
-  text-align:center;
-  width:100%;
 }
+
 #cart-icon {
-  position:absolute;
-  top:15px;
-  right:15px;
+  position:relative; 
   cursor:pointer;
   font-size:26px;
-  z-index:20;
   transition: transform 0.2s;
 }
+
 #cart-icon:hover { transform:scale(1.15); }
+
 #cart-icon span {
   background:#fff;
   color:#ff1a1a;
@@ -62,14 +61,14 @@ header p {
   margin-left:5px;
 }
 
-/* Hamburger */
+/* Hamburger menu */
 #hamburger {
   font-size:28px;
   cursor:pointer;
-  position:fixed;
+  position:fixed; 
   top:20px;
   left:20px;
-  z-index:999;
+  z-index:999; 
   background:#ff1a1a;
   color:#fff;
   padding:6px 10px;
@@ -80,39 +79,25 @@ header p {
 
 /* Overlay menu */
 #menu-overlay {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.5);
-  opacity:0; visibility:hidden;
-  transition:opacity 0.3s;
-  z-index:90;
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.5); opacity:0; visibility:hidden; transition:opacity 0.3s; z-index:90;
 }
 #menu-overlay.active { opacity:1; visibility:visible; }
 
-/* Mobile menu */
+/* Mobile Menu */
 #mobile-menu {
-  position:fixed; top:0; left:-280px;
-  width:280px; height:100%;
-  background:#222;
-  padding:60px 20px;
-  transition:left 0.35s; z-index:101; overflow-y:auto;
+  position:fixed; top:0; left:-280px; width:280px; height:100%;
+  background:#222; padding:60px 20px; transition:left 0.35s; z-index:101; overflow-y:auto;
   border-right:2px solid #ff1a1a;
 }
 #mobile-menu.active { left:0; }
 #mobile-menu ul { list-style:none; padding:0; margin:0; }
 #mobile-menu li { margin-bottom:20px; position:relative; }
-#mobile-menu a {
-  text-decoration:none; color:#fff; font-size:18px; font-weight:bold; display:block; transition:color 0.2s;
-}
+#mobile-menu a { text-decoration:none; color:#fff; font-size:18px; font-weight:bold; display:block; transition:color 0.2s; }
 #mobile-menu a:hover { color:#ff4a4a; }
 
-/* Submenu */
-.submenu {
-  list-style:none; padding-left:15px; margin-top:5px;
-  max-height:0; overflow:hidden;
-  transition: max-height 0.35s ease, opacity 0.35s ease; opacity:0;
-}
+/* Podmenu */
+.submenu { list-style:none; padding-left:15px; margin-top:5px; max-height:0; overflow:hidden; transition: max-height 0.35s ease, opacity 0.35s ease; opacity:0; }
 li.active > .submenu { max-height:500px; opacity:1; }
 .submenu li { margin-bottom:12px; }
 .submenu a { font-size:16px; font-weight:500; color:#ccc; }
@@ -122,12 +107,12 @@ li.active > .submenu { max-height:500px; opacity:1; }
 .container { max-width:1200px; margin:auto; padding:40px 20px; }
 .products {
   display:grid; 
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap:20px; justify-content:center;
 }
 .product {
-  background:#1a1a1a; border-radius:15px; overflow:hidden; padding:15px;
-  text-align:center; transition: transform 0.3s, box-shadow 0.3s;
+  background:#1a1a1a; border-radius:15px; overflow:hidden; padding:15px; text-align:center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 .product:hover { transform:translateY(-6px); box-shadow:0 6px 18px rgba(255,0,0,0.3); }
 .product img { width:100%; max-height:200px; object-fit:cover; border-radius:10px; transition: transform 0.3s; }
@@ -135,12 +120,8 @@ li.active > .submenu { max-height:500px; opacity:1; }
 .product h3 { margin:12px 0 6px; font-size:1.2rem; }
 .product p { color:#ccc; margin-bottom:10px; }
 .product select { padding:5px; border-radius:5px; border:none; font-size:14px; }
-.product button {
-  margin-top:10px; padding:10px 20px;
-  background: linear-gradient(45deg,#ff4a4a,#ff1a1a);
-  border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#fff;
-  transition: background 0.3s, transform 0.2s;
-}
+.product button { margin-top:10px; padding:10px 20px; background: linear-gradient(45deg,#ff4a4a,#ff1a1a); border:none;
+  border-radius:8px; font-weight:bold; cursor:pointer; color:#fff; transition: background 0.3s, transform 0.2s; }
 .product button:hover { background: linear-gradient(45deg,#ff1a1a,#ff4a4a); transform:scale(1.05); }
 
 /* Koszyk */
@@ -163,25 +144,18 @@ li.active > .submenu { max-height:500px; opacity:1; }
 #checkout-btn { background: linear-gradient(45deg,#ff4a4a,#ff1a1a); color:#fff; width:100%; padding:12px 0; font-weight:bold; border-radius:10px; border:none; cursor:pointer; transition: background 0.3s, transform 0.2s; }
 #checkout-btn:hover { background: linear-gradient(45deg,#ff1a1a,#ff4a4a); transform:scale(1.03); }
 
-/* Footer */
+/* FOOTER */
 footer { text-align:center; padding:25px; background:#000; font-size:14px; color:#aaa; }
 footer a { color:#fff; text-decoration:none; }
 
 /* Responsywność */
 @media(max-width:700px){ 
-  header { flex-direction:column; padding:15px 10px; }
-  header img { height:25px; margin-right:5px; } /* jeszcze mniejsze na mobile */
-  header h1 { font-size:1.6rem; margin-top:5px; }
-  #cart-icon { top:10px; right:10px; font-size:22px; }
-  #hamburger { top:10px; left:10px; font-size:28px; }
-  .product img { max-height:180px; }
-  .product h3 { font-size:1rem; }
-  .product p { font-size:0.9rem; }
-  .product button { font-size:13px; padding:6px 12px; }
-  #cart-popup { width:90%; max-width:300px; right:-100%; padding:15px; }
-  #cart-popup.active { right:5%; }
-  #mobile-menu { width:250px; padding:50px 15px; }
-  .submenu a { font-size:15px; }
+  header { flex-direction:column; align-items:center; padding:10px 15px; }
+  header img { height:30px; max-width:120px; margin-bottom:5px; }
+  .header-text h1 { font-size:1.6rem; }
+  .header-text p { font-size:0.9rem; }
+  #cart-icon { font-size:22px; margin-top:5px; }
+  .product img { max-height:150px; }
 }
 </style>
 </head>
@@ -189,8 +163,10 @@ footer a { color:#fff; text-decoration:none; }
 
 <header>
   <img src="logo.png" alt="Logo A8M">
-  <h1>A8M</h1>
-  <p>Streetwear • Limited Drop</p>
+  <div class="header-text">
+    <h1>A8M</h1>
+    <p>Streetwear • Limited Drop</p>
+  </div>
   <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
 </header>
 
@@ -224,7 +200,7 @@ footer a { color:#fff; text-decoration:none; }
   <h2>Koszulki</h2>
   <div class="products">
     <div class="product" id="white-basic-logo">
-      <img src="bialaprzod.png" alt="Biała koszulka">
+      <img src="bialaprzod.png" alt="Biała przód">
       <h3>Biała Koszulka A8M</h3>
       <p>250 zł</p>
       <label for="size1">Rozmiar:</label>
@@ -232,7 +208,7 @@ footer a { color:#fff; text-decoration:none; }
       <button onclick="addToCart('Biała Koszulka A8M',250,document.getElementById('size1').value,'bialaprzod.png')">Dodaj do koszyka</button>
     </div>
     <div class="product" id="white-basic">
-      <img src="koszulka2.png" alt="Czarna koszulka">
+      <img src="koszulka2.png" alt="Czarna Przód">
       <h3>Czarna Koszulka A8M</h3>
       <p>250 zł</p>
       <label for="size2">Rozmiar:</label>
@@ -278,30 +254,54 @@ function changeQty(index,delta){ cart[index].qty+=delta; if(cart[index].qty<=0) 
 function removeFromCart(index){ cart.splice(index,1); updateCart(); }
 function showCart(){ document.getElementById('cart-popup').classList.add('active'); document.getElementById('cart-overlay').classList.add('active'); document.body.style.overflow='hidden'; }
 function hideCart(){ document.getElementById('cart-popup').classList.remove('active'); document.getElementById('cart-overlay').classList.remove('active'); document.body.style.overflow='auto'; }
+
 document.getElementById('cart-icon').addEventListener('click', showCart);
 document.getElementById('close-cart').addEventListener('click', hideCart);
 document.getElementById('cart-overlay').addEventListener('click', hideCart);
-function checkout(){ if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; } alert("Napisz do mnie na Instagramie lub email, aby zamówić!"); }
+
+function checkout(){
+  if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
+  alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
+}
 
 // Hamburger menu
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuOverlay = document.getElementById('menu-overlay');
-hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('active'); menuOverlay.classList.toggle('active'); });
-menuOverlay.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('active');
+  menuOverlay.classList.toggle('active');
+});
+
+menuOverlay.addEventListener('click', () => {
+  mobileMenu.classList.remove('active');
+  menuOverlay.classList.remove('active');
+});
+
+// Podmenu dla produktów
 mobileMenu.querySelectorAll('li > a').forEach(link => {
   const parentLi = link.parentElement;
   if(parentLi.querySelector('.submenu')){
-    link.addEventListener('click', e => { e.preventDefault(); parentLi.classList.toggle('active'); });
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      parentLi.classList.toggle('active');
+    });
   }
 });
+
 mobileMenu.querySelectorAll('.submenu a').forEach(link => {
-  link.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  });
 });
 </script>
 
 </body>
 </html>
+
+
 
 
 

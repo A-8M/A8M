@@ -29,10 +29,9 @@ textarea {
   border-radius:10px;
   border:none;
   resize:none;
-  font-family:'Montserrat',sans-serif;
 }
 button {
-  margin-top:10px;
+  margin-top:12px;
   padding:12px 25px;
   background:linear-gradient(45deg,#ff4a4a,#ff1a1a);
   border:none;
@@ -41,18 +40,26 @@ button {
   border-radius:10px;
   cursor:pointer;
 }
-button:hover { transform:scale(1.03); }
+.stars {
+  display:flex;
+  gap:8px;
+  font-size:32px;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+.stars span {
+  color:#555;
+}
+.stars span.active {
+  color:gold;
+}
 .review {
   background:#1a1a1a;
   padding:15px;
   border-radius:10px;
   margin-top:20px;
 }
-a {
-  color:#fff;
-  text-decoration:none;
-  font-weight:bold;
-}
+a { color:#fff; text-decoration:none; font-weight:bold; }
 footer {
   text-align:center;
   padding:20px;
@@ -73,51 +80,22 @@ footer {
 <div class="container">
   <h2>Dodaj opinię</h2>
 
-  <div id="form-box">
+  <div id="formBox">
+    <div class="stars" id="stars">
+      <span data-star="1">★</span>
+      <span data-star="2">★</span>
+      <span data-star="3">★</span>
+      <span data-star="4">★</span>
+      <span data-star="5">★</span>
+    </div>
+
     <textarea id="reviewText" rows="4" placeholder="Napisz swoją opinię..."></textarea>
-    <button onclick="addReview()">Dodaj opinię</button>
+    <button onclick="submitReview()">Wyślij opinię</button>
   </div>
 
-  <div id="reviewsBox"></div>
+  <div id="reviewResult"></div>
 </div>
 
 <footer>
   © 2025 A8M
 </footer>
-
-<script>
-const reviewKey = "a8m_user_review";
-
-// po załadowaniu strony
-window.onload = () => {
-  const savedReview = localStorage.getItem(reviewKey);
-  if(savedReview){
-    showReview(savedReview);
-    document.getElementById("form-box").style.display = "none";
-  }
-};
-
-function addReview(){
-  const text = document.getElementById("reviewText").value.trim();
-
-  if(text === ""){
-    alert("Napisz opinię!");
-    return;
-  }
-
-  localStorage.setItem(reviewKey, text);
-  showReview(text);
-  document.getElementById("form-box").style.display = "none";
-}
-
-function showReview(text){
-  const box = document.getElementById("reviewsBox");
-  box.innerHTML = `
-    <h2>Twoja opinia</h2>
-    <div class="review">${text}</div>
-  `;
-}
-</script>
-
-</body>
-</html>

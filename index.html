@@ -19,10 +19,14 @@ header {
 }
 
 }
-#cart-icon:hover { transform:scale(1.15); }
-#cart-icon span {
-  background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px;
-  vertical-align:top; margin-left:5px; font-weight:bold;
+#cart-icon {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 26px;
+  z-index: 999;
+  transition: transform 0.2s;
 }
 
 /* Hamburger menu */
@@ -270,6 +274,7 @@ mobileMenu.querySelectorAll('.submenu a').forEach(link => {
 
 </body>
 </html>
+
 
 
 

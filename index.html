@@ -7,6 +7,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:#fff; overflow-x:hidden; }
+  #maintenance-banner {
+  width: 100%;
+  background: #ff4a4a;      /* czerwony, wyraźny */
+  color: #fff;              /* biały tekst */
+  text-align: center;
+  padding: 10px 0;          /* trochę przestrzeni w pionie */
+  font-weight: bold;
+  font-size: 16px;
+  position: fixed;          /* przyklejony do góry */
+  top: 0;
+  left: 0;
+  z-index: 200;             /* nad wszystkim innym */
+}
+
+/* przesunięcie treści strony, żeby banner jej nie zasłaniał */
+body {
+  padding-top: 50px; /* dostosuj do wysokości banneru */
+}
+
+
+  <div id="maintenance-banner">
+  ⚠️ Strona przechodzi przegląd techniczny – zakupy są tymczasowo niedostępne ⚠️
+</div>
 
 /* HEADER */
 header {
@@ -309,6 +332,7 @@ function checkout(){
 
 </body>
 </html>
+
 
 
 

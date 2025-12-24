@@ -23,21 +23,22 @@ header{
   padding:30px;
 }
 .stars{
-  font-size:32px;
-  cursor:pointer;
+  font-size:34px;
   margin-bottom:10px;
 }
 .stars span{
-  color:#444;
+  cursor:pointer;
   user-select:none;
+  color:#444;
 }
 .stars span.active{
   color:gold;
 }
 textarea{
   width:100%;
-  height:80px;
+  height:90px;
   padding:10px;
+  font-size:14px;
 }
 button{
   margin-top:10px;
@@ -53,6 +54,10 @@ button{
   padding:15px;
   margin-top:20px;
 }
+a{
+  color:white;
+  text-decoration:none;
+}
 </style>
 </head>
 
@@ -60,7 +65,7 @@ button{
 
 <header>
   <h1>A8M – Opinie</h1>
-  <a href="index.html" style="color:white;">← wróć</a>
+  <a href="index.html">← wróć do sklepu</a>
 </header>
 
 <div class="container">
@@ -74,9 +79,8 @@ button{
       <span data-n="5">★</span>
     </div>
 
-    <textarea id="text" placeholder="Napisz opinię..."></textarea>
-    <br>
-    <button onclick="send()">Wyślij opinię</button>
+    <textarea id="text" placeholder="Napisz opinię..."></textarea><br>
+    <button id="sendBtn">Wyślij opinię</button>
   </div>
 
   <div id="result"></div>
@@ -85,20 +89,33 @@ button{
 
 <script>
 let selected = 0;
+const STORAGE_KEY = "a8m_review";
 
-document.querySelectorAll("#stars span").forEach(star=>{
-  star.onclick = ()=>{
-    selected = star.dataset.n;
-    document.querySelectorAll("#stars span").forEach(s=>{
-      s.classList.toggle("active", s.dataset.n <= selected);
+// gwiazdki – PEWNE WIĄZANIE PO ZAŁADOWANIU STRONY
+window.addEventListener("DOMContentLoaded", () => {
+
+  document.querySelectorAll("#stars span").forEach(star => {
+    star.addEventListener("click", () => {
+      selected = parseInt(star.dataset.n);
+      document.querySelectorAll("#stars span").forEach(s => {
+        s.classList.toggle("active", parseInt(s.dataset.n) <= selected);
+      });
     });
-  };
+  });
+
+  // wczytaj zapisaną opinię
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(saved){
+    const data = JSON.parse(saved);
+    showReview(data.text, data.stars);
+    document.getElementById("form").style.display = "none";
+  }
 });
 
-function send(){
+document.getElementById("sendBtn").addEventListener("click", () => {
   const text = document.getElementById("text").value.trim();
 
-  if(selected == 0){
+  if(selected === 0){
     alert("Wybierz gwiazdki!");
     return;
   }
@@ -107,36 +124,29 @@ function send(){
     return;
   }
 
-  localStorage.setItem("a8m_review", JSON.stringify({text, stars:selected}));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({ text, stars: selected })
+  );
 
-  document.getElementById("form").style.display="none";
-  document.getElementById("result").innerHTML = `
-    <h3>Twoja opinia</h3>
-    <div class="review">
-      <div style="color:gold;">${"★".repeat(selected)}</div>
-      <p>${text}</p>
-    </div>
-  `;
+  showReview(text, selected);
+  document.getElementById("form").style.display = "none";
 
+  // EMAIL
   window.location.href =
     "mailto:email@email.com?subject=Opinia A8M&body=" +
     encodeURIComponent(text + " (" + selected + " gwiazdek)");
-}
+});
 
-window.onload = ()=>{
-  const saved = localStorage.getItem("a8m_review");
-  if(saved){
-    const r = JSON.parse(saved);
-    document.getElementById("form").style.display="none";
-    document.getElementById("result").innerHTML = `
-      <h3>Twoja opinia</h3>
-      <div class="review">
-        <div style="color:gold;">${"★".repeat(r.stars)}</div>
-        <p>${r.text}</p>
-      </div>
-    `;
-  }
-};
+function showReview(text, stars){
+  document.getElementById("result").innerHTML = `
+    <h3>Twoja opinia</h3>
+    <div class="review">
+      <div style="color:gold;font-size:20px;">${"★".repeat(stars)}</div>
+      <p>${text}</p>
+    </div>
+  `;
+}
 </script>
 
 </body>

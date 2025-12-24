@@ -19,13 +19,6 @@ header {
   position:relative;
 }
 
-header img {
-  height:40px;
-  width:auto;
-  max-width:150px;
-}
-
-.header-left { display:flex; align-items:center; }
 .header-center {
   display:flex;
   flex-direction:column;
@@ -47,9 +40,9 @@ header img {
   background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
-/* Hamburger menu - domyślnie ukryty na desktop */
+/* Hamburger menu - widoczny na desktopie, ukryty na małych ekranach */
 #hamburger {
-  display:none;
+  display:block;
   font-size:28px;
   cursor:pointer;
   position:fixed;
@@ -137,9 +130,8 @@ footer a { color:#fff; text-decoration:none; }
 
 /* Responsywność */
 @media(max-width:700px){
-  #hamburger { display:block; } /* hamburger tylko na małych ekranach */
+  #hamburger { display:none; } /* na małych ekranach hamburger znika */
   header { flex-direction:column; align-items:center; padding:10px 15px; }
-  header img { height:30px; max-width:120px; margin-bottom:5px; }
   .header-center h1 { font-size:1.6rem; }
   .header-center p { font-size:0.9rem; }
   #cart-icon { font-size:22px; margin-top:5px; }
@@ -150,9 +142,6 @@ footer a { color:#fff; text-decoration:none; }
 <body>
 
 <header>
-  <div class="header-left">
-    <img src="logo.png" alt="Logo A8M">
-  </div>
   <div class="header-center">
     <h1>A8M</h1>
     <p>Streetwear • Limited Drop</p>

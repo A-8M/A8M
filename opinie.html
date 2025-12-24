@@ -4,67 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A8M – Opinie</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-body {
+body{
   margin:0;
-  font-family:'Montserrat',sans-serif;
+  font-family:Arial, sans-serif;
   background:#0d0d0d;
-  color:#fff;
+  color:white;
 }
-header {
-  background:linear-gradient(135deg,#ff4a4a,#ff1a1a);
-  padding:20px;
+header{
+  background:#ff1a1a;
+  padding:15px;
   text-align:center;
 }
-.container {
-  max-width:800px;
+.container{
+  max-width:600px;
   margin:auto;
-  padding:40px 20px;
+  padding:30px;
 }
-textarea {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  resize:none;
-}
-button {
-  margin-top:12px;
-  padding:12px 25px;
-  background:linear-gradient(45deg,#ff4a4a,#ff1a1a);
-  border:none;
-  color:#fff;
-  font-weight:bold;
-  border-radius:10px;
-  cursor:pointer;
-}
-.stars {
-  display:flex;
-  gap:8px;
+.stars{
   font-size:32px;
   cursor:pointer;
   margin-bottom:10px;
 }
-.stars span {
-  color:#555;
+.stars span{
+  color:#444;
+  user-select:none;
 }
-.stars span.active {
+.stars span.active{
   color:gold;
 }
-.review {
-  background:#1a1a1a;
-  padding:15px;
-  border-radius:10px;
-  margin-top:20px;
+textarea{
+  width:100%;
+  height:80px;
+  padding:10px;
 }
-a { color:#fff; text-decoration:none; font-weight:bold; }
-footer {
-  text-align:center;
-  padding:20px;
-  background:#000;
-  color:#aaa;
+button{
+  margin-top:10px;
+  padding:10px 20px;
+  background:#ff1a1a;
+  border:none;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.review{
+  background:#222;
+  padding:15px;
+  margin-top:20px;
 }
 </style>
 </head>
@@ -72,30 +59,85 @@ footer {
 <body>
 
 <header>
-  <h1>A𒆙M</h1>
-  <p>Opinie klientów</p>
-  <p><a href="index.html">← Wróć do sklepu</a></p>
+  <h1>A8M – Opinie</h1>
+  <a href="index.html" style="color:white;">← wróć</a>
 </header>
 
 <div class="container">
-  <h2>Dodaj opinię</h2>
 
-  <div id="formBox">
+  <div id="form">
     <div class="stars" id="stars">
-      <span data-star="1">★</span>
-      <span data-star="2">★</span>
-      <span data-star="3">★</span>
-      <span data-star="4">★</span>
-      <span data-star="5">★</span>
+      <span data-n="1">★</span>
+      <span data-n="2">★</span>
+      <span data-n="3">★</span>
+      <span data-n="4">★</span>
+      <span data-n="5">★</span>
     </div>
 
-    <textarea id="reviewText" rows="4" placeholder="Napisz swoją opinię..."></textarea>
-    <button onclick="submitReview()">Wyślij opinię</button>
+    <textarea id="text" placeholder="Napisz opinię..."></textarea>
+    <br>
+    <button onclick="send()">Wyślij opinię</button>
   </div>
 
-  <div id="reviewResult"></div>
+  <div id="result"></div>
+
 </div>
 
-<footer>
-  © 2025 A8M
-</footer>
+<script>
+let selected = 0;
+
+document.querySelectorAll("#stars span").forEach(star=>{
+  star.onclick = ()=>{
+    selected = star.dataset.n;
+    document.querySelectorAll("#stars span").forEach(s=>{
+      s.classList.toggle("active", s.dataset.n <= selected);
+    });
+  };
+});
+
+function send(){
+  const text = document.getElementById("text").value.trim();
+
+  if(selected == 0){
+    alert("Wybierz gwiazdki!");
+    return;
+  }
+  if(text === ""){
+    alert("Napisz opinię!");
+    return;
+  }
+
+  localStorage.setItem("a8m_review", JSON.stringify({text, stars:selected}));
+
+  document.getElementById("form").style.display="none";
+  document.getElementById("result").innerHTML = `
+    <h3>Twoja opinia</h3>
+    <div class="review">
+      <div style="color:gold;">${"★".repeat(selected)}</div>
+      <p>${text}</p>
+    </div>
+  `;
+
+  window.location.href =
+    "mailto:email@email.com?subject=Opinia A8M&body=" +
+    encodeURIComponent(text + " (" + selected + " gwiazdek)");
+}
+
+window.onload = ()=>{
+  const saved = localStorage.getItem("a8m_review");
+  if(saved){
+    const r = JSON.parse(saved);
+    document.getElementById("form").style.display="none";
+    document.getElementById("result").innerHTML = `
+      <h3>Twoja opinia</h3>
+      <div class="review">
+        <div style="color:gold;">${"★".repeat(r.stars)}</div>
+        <p>${r.text}</p>
+      </div>
+    `;
+  }
+};
+</script>
+
+</body>
+</html>

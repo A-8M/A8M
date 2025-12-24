@@ -41,20 +41,19 @@ header {
   background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
-/* Hamburger */
+/* Hamburger (bez kwadratu tła) */
 #hamburger {
-  font-size: 28px;
-  cursor: pointer;
+  font-size:28px;
+  cursor:pointer;
   z-index:999;
-  background:#ff1a1a;
   color:#fff;
-  padding: 6px 10px;
-  border-radius:5px;
+  border:none;
+  border-radius:0;
   transition: transform 0.2s;
 }
 #hamburger:hover { transform: scale(1.2); }
 
-/* Overlay menu */
+/* Overlay */
 #menu-overlay {
   position: fixed;
   top: 0;
@@ -79,7 +78,7 @@ header {
 #mobile-menu {
   position: fixed;
   top:0;
-  left:-280px;
+  left:-280px; /* ukryte poza ekranem */
   width:280px;
   height:100%;
   background:#222;

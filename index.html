@@ -106,6 +106,23 @@ footer a { color:#fff; text-decoration:none; }
   #hamburger { top:auto; left:auto; position: static; }
   .product img { max-height:150px; }
 }
+  .mail-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  background: linear-gradient(45deg,#ff4a4a,#ff1a1a);
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
+  border-radius: 14px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.mail-btn:hover {
+  transform: scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -181,7 +198,11 @@ footer a { color:#fff; text-decoration:none; }
   
 
 <footer id="contact">
-  <p>Kontakt: <a href="https://instagram.com/">Instagram</a> | email@email.com</p>
+  <p><a href="mailto:aspire8more@email.com?subject=Zamówienie%20A8M"
+   class="mail-btn">
+  ✉️ Napisz do nas
+</a>
+
   <p>© 2025 A8M</p>
 </footer>
 
@@ -261,6 +282,7 @@ function checkout(){
 
 </body>
 </html>
+
 
 
 

@@ -17,6 +17,7 @@ header {
   background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
   color: #fff;
   position: relative;
+  z-index: 100;
 }
 
 .header-center {
@@ -41,14 +42,16 @@ header {
   background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
-/* Hamburger (bez kwadratu tła) */
+/* Hamburger (tylko ikona, bez kwadratu) */
 #hamburger {
   font-size:28px;
   cursor:pointer;
   z-index:999;
   color:#fff;
   border:none;
-  border-radius:0;
+  background:none;
+  padding:0;
+  margin:0;
   transition: transform 0.2s;
 }
 #hamburger:hover { transform: scale(1.2); }
@@ -78,7 +81,7 @@ header {
 #mobile-menu {
   position: fixed;
   top:0;
-  left:-280px; /* ukryte poza ekranem */
+  left:-100%; /* całkowicie poza ekranem */
   width:280px;
   height:100%;
   background:#222;

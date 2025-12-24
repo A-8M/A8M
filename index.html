@@ -10,22 +10,22 @@ body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:
 
 /* HEADER */
 header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
   background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
-  color:#fff;
-  position:relative;
+  color: #fff;
+  position: relative;
 }
 
-/* Header centralny */
 .header-center {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  flex-grow:1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 }
+
 .header-center h1 { margin:0; font-size:2rem; }
 .header-center p { margin:0; font-size:1rem; color:#f0f0f0; }
 
@@ -43,44 +43,41 @@ header {
 
 /* Hamburger */
 #hamburger {
-  display:block;
-  font-size:28px;
-  cursor:pointer;
+  font-size: 28px;
+  cursor: pointer;
   z-index:999;
   background:#ff1a1a;
   color:#fff;
-  padding:6px 10px;
+  padding: 6px 10px;
   border-radius:5px;
   transition: transform 0.2s;
-  position:fixed;
-  top:15px;
-  left:20px; /* hamburger po lewej */
 }
-#hamburger:hover { transform:scale(1.2); }
+#hamburger:hover { transform: scale(1.2); }
 
 /* Overlay menu */
 #menu-overlay {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   background: rgba(0,0,0,0.5);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s;
-  z-index: 90;
   pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 50;
 }
 #menu-overlay.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  z-index: 90;
 }
 
 /* Mobile Menu */
 #mobile-menu {
-  position:fixed;
+  position: fixed;
   top:0;
   left:-280px;
   width:280px;
@@ -150,12 +147,12 @@ li.active > .submenu { max-height:500px; opacity:1; }
 footer { text-align:center; padding:25px; background:#000; font-size:14px; color:#aaa; }
 footer a { color:#fff; text-decoration:none; }
 
-/* Responsywność */
+/* RESPONSYWNOŚĆ */
 @media(max-width:700px){
-  header { flex-direction:column; align-items:center; padding:10px 15px; }
-  .header-center h1 { font-size:1.6rem; }
-  .header-center p { font-size:0.9rem; }
-  #cart-icon { font-size:22px; margin-top:5px; }
+  header { flex-direction: row; justify-content: space-between; align-items: center; padding: 10px 15px; }
+  .header-center { flex-direction: column; align-items: center; }
+  #cart-icon { margin-top: 0; }
+  #hamburger { top:auto; left:auto; position: static; }
   .product img { max-height:150px; }
 }
 </style>
@@ -163,6 +160,7 @@ footer a { color:#fff; text-decoration:none; }
 <body>
 
 <header>
+  <div id="hamburger">&#9776;</div>
   <div class="header-center">
     <h1>A8M</h1>
     <p>Streetwear • Limited Drop</p>
@@ -171,9 +169,7 @@ footer a { color:#fff; text-decoration:none; }
 </header>
 
 <!-- Hamburger i overlay -->
-<div id="hamburger">&#9776;</div>
 <div id="menu-overlay"></div>
-
 <nav id="mobile-menu">
   <ul>
     <li>

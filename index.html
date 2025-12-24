@@ -12,63 +12,49 @@ body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:
 header {
   display:flex;
   align-items:center;
-  justify-content:space-between; 
+  justify-content:space-between;
   padding:15px 20px;
-  background:#0d0d0d; 
-  border-bottom:2px solid #ff1a1a; 
+  background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
+  color:#fff;
+  position:relative;
 }
 
 header img {
-  height:40px;   
-  width:auto;    
-  max-width:150px; 
+  height:40px;
+  width:auto;
+  max-width:150px;
 }
 
-.header-text {
+.header-left { display:flex; align-items:center; }
+.header-center {
   display:flex;
   flex-direction:column;
   align-items:center;
-  flex-grow:1; 
+  flex-grow:1;
 }
 
-.header-text h1 {
-  margin:0;
-  font-size:2rem;
-}
-
-.header-text p {
-  margin:0;
-  font-size:1rem;
-  color:#f0f0f0;
-}
+.header-center h1 { margin:0; font-size:2rem; }
+.header-center p { margin:0; font-size:1rem; color:#f0f0f0; }
 
 #cart-icon {
-  position:relative; 
   cursor:pointer;
   font-size:26px;
+  z-index:20;
   transition: transform 0.2s;
 }
-
 #cart-icon:hover { transform:scale(1.15); }
-
 #cart-icon span {
-  background:#fff;
-  color:#ff1a1a;
-  border-radius:50%;
-  padding:3px 7px;
-  font-size:14px;
-  font-weight:bold;
-  margin-left:5px;
+  background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
 }
 
 /* Hamburger menu */
 #hamburger {
   font-size:28px;
   cursor:pointer;
-  position:fixed; 
+  position:fixed;
   top:20px;
   left:20px;
-  z-index:999; 
+  z-index:999;
   background:#ff1a1a;
   color:#fff;
   padding:6px 10px;
@@ -106,7 +92,7 @@ li.active > .submenu { max-height:500px; opacity:1; }
 /* Produkty */
 .container { max-width:1200px; margin:auto; padding:40px 20px; }
 .products {
-  display:grid; 
+  display:grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap:20px; justify-content:center;
 }
@@ -149,11 +135,11 @@ footer { text-align:center; padding:25px; background:#000; font-size:14px; color
 footer a { color:#fff; text-decoration:none; }
 
 /* Responsywność */
-@media(max-width:700px){ 
+@media(max-width:700px){
   header { flex-direction:column; align-items:center; padding:10px 15px; }
   header img { height:30px; max-width:120px; margin-bottom:5px; }
-  .header-text h1 { font-size:1.6rem; }
-  .header-text p { font-size:0.9rem; }
+  .header-center h1 { font-size:1.6rem; }
+  .header-center p { font-size:0.9rem; }
   #cart-icon { font-size:22px; margin-top:5px; }
   .product img { max-height:150px; }
 }
@@ -162,8 +148,10 @@ footer a { color:#fff; text-decoration:none; }
 <body>
 
 <header>
-  <img src="logo.png" alt="Logo A8M">
-  <div class="header-text">
+  <div class="header-left">
+    <img src="logo.png" alt="Logo A8M">
+  </div>
+  <div class="header-center">
     <h1>A8M</h1>
     <p>Streetwear • Limited Drop</p>
   </div>
@@ -300,17 +288,3 @@ mobileMenu.querySelectorAll('.submenu a').forEach(link => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

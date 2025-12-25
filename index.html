@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A8M - Streetwear</title>
 
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome (IKONY) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:#fff; overflow-x:hidden; }
+body {
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:#0d0d0d;
+  color:#fff;
+}
 
 /* HEADER */
 header {
@@ -23,12 +25,12 @@ header {
   background:linear-gradient(135deg,#ff4a4a,#ff1a1a);
 }
 
-.header-center { text-align:center; flex-grow:1; }
-.header-center h1 { margin:0; font-size:2rem; }
-.header-center p { margin:0; font-size:1rem; }
+.header-center {
+  text-align:center;
+  flex-grow:1;
+}
 
-/* Koszyk */
-#cart-icon { cursor:pointer; font-size:26px; }
+#cart-icon { font-size:26px; cursor:pointer; }
 #cart-icon span {
   background:#fff;
   color:#ff1a1a;
@@ -38,16 +40,15 @@ header {
   font-weight:bold;
 }
 
-/* Hamburger */
 #hamburger {
   font-size:28px;
-  cursor:pointer;
   background:none;
   border:none;
   color:#fff;
+  cursor:pointer;
 }
 
-/* Produkty */
+/* PRODUCTS */
 .container { max-width:1200px; margin:auto; padding:40px 20px; }
 .products {
   display:grid;
@@ -78,9 +79,9 @@ header {
 
 /* FOOTER */
 footer {
+  background:#000;
   text-align:center;
   padding:30px;
-  background:#000;
   color:#aaa;
 }
 
@@ -88,19 +89,35 @@ footer {
 .socials {
   display:flex;
   justify-content:center;
-  gap:25px;
+  gap:30px;
   margin-bottom:10px;
 }
 
 .socials a {
+  font-size:30px;
   color:#fff;
-  font-size:28px;
-  transition:transform 0.2s,color 0.2s;
+  transition:transform 0.25s, filter 0.25s;
 }
 
-.socials a:hover {
-  color:#ff4a4a;
-  transform:scale(1.2);
+/* INSTAGRAM */
+.socials a.instagram:hover {
+  color:#E1306C;
+  filter:drop-shadow(0 0 10px #E1306C);
+  transform:scale(1.25);
+}
+
+/* FACEBOOK */
+.socials a.facebook:hover {
+  color:#1877F2;
+  filter:drop-shadow(0 0 10px #1877F2);
+  transform:scale(1.25);
+}
+
+/* TIKTOK */
+.socials a.tiktok:hover {
+  color:#00f2ea;
+  filter:drop-shadow(0 0 10px #ff0050);
+  transform:scale(1.25);
 }
 </style>
 </head>
@@ -124,24 +141,21 @@ footer {
       <img src="bialaprzod.png">
       <h3>Biała Koszulka A8M</h3>
       <p>250 zł</p>
-      <select id="size1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Biała Koszulka A8M',250,'bialaprzod.png',size1.value)">Dodaj do koszyka</button>
+      <button>Dodaj do koszyka</button>
     </div>
 
     <div class="product">
       <img src="koszulka2.png">
       <h3>Czarna Koszulka A8M</h3>
       <p>250 zł</p>
-      <select id="size2"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Czarna Koszulka A8M',250,'koszulka2.png',size2.value)">Dodaj do koszyka</button>
+      <button>Dodaj do koszyka</button>
     </div>
 
     <div class="product">
       <img src="fioletova.png">
       <h3>Fioletowa Koszulka A8M</h3>
       <p>250 zł</p>
-      <select id="size3"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Fioletowa Koszulka A8M',250,'fioletova.png',size3.value)">Dodaj do koszyka</button>
+      <button>Dodaj do koszyka</button>
     </div>
 
   </div>
@@ -149,21 +163,22 @@ footer {
 
 <footer>
   <div class="socials">
-    <a href="https://www.instagram.com/aspire8more/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.facebook.com/TWOJ_PROFIL" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-    <a href="https://www.tiktok.com/@TWOJ_PROFIL" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    <a class="instagram" href="https://www.instagram.com/aspire8more/" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a class="facebook" href="https://www.facebook.com/TWOJ_PROFIL" target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a class="tiktok" href="https://www.tiktok.com/@TWOJ_PROFIL" target="_blank">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
   </div>
+
+  <p>email@email.com</p>
   <p>© 2025 A8M</p>
 </footer>
 
-<script>
-let cart=[];
-function addToCart(name,price,img,size){
-  cart.push({name,price,img,size});
-  document.getElementById('cart-count').textContent=cart.length;
-}
-</script>
-
 </body>
 </html>
+
 

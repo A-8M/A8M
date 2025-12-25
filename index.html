@@ -30,16 +30,6 @@ header {
   flex-grow:1;
 }
 
-#cart-icon { font-size:26px; cursor:pointer; }
-#cart-icon span {
-  background:#fff;
-  color:#ff1a1a;
-  border-radius:50%;
-  padding:3px 7px;
-  font-size:14px;
-  font-weight:bold;
-}
-
 #hamburger {
   font-size:28px;
   background:none;
@@ -67,15 +57,6 @@ header {
   object-fit:cover;
   border-radius:10px;
 }
-.product button {
-  margin-top:10px;
-  padding:10px 20px;
-  background:linear-gradient(45deg,#ff4a4a,#ff1a1a);
-  border:none;
-  border-radius:8px;
-  color:#fff;
-  cursor:pointer;
-}
 
 /* FOOTER */
 footer {
@@ -95,28 +76,29 @@ footer {
 
 .socials a {
   font-size:30px;
-  color:#fff;
   transition:transform 0.25s, filter 0.25s;
 }
 
-/* INSTAGRAM */
+/* NORMALNE KOLORY */
+.socials a.instagram { color:#E1306C; }
+.socials a.facebook { color:#1877F2; }
+.socials a.tiktok   { color:#00f2ea; }
+
+/* GLOW NA HOVER */
 .socials a.instagram:hover {
-  color:#E1306C;
-  filter:drop-shadow(0 0 10px #E1306C);
+  filter:drop-shadow(0 0 12px #E1306C);
   transform:scale(1.25);
 }
 
-/* FACEBOOK */
 .socials a.facebook:hover {
-  color:#1877F2;
-  filter:drop-shadow(0 0 10px #1877F2);
+  filter:drop-shadow(0 0 12px #1877F2);
   transform:scale(1.25);
 }
 
-/* TIKTOK */
 .socials a.tiktok:hover {
-  color:#00f2ea;
-  filter:drop-shadow(0 0 10px #ff0050);
+  filter:
+    drop-shadow(0 0 8px #00f2ea)
+    drop-shadow(0 0 14px #ff0050);
   transform:scale(1.25);
 }
 </style>
@@ -130,7 +112,6 @@ footer {
     <h1>A𒆙M</h1>
     <p>Streetwear • Limited Drop</p>
   </div>
-  <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
 </header>
 
 <div class="container">
@@ -141,21 +122,18 @@ footer {
       <img src="bialaprzod.png">
       <h3>Biała Koszulka A8M</h3>
       <p>250 zł</p>
-      <button>Dodaj do koszyka</button>
     </div>
 
     <div class="product">
       <img src="koszulka2.png">
       <h3>Czarna Koszulka A8M</h3>
       <p>250 zł</p>
-      <button>Dodaj do koszyka</button>
     </div>
 
     <div class="product">
       <img src="fioletova.png">
       <h3>Fioletowa Koszulka A8M</h3>
       <p>250 zł</p>
-      <button>Dodaj do koszyka</button>
     </div>
 
   </div>
@@ -180,5 +158,4 @@ footer {
 
 </body>
 </html>
-
 

@@ -34,14 +34,34 @@ header {
 /* Koszyk */
 #cart-icon {
   cursor:pointer;
-  font-size:26px;
-  z-index:20;
-  transition: transform 0.2s;
+  font-size: 26px;
+  z-index: 20;
+  transition: transform 0.2s, color 0.2s;
+  color: #fff;
 }
-#cart-icon:hover { transform:scale(1.15); }
+#cart-icon:hover {
+  transform: scale(1.15);
+  color: #ff4a4a;
+}
 #cart-icon span {
-  background:#fff; color:#ff1a1a; border-radius:50%; padding:3px 7px; font-size:14px; font-weight:bold; margin-left:5px;
+  background: #fff;
+  color: #ff1a1a;
+  border-radius: 50%;
+  padding: 3px 7px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 5px;
 }
+
+/* Animacja licznika */
+@keyframes bounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  50%  { transform: scale(0.9); }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+#cart-count.bounce { animation: bounce 0.5s ease; }
 
 /* Hamburger */
 #hamburger {
@@ -140,7 +160,10 @@ footer a:hover { color:#fff; transform:scale(1.2); }
     <h1>A8M</h1>
     <p>Streetwear • Limited Drop</p>
   </div>
-  <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
+  <div id="cart-icon">
+    <i class="fas fa-shopping-bag"></i>
+    <span id="cart-count">0</span>
+  </div>
 </header>
 
 <div id="menu-overlay"></div>
@@ -217,15 +240,17 @@ function addToCart(name,price,size,img){
   updateCart(); showCart();
 }
 function updateCart(){
-  const container=document.getElementById('cart-items-container');
-  const total=document.getElementById('cart-total');
+  const container = document.getElementById('cart-items-container');
+  const total = document.getElementById('cart-total');
+  const cartCount = document.getElementById('cart-count');
   container.innerHTML='';
-  let sum=0;
+  let sum = 0;
+
   cart.forEach((item,index)=>{
-    sum+=item.price*item.qty;
-    const div=document.createElement('div'); div.className='cart-item';
-    const info=document.createElement('div'); info.innerHTML=`<img src="${item.img}"> ${item.name} (${item.size})`;
-    const controls=document.createElement('div'); controls.className='cart-controls';
+    sum += item.price*item.qty;
+    const div = document.createElement('div'); div.className='cart-item';
+    const info = document.createElement('div'); info.innerHTML=`<img src="${item.img}"> ${item.name} (${item.size})`;
+    const controls = document.createElement('div'); controls.className='cart-controls';
     const minusBtn=document.createElement('button'); minusBtn.textContent='-'; minusBtn.onclick=()=>changeQty(index,-1);
     const qtySpan=document.createElement('span'); qtySpan.textContent=item.qty;
     const plusBtn=document.createElement('button'); plusBtn.textContent='+'; plusBtn.onclick=()=>changeQty(index,1);
@@ -233,9 +258,16 @@ function updateCart(){
     controls.appendChild(minusBtn); controls.appendChild(qtySpan); controls.appendChild(plusBtn); controls.appendChild(removeBtn);
     div.appendChild(info); div.appendChild(controls); container.appendChild(div);
   });
-  total.textContent=`Suma: ${sum} zł`;
-  document.getElementById('cart-count').textContent=cart.reduce((a,b)=>a+b.qty,0);
+
+  total.textContent = `Suma: ${sum} zł`;
+
+  // Animacja licznika
+  cartCount.textContent = cart.reduce((a,b)=>a+b.qty,0);
+  cartCount.classList.remove('bounce'); // reset animacji
+  void cartCount.offsetWidth; // wymusza restart animacji
+  cartCount.classList.add('bounce');
 }
+
 function changeQty(index,delta){ cart[index].qty+=delta; if(cart[index].qty<=0) cart.splice(index,1); updateCart(); }
 function removeFromCart(index){ cart.splice(index,1); updateCart(); }
 function showCart(){ document.getElementById('cart-popup').classList.add('active'); document.getElementById('cart-overlay').classList.add('active'); document.body.style.overflow='hidden'; }
@@ -284,3 +316,5 @@ function checkout(){
 
 </body>
 </html>
+
+

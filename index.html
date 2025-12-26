@@ -80,16 +80,57 @@ li.active > .submenu { max-height:500px; opacity:1; }
 /* Koszyk popup */
 #cart-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:90; opacity:0; visibility:hidden; transition: opacity 0.3s; }
 #cart-overlay.active { opacity:1; visibility:visible; }
+
 #cart-popup {
-  position: fixed; top:0; right:-100%; width:380px; max-width:90%; height:100%;
+  position: fixed; top:0; right:-100%; width:380px; max-width:90%; height:100vh;
   background:#222; padding:30px 20px; border-radius:0 0 0 20px;
   box-shadow:-5px 0 25px rgba(0,0,0,0.7); color:#fff; z-index:100;
   display:flex; flex-direction:column; transition:right 0.35s; box-sizing:border-box;
 }
+
 #cart-popup.active { right:0; }
 #cart-popup h3 { margin:0 0 12px; font-size:20px; text-align:center; border-bottom:1px solid #444; padding-bottom:5px; }
 #cart-popup #close-cart { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer; }
 #cart-items-container { overflow-y:auto; flex-grow:1; margin-bottom:20px; }
+
+/* Estetyczne produkty w koszyku */
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #333;
+  flex-wrap: wrap;
+}
+
+.cart-item div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.cart-controls button {
+  flex-shrink: 0;
+  padding: 3px 7px;
+  background: #ff4a4a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.cart-controls button:hover { background: #ff1a1a; transform: scale(1.05); }
 
 /* Widoczny przycisk Zamów */
 #checkout-btn {
@@ -217,7 +258,6 @@ function updateCart(){
 
   total.textContent = `Suma: ${sum} zł`;
 
-  // Animacja licznika
   cartCount.textContent = cart.reduce((a,b)=>a+b.qty,0);
   cartCount.classList.remove('bounce'); void cartCount.offsetWidth; cartCount.classList.add('bounce');
 }
@@ -236,7 +276,6 @@ const menuOverlay = document.getElementById('menu-overlay');
 
 hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('active'); menuOverlay.classList.toggle('active'); });
 menuOverlay.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
-
 mobileMenu.querySelectorAll('li > a').forEach(link => {
   const parentLi = link.parentElement;
   if(parentLi.querySelector('.submenu')){
@@ -247,12 +286,14 @@ mobileMenu.querySelectorAll('.submenu a').forEach(link => {
   link.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
 });
 
-function checkout(e){
-  if(e) e.preventDefault();
+function checkout(){
   if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
   alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
+  // opcjonalnie: wyczyść koszyk po zamówieniu:
+  // cart = []; updateCart(); hideCart();
 }
 </script>
+
 </body>
 </html>
 

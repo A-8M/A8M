@@ -52,8 +52,16 @@ header {
 #hamburger:hover { transform: scale(1.2); }
 
 /* Overlay */
-#menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s; z-index: 90; }
-#menu-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+#menu-overlay { 
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+  background: rgba(0,0,0,0); /* przezroczyste w spoczynku */
+  opacity: 0; visibility: hidden; pointer-events: none; 
+  transition: opacity 0.3s, background 0.3s; z-index: 90; 
+}
+#menu-overlay.active { 
+  background: rgba(0,0,0,0.5); /* lekko ciemne tło przy otwartym menu */
+  opacity: 1; visibility: visible; pointer-events: auto; 
+}
 
 /* Mobile/Desktop Menu */
 #mobile-menu { 
@@ -85,6 +93,7 @@ li.active > .submenu { max-height:500px; opacity:1; }
 .old-price { text-decoration: line-through; color:#aaa; margin-right:8px; }
 .new-price { color:#ff4a4a; font-weight:bold; }
 
+/* Opcje i przycisk */
 .product select { padding:5px; border-radius:5px; border:none; font-size:14px; }
 .product button { margin-top:10px; padding:10px 20px; background: linear-gradient(45deg,#ff4a4a,#ff1a1a); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#fff; transition: background 0.3s, transform 0.2s; }
 .product button:hover { background: linear-gradient(45deg,#ff1a1a,#ff4a4a); transform:scale(1.05); }
@@ -115,7 +124,6 @@ footer a:hover { color:#fff; transform:scale(1.2); }
   header { flex-direction: row; justify-content: space-between; align-items: center; padding: 10px 15px; }
   .header-center { flex-direction: column; align-items: center; }
   #cart-icon { margin-top: 0; }
-  #hamburger { position: static; }
   .product img { max-height:150px; }
 }
 </style>
@@ -177,7 +185,7 @@ footer a:hover { color:#fff; transform:scale(1.2); }
       <button onclick="addToCart('Czarna Koszulka A8M',115,document.getElementById('size2').value,'koszulka2.png')">Dodaj do koszyka</button>
     </div>
     <div class="product" id="fioletova">
-      <img src="fioletova.png" alt="fioletova">
+      <img src="fioletova.png" alt="Fioletowa Przód">
       <h3>Fioletowa Koszulka A8M</h3>
       <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
       <label for="size3">Rozmiar:</label>

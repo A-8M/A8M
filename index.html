@@ -52,7 +52,7 @@ header {
 #hamburger:hover { transform: scale(1.2); }
 
 /* Overlay */
-#menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s; z-index: 90; }
+#menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s; z-index: 90; }
 #menu-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
 /* Mobile/Desktop Menu */
@@ -79,7 +79,12 @@ li.active > .submenu { max-height:500px; opacity:1; }
 .product img { width:100%; max-height:200px; object-fit:cover; border-radius:10px; transition: transform 0.3s; }
 .product img:hover { transform: scale(1.05); }
 .product h3 { margin:12px 0 6px; font-size:1.2rem; }
-.product p { color:#ccc; margin-bottom:10px; }
+
+/* Ceny z promocją */
+.price { margin-bottom:10px; font-size:1rem; }
+.old-price { text-decoration: line-through; color:#aaa; margin-right:8px; }
+.new-price { color:#ff4a4a; font-weight:bold; }
+
 .product select { padding:5px; border-radius:5px; border:none; font-size:14px; }
 .product button { margin-top:10px; padding:10px 20px; background: linear-gradient(45deg,#ff4a4a,#ff1a1a); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#fff; transition: background 0.3s, transform 0.2s; }
 .product button:hover { background: linear-gradient(45deg,#ff1a1a,#ff4a4a); transform:scale(1.05); }
@@ -158,7 +163,7 @@ footer a:hover { color:#fff; transform:scale(1.2); }
     <div class="product" id="white-basic-logo">
       <img src="bialaprzod.png" alt="Biała przód">
       <h3>Biała Koszulka A8M</h3>
-      <p>115 zł</p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
       <label for="size1">Rozmiar:</label>
       <select id="size1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       <button onclick="addToCart('Biała Koszulka A8M',115,document.getElementById('size1').value,'bialaprzod.png')">Dodaj do koszyka</button>
@@ -166,7 +171,7 @@ footer a:hover { color:#fff; transform:scale(1.2); }
     <div class="product" id="white-basic">
       <img src="koszulka2.png" alt="Czarna Przód">
       <h3>Czarna Koszulka A8M</h3>
-      <p>115 zł</p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
       <label for="size2">Rozmiar:</label>
       <select id="size2"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       <button onclick="addToCart('Czarna Koszulka A8M',115,document.getElementById('size2').value,'koszulka2.png')">Dodaj do koszyka</button>
@@ -174,7 +179,7 @@ footer a:hover { color:#fff; transform:scale(1.2); }
     <div class="product" id="fioletova">
       <img src="fioletova.png" alt="fioletova">
       <h3>Fioletowa Koszulka A8M</h3>
-      <p>115 zł</p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
       <label for="size3">Rozmiar:</label>
       <select id="size3"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       <button onclick="addToCart('Fioletowa Koszulka A8M',115,document.getElementById('size3').value,'fioletova.png')">Dodaj do koszyka</button>
@@ -267,4 +272,3 @@ function checkout(){
 
 </body>
 </html>
-

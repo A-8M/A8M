@@ -87,13 +87,12 @@ li.active > .submenu { max-height:500px; opacity:1; }
   box-shadow:-5px 0 25px rgba(0,0,0,0.7); color:#fff; z-index:100;
   display:flex; flex-direction:column; transition:right 0.35s; box-sizing:border-box;
 }
-
 #cart-popup.active { right:0; }
 #cart-popup h3 { margin:0 0 12px; font-size:20px; text-align:center; border-bottom:1px solid #444; padding-bottom:5px; }
 #cart-popup #close-cart { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer; }
 #cart-items-container { overflow-y:auto; flex-grow:1; margin-bottom:20px; }
 
-/* Estetyczne produkty w koszyku */
+/* Miniaturki w koszyku */
 .cart-item {
   display: flex;
   align-items: center;
@@ -103,7 +102,6 @@ li.active > .submenu { max-height:500px; opacity:1; }
   border-bottom: 1px solid #333;
   flex-wrap: wrap;
 }
-
 .cart-item div:first-child {
   display: flex;
   align-items: center;
@@ -111,14 +109,20 @@ li.active > .submenu { max-height:500px; opacity:1; }
   max-width: 60%;
   word-break: break-word;
 }
-
+.cart-item img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
 .cart-controls {
   display: flex;
   align-items: center;
   gap: 4px;
   flex-wrap: wrap;
 }
-
 .cart-controls button {
   flex-shrink: 0;
   padding: 3px 7px;
@@ -129,7 +133,6 @@ li.active > .submenu { max-height:500px; opacity:1; }
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
-
 .cart-controls button:hover { background: #ff1a1a; transform: scale(1.05); }
 
 /* Widoczny przycisk Zamów */
@@ -242,11 +245,10 @@ function updateCart(){
   const cartCount = document.getElementById('cart-count');
   container.innerHTML='';
   let sum = 0;
-
   cart.forEach((item,index)=>{
     sum += item.price*item.qty;
     const div = document.createElement('div'); div.className='cart-item';
-    const info = document.createElement('div'); info.innerHTML=`<img src="${item.img}"> ${item.name} (${item.size})`;
+    const info = document.createElement('div'); info.innerHTML=`<img src="${item.img}" alt="${item.name}"> ${item.name} (${item.size})`;
     const controls = document.createElement('div'); controls.className='cart-controls';
     const minusBtn=document.createElement('button'); minusBtn.textContent='-'; minusBtn.onclick=()=>changeQty(index,-1);
     const qtySpan=document.createElement('span'); qtySpan.textContent=item.qty;
@@ -255,9 +257,7 @@ function updateCart(){
     controls.appendChild(minusBtn); controls.appendChild(qtySpan); controls.appendChild(plusBtn); controls.appendChild(removeBtn);
     div.appendChild(info); div.appendChild(controls); container.appendChild(div);
   });
-
   total.textContent = `Suma: ${sum} zł`;
-
   cartCount.textContent = cart.reduce((a,b)=>a+b.qty,0);
   cartCount.classList.remove('bounce'); void cartCount.offsetWidth; cartCount.classList.add('bounce');
 }
@@ -278,9 +278,7 @@ hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('active'
 menuOverlay.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
 mobileMenu.querySelectorAll('li > a').forEach(link => {
   const parentLi = link.parentElement;
-  if(parentLi.querySelector('.submenu')){
-    link.addEventListener('click', e => { e.preventDefault(); parentLi.classList.toggle('active'); });
-  }
+  if(parentLi.querySelector('.submenu')){ link.addEventListener('click', e => { e.preventDefault(); parentLi.classList.toggle('active'); }); }
 });
 mobileMenu.querySelectorAll('.submenu a').forEach(link => {
   link.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
@@ -289,12 +287,11 @@ mobileMenu.querySelectorAll('.submenu a').forEach(link => {
 function checkout(){
   if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
   alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
-  // opcjonalnie: wyczyść koszyk po zamówieniu:
+  // opcjonalnie: wyczyść koszyk po zamówieniu
   // cart = []; updateCart(); hideCart();
 }
 </script>
 
 </body>
 </html>
-
 

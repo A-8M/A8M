@@ -6,78 +6,65 @@
 <title>A8M – Streetwear</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Montserrat;
-  background:#0d0d0d;
-  color:#fff;
-}
-header{
-  background:#ff1a1a;
-  text-align:center;
-  padding:20px;
-}
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-  padding:30px;
-}
-.product{
-  background:#1a1a1a;
-  padding:15px;
-  border-radius:15px;
-  text-align:center;
-  cursor:pointer;
-}
-.product img{
-  width:100%;
-  border-radius:12px;
-}
-button{
-  background:#ff1a1a;
-  color:#fff;
-  border:none;
-  padding:12px;
-  border-radius:10px;
-  font-weight:bold;
-  width:100%;
-  cursor:pointer;
-}
-footer{
-  text-align:center;
-  padding:20px;
-  color:#aaa;
-}
-a{color:#ff4a4a}
+body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
 
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-}
-#modal{
-  display:none;
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:#1a1a1a;
-  padding:25px;
-  border-radius:20px;
-  width:90%;
-  max-width:420px;
-}
-input,textarea,select{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:8px;
-  border:none;
+/* HEADER */
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);position:relative;z-index:100;color:#fff}
+.header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1}
+.header-center h1{margin:0;font-size:2rem}
+.header-center p{margin:0;font-size:1rem;color:#f0f0f0}
+#hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;position:relative;transition: transform 0.2s}
+#hamburger:hover{transform:scale(1.2)}
+#cart-icon{cursor:pointer;font-size:26px;z-index:20;transition: transform 0.2s,color 0.2s;color:#fff}
+#cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
+#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
+
+/* MOBILE MENU */
+#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
+#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
+#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
+#mobile-menu.active{transform:translateX(0)}
+#mobile-menu ul{list-style:none;padding:0;margin:0}
+#mobile-menu li{margin-bottom:20px;position:relative}
+#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
+#mobile-menu a:hover{color:#fff}
+.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
+li.active>.submenu{max-height:500px;opacity:1}
+.submenu li{margin-bottom:12px}
+.submenu a{font-size:16px;font-weight:500;color:#ccc}
+.submenu a:hover{color:#ff1a1a}
+
+/* PRODUCTS */
+.container{max-width:1200px;margin:auto;padding:40px 20px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;justify-content:center}
+.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
+.product:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(255,0,0,0.3)}
+.product img{width:100%;max-height:200px;object-fit:cover;border-radius:10px;transition:transform 0.3s}
+.product img:hover{transform:scale(1.05)}
+.product h3{margin:12px 0 6px;font-size:1.2rem}
+.price{margin-bottom:10px;font-size:1rem}
+.old-price{text-decoration: line-through;color:#aaa;margin-right:8px}
+.new-price{color:#ff4a4a;font-weight:bold}
+
+/* MODAL */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:420px;z-index:100}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none}
+label{display:block;margin:10px 0}
+
+/* FOOTER */
+footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
+footer a:hover{color:#fff;transform:scale(1.2)}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  header{flex-direction:row;justify-content:space-between;align-items:center;padding:10px 15px}
+  .product img{max-height:150px}
 }
 </style>
 </head>
@@ -85,89 +72,113 @@ input,textarea,select{
 <body>
 
 <header>
-  <h1>A8M</h1>
-  <p>Streetwear • Limited Drop</p>
+  <div id="hamburger">&#9776;</div>
+  <div class="header-center"><h1>A𒆙M</h1><p>Streetwear • Limited Drop</p></div>
+  <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
 </header>
 
-<section class="products">
-  <div class="product" onclick="openModal('Biała Koszulka A8M',115)">
-    <img src="bialaprzod.png" alt="Biała Koszulka">
-    <h3>Biała Koszulka A8M</h3>
-    <p>115 zł</p>
-  </div>
+<div id="menu-overlay"></div>
+<nav id="mobile-menu">
+  <ul>
+    <li>
+      <a href="#">Produkty ▾</a>
+      <ul class="submenu">
+        <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
+        <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
+        <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
+      </ul>
+    </li>
+    <li><a href="#opinie">Opinie</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    <li><a href="#about">O nas</a></li>
+  </ul>
+</nav>
 
-  <div class="product" onclick="openModal('Czarna Koszulka A8M',115)">
-    <img src="koszulka2.png" alt="Czarna Koszulka">
-    <h3>Czarna Koszulka A8M</h3>
-    <p>115 zł</p>
+<div class="container" id="products">
+  <h2>Koszulki</h2>
+  <div class="products">
+    <div class="product" id="white-basic-logo" onclick="openModal('Biała Koszulka A8M','250','115','bialaprzod.png')">
+      <img src="bialaprzod.png" alt="Biała przód">
+      <h3>Biała Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+    </div>
+    <div class="product" id="white-basic" onclick="openModal('Czarna Koszulka A8M','250','115','koszulka2.png')">
+      <img src="koszulka2.png" alt="Czarna Przód">
+      <h3>Czarna Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+    </div>
+    <div class="product" id="fioletova" onclick="openModal('Fioletowa Koszulka A8M','250','115','fioletova.png')">
+      <img src="fioletova.png" alt="Fioletowa Przód">
+      <h3>Fioletowa Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+    </div>
   </div>
+</div>
 
-  <div class="product" onclick="openModal('Fioletowa Koszulka A8M',115)">
-    <img src="fioletova.png" alt="Fioletowa Koszulka">
-    <h3>Fioletowa Koszulka A8M</h3>
-    <p>115 zł</p>
-  </div>
-</section>
-
+<!-- MODAL ZAMÓWIENIA -->
 <div id="overlay" onclick="closeModal()"></div>
-
 <div id="modal">
-  <h3 id="pname"></h3>
-  <p id="pprice"></p>
-
-  <select id="size">
-    <option>S</option><option>M</option><option>L</option><option>XL</option>
-  </select>
-
-  <input id="name" placeholder="Imię i nazwisko">
-  <input id="email" placeholder="Email">
-  <input id="phone" placeholder="Telefon">
-  <textarea id="address" placeholder="Adres dostawy"></textarea>
-
-  <label>
-    <input type="checkbox" id="agree">
-    Akceptuję
-    <a href="regulamin.html" target="_blank">Regulamin</a> i
-    <a href="rodo.html" target="_blank">RODO</a>
+  <h3 id="modal-name"></h3>
+  <p id="modal-price"></p>
+  <label>Rozmiar:
+    <select id="modal-size">
+      <option>S</option><option>M</option><option>L</option><option>XL</option>
+    </select>
   </label>
-
+  <input id="modal-name-input" placeholder="Imię i nazwisko">
+  <input id="modal-email" placeholder="Email">
+  <input id="modal-phone" placeholder="Telefon">
+  <textarea id="modal-address" placeholder="Adres dostawy"></textarea>
+  <label>
+    <input type="checkbox" id="modal-agree">
+    Akceptuję <a href="regulamin.html" target="_blank">Regulamin</a> i <a href="rodo.html" target="_blank">RODO</a>
+  </label>
   <button onclick="sendOrder()">Zamawiam</button>
 </div>
 
-<footer>
-<a href="regulamin.html" target="_blank">Regulamin</a> |
-<a href="rodo.html" target="_blank">RODO</a><br><br>
-© 2025 A8M
+<footer id="contact">
+  <p>Kontakt:
+    <a href="https://www.instagram.com/aspire8more/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61585811125484" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+  </p>
+  <p>© 2025 A8M</p>
 </footer>
 
 <script>
-let product={};
+// HAMBURGER MENU
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobile-menu');
+const menuOverlay=document.getElementById('menu-overlay');
 
-function openModal(name,price){
-  product={name,price};
-  document.getElementById('pname').textContent=name;
-  document.getElementById('pprice').textContent=price+" zł";
-  document.getElementById('modal').style.display="block";
-  document.getElementById('overlay').style.display="block";
+hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active')});
+menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active')});
+mobileMenu.querySelectorAll('li>a').forEach(link=>{
+  const parentLi=link.parentElement;
+  if(parentLi.querySelector('.submenu')){
+    link.addEventListener('click',e=>{e.preventDefault();parentLi.classList.toggle('active')});
+  }
+});
+
+// MODAL ZAMÓWIENIA
+function openModal(name,oldPrice,newPrice,img){
+  document.getElementById('modal-name').textContent=name;
+  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
+  document.getElementById('overlay').style.display='block';
+  document.getElementById('modal').style.display='block';
 }
 
 function closeModal(){
-  document.getElementById('modal').style.display="none";
-  document.getElementById('overlay').style.display="none";
+  document.getElementById('overlay').style.display='none';
+  document.getElementById('modal').style.display='none';
 }
 
 function sendOrder(){
-  const agree = document.getElementById('agree');
-  if(!agree.checked){
-    alert("Musisz zaakceptować Regulamin i RODO");
-    return;
-  }
-  alert(
-    "Zamówienie przyjęte!\n\n"+
-    product.name+
-    "\nRozmiar: "+document.getElementById('size').value+
-    "\n\nSkontaktujemy się mailowo."
-  );
+  const agree=document.getElementById('modal-agree');
+  if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}
+  alert("Zamówienie przyjęte!\n\nProdukt: "+document.getElementById('modal-name').textContent+
+        "\nRozmiar: "+document.getElementById('modal-size').value+
+        "\n\nSkontaktujemy się mailowo.");
   closeModal();
 }
 </script>

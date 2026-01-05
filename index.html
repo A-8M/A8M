@@ -4,295 +4,275 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A8M - Streetwear</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-body { margin:0; font-family:'Montserrat',sans-serif; background:#0d0d0d; color:#fff; overflow-x:hidden; }
+body{
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:#0d0d0d;
+  color:#fff;
+  overflow-x:hidden;
+}
 
 /* HEADER */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
-  color: #fff;
-  position: relative;
-  z-index: 100;
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:linear-gradient(135deg,#ff4a4a,#ff1a1a);
 }
-.header-center { display: flex; flex-direction: column; align-items: center; flex-grow: 1; }
-.header-center h1 { margin:0; font-size:2rem; }
-.header-center p { margin:0; font-size:1rem; color:#f0f0f0; }
+.header-center{text-align:center;}
+#cart-icon{cursor:pointer;font-size:26px;}
+#cart-icon span{
+  background:#fff;color:#ff1a1a;border-radius:50%;
+  padding:3px 7px;font-weight:bold;margin-left:5px;
+}
 
-/* Koszyk */
-#cart-icon {
+/* PRODUKTY */
+.container{max-width:1200px;margin:auto;padding:40px 20px;}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.product{
+  background:#1a1a1a;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
   cursor:pointer;
-  font-size: 26px;
-  z-index: 20;
-  transition: transform 0.2s, color 0.2s;
-  color: #fff;
+  transition:0.3s;
 }
-#cart-icon:hover { transform: scale(1.15); color: #ff4a4a; }
-#cart-icon span {
-  background: #fff; color: #ff1a1a; border-radius: 50%; padding: 3px 7px; font-size: 14px; font-weight: bold; margin-left: 5px;
+.product:hover{
+  transform:translateY(-6px);
+  box-shadow:0 6px 20px rgba(255,0,0,0.4);
+}
+.product img{
+  width:100%;
+  max-height:220px;
+  object-fit:cover;
+  border-radius:12px;
+}
+.price{margin:10px 0;}
+.old-price{text-decoration:line-through;color:#aaa;margin-right:8px;}
+.new-price{color:#ff4a4a;font-weight:bold;}
+
+/* ===== MODAL PRODUKTU ===== */
+#product-modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  opacity:0;
+  visibility:hidden;
+  transition:0.3s;
+  z-index:200;
+}
+#product-modal-overlay.active{
+  opacity:1;
+  visibility:visible;
+}
+#product-modal{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.85);
+  background:#1a1a1a;
+  width:90%;
+  max-width:420px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  z-index:201;
+  opacity:0;
+  transition:0.3s;
+}
+#product-modal.active{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+#product-modal img{
+  width:100%;
+  max-height:300px;
+  object-fit:cover;
+  border-radius:15px;
+}
+#close-product-modal{
+  position:absolute;
+  top:10px;
+  right:15px;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:28px;
+  cursor:pointer;
+}
+#product-modal select{
+  margin-top:10px;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+}
+#product-modal button{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  background:linear-gradient(45deg,#ff4a4a,#ff1a1a);
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
 }
 
-/* Animacja licznika */
-@keyframes bounce { 0%{transform:scale(1);}30%{transform:scale(1.4);}50%{transform:scale(0.9);}70%{transform:scale(1.2);}100%{transform:scale(1);} }
-#cart-count.bounce { animation: bounce 0.5s ease; }
-
-/* Hamburger */
-#hamburger { font-size:28px; cursor:pointer; z-index:9999; border:none; background:none; padding:5px; color:#fff; position:relative; transition: transform 0.2s; }
-#hamburger:hover { transform: scale(1.2); }
-
-/* Overlay */
-#menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s, background 0.3s; z-index: 90; }
-#menu-overlay.active { background: rgba(0,0,0,0.5); opacity: 1; visibility: visible; pointer-events: auto; }
-
-/* Mobile Menu */
-#mobile-menu { position: fixed; top:0; left:0; width:300px; height:100%; background:#111; padding:60px 20px; transform: translateX(-100%); transition: transform 0.35s ease; z-index:100; overflow-y:auto; }
-#mobile-menu.active { transform: translateX(0); }
-#mobile-menu ul { list-style:none; padding:0; margin:0; }
-#mobile-menu li { margin-bottom:20px; position:relative; }
-#mobile-menu a { text-decoration:none; color:#ff4a4a; font-size:18px; font-weight:bold; display:block; transition: color 0.3s; }
-#mobile-menu a:hover { color:#fff; }
-.submenu { list-style:none; padding-left:15px; margin-top:5px; max-height:0; overflow:hidden; transition: max-height 0.35s ease, opacity 0.35s ease; opacity:0; }
-li.active > .submenu { max-height:500px; opacity:1; }
-.submenu li { margin-bottom:12px; }
-.submenu a { font-size:16px; font-weight:500; color:#ccc; }
-.submenu a:hover { color:#ff1a1a; }
-
-/* Produkty */
-.container { max-width:1200px; margin:auto; padding:40px 20px; }
-.products { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px; justify-content:center; }
-.product { background:#1a1a1a; border-radius:15px; overflow:hidden; padding:15px; text-align:center; transition: transform 0.3s, box-shadow 0.3s; }
-.product:hover { transform:translateY(-6px); box-shadow:0 6px 18px rgba(255,0,0,0.3); }
-.product img { width:100%; max-height:200px; object-fit:cover; border-radius:10px; transition: transform 0.3s; }
-.product img:hover { transform: scale(1.05); }
-.product h3 { margin:12px 0 6px; font-size:1.2rem; }
-.price { margin-bottom:10px; font-size:1rem; }
-.old-price { text-decoration: line-through; color:#aaa; margin-right:8px; }
-.new-price { color:#ff4a4a; font-weight:bold; }
-.product select { padding:5px; border-radius:5px; border:none; font-size:14px; }
-.product button { margin-top:10px; padding:10px 20px; background: linear-gradient(45deg,#ff4a4a,#ff1a1a); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#fff; transition: background 0.3s, transform 0.2s; }
-.product button:hover { background: linear-gradient(45deg,#ff1a1a,#ff4a4a); transform:scale(1.05); }
-
-/* Koszyk popup */
-#cart-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:90; opacity:0; visibility:hidden; transition: opacity 0.3s; }
-#cart-overlay.active { opacity:1; visibility:visible; }
-
-#cart-popup {
-  position: fixed; top:0; right:-100%; width:380px; max-width:90%; height:100vh;
-  background:#222; padding:30px 20px; border-radius:0 0 0 20px;
-  box-shadow:-5px 0 25px rgba(0,0,0,0.7); color:#fff; z-index:100;
-  display:flex; flex-direction:column; transition:right 0.35s; box-sizing:border-box;
+/* ===== KOSZYK ===== */
+#cart-popup{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:350px;
+  height:100vh;
+  background:#222;
+  padding:20px;
+  transition:0.35s;
+  z-index:300;
 }
-#cart-popup.active { right:0; }
-#cart-popup h3 { margin:0 0 12px; font-size:20px; text-align:center; border-bottom:1px solid #444; padding-bottom:5px; }
-#cart-popup #close-cart { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer; }
-#cart-items-container { overflow-y:auto; flex-grow:1; margin-bottom:20px; }
-
-/* Miniaturki w koszyku */
-.cart-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 5px 0;
-  border-bottom: 1px solid #333;
-  flex-wrap: wrap;
+#cart-popup.active{right:0;}
+#cart-items-container div{
+  border-bottom:1px solid #444;
+  padding:8px 0;
 }
-.cart-item div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  max-width: 60%;
-  word-break: break-word;
-}
-.cart-item img {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 6px;
-  flex-shrink: 0;
-}
-.cart-controls {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-.cart-controls button {
-  flex-shrink: 0;
-  padding: 3px 7px;
-  background: #ff4a4a;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-.cart-controls button:hover { background: #ff1a1a; transform: scale(1.05); }
-
-/* Widoczny przycisk Zamów */
-#checkout-btn {
-  width:100%; padding:18px 0; font-weight:900; font-size:18px; color:#fff;
-  background: linear-gradient(135deg,#ff0000,#ff4a4a); border:none; border-radius:15px;
-  cursor:pointer; box-shadow:0 6px 25px rgba(255,0,0,0.6); transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
-  box-sizing:border-box;
-}
-#checkout-btn:hover { transform: scale(1.05); box-shadow:0 8px 30px rgba(255,0,0,0.8); background: linear-gradient(135deg,#ff4a4a,#ff0000); }
-
-/* FOOTER */
-footer { text-align:center; padding:25px; background:#000; font-size:14px; color:#aaa; }
-footer a { color:#ff4a4a; margin:0 8px; text-decoration:none; font-size:20px; transition: color 0.3s, transform 0.3s; }
-footer a:hover { color:#fff; transform:scale(1.2); }
-
-/* RESPONSYWNOŚĆ */
-@media(max-width:700px){
-  header { flex-direction: row; justify-content: space-between; align-items: center; padding: 10px 15px; }
-  .header-center { flex-direction: column; align-items: center; }
-  #cart-icon { margin-top: 0; }
-  .product img { max-height:150px; }
+#checkout-btn{
+  width:100%;
+  padding:15px;
+  margin-top:15px;
+  background:#ff1a1a;
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-weight:bold;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <div id="hamburger">&#9776;</div>
-  <div class="header-center"><h1>A𒆙M</h1><p>Streetwear • Limited Drop</p></div>
+  <div></div>
+  <div class="header-center">
+    <h1>A𒆙M</h1>
+    <p>Streetwear • Limited Drop</p>
+  </div>
   <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
 </header>
 
-<div id="menu-overlay"></div>
-<nav id="mobile-menu">
-  <ul>
-    <li>
-      <a href="#">Produkty ▾</a>
-      <ul class="submenu">
-        <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
-        <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
-        <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
-      </ul>
-    </li>
-    <li><a href="opinie.html">Opinie</a></li>
-    <li><a href="#contact">Kontakt</a></li>
-    <li><a href="about.html">O nas</a></li>
-  </ul>
-</nav>
+<div class="container">
+<h2>Koszulki</h2>
 
-<div id="cart-overlay"></div>
+<div class="products">
+
+<div class="product" data-name="Biała Koszulka A8M" data-price="115" data-img="bialaprzod.png">
+  <img src="bialaprzod.png">
+  <h3>Biała Koszulka A8M</h3>
+  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
+</div>
+
+<div class="product" data-name="Czarna Koszulka A8M" data-price="115" data-img="koszulka2.png">
+  <img src="koszulka2.png">
+  <h3>Czarna Koszulka A8M</h3>
+  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
+</div>
+
+<div class="product" data-name="Fioletowa Koszulka A8M" data-price="115" data-img="fioletova.png">
+  <img src="fioletova.png">
+  <h3>Fioletowa Koszulka A8M</h3>
+  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
+</div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div id="product-modal-overlay"></div>
+<div id="product-modal">
+  <button id="close-product-modal">×</button>
+  <img id="modal-img">
+  <h3 id="modal-title"></h3>
+  <p class="price"><span class="old-price">250 zł</span> <span class="new-price" id="modal-price"></span> zł</p>
+  <select id="modal-size">
+    <option>S</option><option>M</option><option>L</option><option>XL</option>
+  </select>
+  <button id="modal-add-btn">Dodaj do koszyka</button>
+</div>
+
+<!-- KOSZYK -->
 <div id="cart-popup">
   <h3>Koszyk</h3>
-  <button id="close-cart">×</button>
   <div id="cart-items-container"></div>
-  <p class="cart-total" id="cart-total">Suma: 0 zł</p>
-  <button id="checkout-btn" onclick="checkout()">Zamów</button>
+  <p id="cart-total">Suma: 0 zł</p>
+  <button id="checkout-btn">Zamów</button>
 </div>
-
-<div class="container" id="products">
-  <h2>Koszulki</h2>
-  <div class="products">
-    <div class="product" id="white-basic-logo">
-      <img src="bialaprzod.png" alt="Biała przód">
-      <h3>Biała Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
-      <label for="size1">Rozmiar:</label>
-      <select id="size1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Biała Koszulka A8M',115,document.getElementById('size1').value,'bialaprzod.png')">Dodaj do koszyka</button>
-    </div>
-    <div class="product" id="white-basic">
-      <img src="koszulka2.png" alt="Czarna Przód">
-      <h3>Czarna Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
-      <label for="size2">Rozmiar:</label>
-      <select id="size2"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Czarna Koszulka A8M',115,document.getElementById('size2').value,'koszulka2.png')">Dodaj do koszyka</button>
-    </div>
-    <div class="product" id="fioletova">
-      <img src="fioletova.png" alt="Fioletowa Przód">
-      <h3>Fioletowa Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
-      <label for="size3">Rozmiar:</label>
-      <select id="size3"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="addToCart('Fioletowa Koszulka A8M',115,document.getElementById('size3').value,'fioletova.png')">Dodaj do koszyka</button>
-    </div>
-  </div>
-</div>
-
-<footer id="contact">
-  <p>Kontakt: 
-    <a href="https://www.instagram.com/aspire8more/" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.facebook.com/profile.php?id=61585811125484" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a href="https://www.tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
-  </p>
-  <p>© 2025 A8M</p>
-</footer>
 
 <script>
-// Koszyk
 let cart=[];
-function addToCart(name,price,size,img){
-  const existing=cart.find(item=>item.name===name && item.size===size);
-  if(existing){ existing.qty++; } else{ cart.push({name,price,size,img,qty:1}); }
-  updateCart(); showCart();
+let modalProduct={};
+
+document.querySelectorAll('.product').forEach(p=>{
+  p.onclick=()=>{
+    modalProduct={
+      name:p.dataset.name,
+      price:parseInt(p.dataset.price),
+      img:p.dataset.img
+    };
+    modalTitle.textContent=modalProduct.name;
+    modalPrice.textContent=modalProduct.price;
+    modalImg.src=modalProduct.img;
+    productModal.classList.add('active');
+    productModalOverlay.classList.add('active');
+  }
+});
+
+const productModal=document.getElementById('product-modal');
+const productModalOverlay=document.getElementById('product-modal-overlay');
+const modalTitle=document.getElementById('modal-title');
+const modalPrice=document.getElementById('modal-price');
+const modalImg=document.getElementById('modal-img');
+
+close-product-modal.onclick=()=>closeModal();
+productModalOverlay.onclick=()=>closeModal();
+
+function closeModal(){
+  productModal.classList.remove('active');
+  productModalOverlay.classList.remove('active');
 }
+
+modal-add-btn.onclick=()=>{
+  addToCart(modalProduct,modal-size.value);
+  closeModal();
+};
+
+function addToCart(p,size){
+  cart.push({...p,size});
+  updateCart();
+  cartPopup.classList.add('active');
+}
+
 function updateCart(){
-  const container = document.getElementById('cart-items-container');
-  const total = document.getElementById('cart-total');
-  const cartCount = document.getElementById('cart-count');
-  container.innerHTML='';
-  let sum = 0;
-  cart.forEach((item,index)=>{
-    sum += item.price*item.qty;
-    const div = document.createElement('div'); div.className='cart-item';
-    const info = document.createElement('div'); info.innerHTML=`<img src="${item.img}" alt="${item.name}"> ${item.name} (${item.size})`;
-    const controls = document.createElement('div'); controls.className='cart-controls';
-    const minusBtn=document.createElement('button'); minusBtn.textContent='-'; minusBtn.onclick=()=>changeQty(index,-1);
-    const qtySpan=document.createElement('span'); qtySpan.textContent=item.qty;
-    const plusBtn=document.createElement('button'); plusBtn.textContent='+'; plusBtn.onclick=()=>changeQty(index,1);
-    const removeBtn=document.createElement('button'); removeBtn.textContent='Usuń'; removeBtn.onclick=()=>removeFromCart(index);
-    controls.appendChild(minusBtn); controls.appendChild(qtySpan); controls.appendChild(plusBtn); controls.appendChild(removeBtn);
-    div.appendChild(info); div.appendChild(controls); container.appendChild(div);
+  cartItemsContainer.innerHTML='';
+  let sum=0;
+  cart.forEach(i=>{
+    sum+=i.price;
+    cartItemsContainer.innerHTML+=`<div>${i.name} (${i.size}) - ${i.price} zł</div>`;
   });
-  total.textContent = `Suma: ${sum} zł`;
-  cartCount.textContent = cart.reduce((a,b)=>a+b.qty,0);
-  cartCount.classList.remove('bounce'); void cartCount.offsetWidth; cartCount.classList.add('bounce');
+  cartTotal.textContent=`Suma: ${sum} zł`;
+  cartCount.textContent=cart.length;
 }
-function changeQty(index,delta){ cart[index].qty+=delta; if(cart[index].qty<=0) cart.splice(index,1); updateCart(); }
-function removeFromCart(index){ cart.splice(index,1); updateCart(); }
-function showCart(){ document.getElementById('cart-popup').classList.add('active'); document.getElementById('cart-overlay').classList.add('active'); document.body.style.overflow='hidden'; }
-function hideCart(){ document.getElementById('cart-popup').classList.remove('active'); document.getElementById('cart-overlay').classList.remove('active'); document.body.style.overflow='auto'; }
-document.getElementById('cart-icon').addEventListener('click', showCart);
-document.getElementById('close-cart').addEventListener('click', hideCart);
-document.getElementById('cart-overlay').addEventListener('click', hideCart);
 
-// Hamburger menu
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
-const menuOverlay = document.getElementById('menu-overlay');
-
-hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('active'); menuOverlay.classList.toggle('active'); });
-menuOverlay.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
-mobileMenu.querySelectorAll('li > a').forEach(link => {
-  const parentLi = link.parentElement;
-  if(parentLi.querySelector('.submenu')){ link.addEventListener('click', e => { e.preventDefault(); parentLi.classList.toggle('active'); }); }
-});
-mobileMenu.querySelectorAll('.submenu a').forEach(link => {
-  link.addEventListener('click', () => { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); });
-});
-
-function checkout(){
-  if(cart.length===0){ alert("Twój koszyk jest pusty!"); return; }
-  alert("Napisz do mnie na Instagramie lub email, aby zamówić!");
-  // opcjonalnie: wyczyść koszyk po zamówieniu
-  // cart = []; updateCart(); hideCart();
-}
+cart-icon.onclick=()=>cartPopup.classList.toggle('active');
 </script>
 
 </body>
 </html>
-
-

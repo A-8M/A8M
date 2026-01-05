@@ -3,157 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A8M - Streetwear</title>
+<title>A8M – Streetwear</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Montserrat',sans-serif;
+  font-family:Montserrat;
   background:#0d0d0d;
   color:#fff;
-  overflow-x:hidden;
 }
-
-/* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 20px;
-  background:linear-gradient(135deg,#ff4a4a,#ff1a1a);
+  background:#ff1a1a;
+  text-align:center;
+  padding:20px;
 }
-.header-center{text-align:center;}
-#cart-icon{cursor:pointer;font-size:26px;}
-#cart-icon span{
-  background:#fff;color:#ff1a1a;border-radius:50%;
-  padding:3px 7px;font-weight:bold;margin-left:5px;
-}
-
-/* PRODUKTY */
-.container{max-width:1200px;margin:auto;padding:40px 20px;}
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
+  padding:30px;
 }
 .product{
   background:#1a1a1a;
-  border-radius:15px;
   padding:15px;
+  border-radius:15px;
   text-align:center;
   cursor:pointer;
-  transition:0.3s;
-}
-.product:hover{
-  transform:translateY(-6px);
-  box-shadow:0 6px 20px rgba(255,0,0,0.4);
 }
 .product img{
   width:100%;
-  max-height:220px;
-  object-fit:cover;
   border-radius:12px;
 }
-.price{margin:10px 0;}
-.old-price{text-decoration:line-through;color:#aaa;margin-right:8px;}
-.new-price{color:#ff4a4a;font-weight:bold;}
+button{
+  background:#ff1a1a;
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  font-weight:bold;
+  width:100%;
+  cursor:pointer;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#aaa;
+}
+a{color:#ff4a4a}
 
-/* ===== MODAL PRODUKTU ===== */
-#product-modal-overlay{
+#overlay{
+  display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
-  opacity:0;
-  visibility:hidden;
-  transition:0.3s;
-  z-index:200;
+  background:rgba(0,0,0,.6);
 }
-#product-modal-overlay.active{
-  opacity:1;
-  visibility:visible;
-}
-#product-modal{
+#modal{
+  display:none;
   position:fixed;
   top:50%;
   left:50%;
-  transform:translate(-50%,-50%) scale(0.85);
+  transform:translate(-50%,-50%);
   background:#1a1a1a;
-  width:90%;
-  max-width:420px;
   padding:25px;
   border-radius:20px;
-  text-align:center;
-  z-index:201;
-  opacity:0;
-  transition:0.3s;
+  width:90%;
+  max-width:420px;
 }
-#product-modal.active{
-  opacity:1;
-  transform:translate(-50%,-50%) scale(1);
-}
-#product-modal img{
+input,textarea,select{
   width:100%;
-  max-height:300px;
-  object-fit:cover;
-  border-radius:15px;
-}
-#close-product-modal{
-  position:absolute;
-  top:10px;
-  right:15px;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:28px;
-  cursor:pointer;
-}
-#product-modal select{
-  margin-top:10px;
-  padding:8px;
+  padding:10px;
+  margin:6px 0;
   border-radius:8px;
   border:none;
-}
-#product-modal button{
-  margin-top:15px;
-  width:100%;
-  padding:14px;
-  background:linear-gradient(45deg,#ff4a4a,#ff1a1a);
-  border:none;
-  border-radius:12px;
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* ===== KOSZYK ===== */
-#cart-popup{
-  position:fixed;
-  right:-100%;
-  top:0;
-  width:350px;
-  height:100vh;
-  background:#222;
-  padding:20px;
-  transition:0.35s;
-  z-index:300;
-}
-#cart-popup.active{right:0;}
-#cart-items-container div{
-  border-bottom:1px solid #444;
-  padding:8px 0;
-}
-#checkout-btn{
-  width:100%;
-  padding:15px;
-  margin-top:15px;
-  background:#ff1a1a;
-  border:none;
-  border-radius:12px;
-  color:#fff;
-  font-weight:bold;
 }
 </style>
 </head>
@@ -161,117 +85,91 @@ header{
 <body>
 
 <header>
-  <div></div>
-  <div class="header-center">
-    <h1>A𒆙M</h1>
-    <p>Streetwear • Limited Drop</p>
-  </div>
-  <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
+  <h1>A8M</h1>
+  <p>Streetwear • Limited Drop</p>
 </header>
 
-<div class="container">
-<h2>Koszulki</h2>
+<section class="products">
+  <div class="product" onclick="openModal('Biała Koszulka A8M',115)">
+    <img src="bialaprzod.png" alt="Biała Koszulka">
+    <h3>Biała Koszulka A8M</h3>
+    <p>115 zł</p>
+  </div>
 
-<div class="products">
+  <div class="product" onclick="openModal('Czarna Koszulka A8M',115)">
+    <img src="koszulka2.png" alt="Czarna Koszulka">
+    <h3>Czarna Koszulka A8M</h3>
+    <p>115 zł</p>
+  </div>
 
-<div class="product" data-name="Biała Koszulka A8M" data-price="115" data-img="bialaprzod.png">
-  <img src="bialaprzod.png">
-  <h3>Biała Koszulka A8M</h3>
-  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
-</div>
+  <div class="product" onclick="openModal('Fioletowa Koszulka A8M',115)">
+    <img src="fioletova.png" alt="Fioletowa Koszulka">
+    <h3>Fioletowa Koszulka A8M</h3>
+    <p>115 zł</p>
+  </div>
+</section>
 
-<div class="product" data-name="Czarna Koszulka A8M" data-price="115" data-img="koszulka2.png">
-  <img src="koszulka2.png">
-  <h3>Czarna Koszulka A8M</h3>
-  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
-</div>
+<div id="overlay" onclick="closeModal()"></div>
 
-<div class="product" data-name="Fioletowa Koszulka A8M" data-price="115" data-img="fioletova.png">
-  <img src="fioletova.png">
-  <h3>Fioletowa Koszulka A8M</h3>
-  <p class="price"><span class="old-price">250 zł</span><span class="new-price">115</span> zł</p>
-</div>
+<div id="modal">
+  <h3 id="pname"></h3>
+  <p id="pprice"></p>
 
-</div>
-</div>
-
-<!-- MODAL -->
-<div id="product-modal-overlay"></div>
-<div id="product-modal">
-  <button id="close-product-modal">×</button>
-  <img id="modal-img">
-  <h3 id="modal-title"></h3>
-  <p class="price"><span class="old-price">250 zł</span> <span class="new-price" id="modal-price"></span> zł</p>
-  <select id="modal-size">
+  <select id="size">
     <option>S</option><option>M</option><option>L</option><option>XL</option>
   </select>
-  <button id="modal-add-btn">Dodaj do koszyka</button>
+
+  <input id="name" placeholder="Imię i nazwisko">
+  <input id="email" placeholder="Email">
+  <input id="phone" placeholder="Telefon">
+  <textarea id="address" placeholder="Adres dostawy"></textarea>
+
+  <label>
+    <input type="checkbox" id="agree">
+    Akceptuję
+    <a href="regulamin.html" target="_blank">Regulamin</a> i
+    <a href="rodo.html" target="_blank">RODO</a>
+  </label>
+
+  <button onclick="sendOrder()">Zamawiam</button>
 </div>
 
-<!-- KOSZYK -->
-<div id="cart-popup">
-  <h3>Koszyk</h3>
-  <div id="cart-items-container"></div>
-  <p id="cart-total">Suma: 0 zł</p>
-  <button id="checkout-btn">Zamów</button>
-</div>
+<footer>
+<a href="regulamin.html" target="_blank">Regulamin</a> |
+<a href="rodo.html" target="_blank">RODO</a><br><br>
+© 2025 A8M
+</footer>
 
 <script>
-let cart=[];
-let modalProduct={};
+let product={};
 
-document.querySelectorAll('.product').forEach(p=>{
-  p.onclick=()=>{
-    modalProduct={
-      name:p.dataset.name,
-      price:parseInt(p.dataset.price),
-      img:p.dataset.img
-    };
-    modalTitle.textContent=modalProduct.name;
-    modalPrice.textContent=modalProduct.price;
-    modalImg.src=modalProduct.img;
-    productModal.classList.add('active');
-    productModalOverlay.classList.add('active');
-  }
-});
-
-const productModal=document.getElementById('product-modal');
-const productModalOverlay=document.getElementById('product-modal-overlay');
-const modalTitle=document.getElementById('modal-title');
-const modalPrice=document.getElementById('modal-price');
-const modalImg=document.getElementById('modal-img');
-
-close-product-modal.onclick=()=>closeModal();
-productModalOverlay.onclick=()=>closeModal();
+function openModal(name,price){
+  product={name,price};
+  document.getElementById('pname').textContent=name;
+  document.getElementById('pprice').textContent=price+" zł";
+  document.getElementById('modal').style.display="block";
+  document.getElementById('overlay').style.display="block";
+}
 
 function closeModal(){
-  productModal.classList.remove('active');
-  productModalOverlay.classList.remove('active');
+  document.getElementById('modal').style.display="none";
+  document.getElementById('overlay').style.display="none";
 }
 
-modal-add-btn.onclick=()=>{
-  addToCart(modalProduct,modal-size.value);
+function sendOrder(){
+  const agree = document.getElementById('agree');
+  if(!agree.checked){
+    alert("Musisz zaakceptować Regulamin i RODO");
+    return;
+  }
+  alert(
+    "Zamówienie przyjęte!\n\n"+
+    product.name+
+    "\nRozmiar: "+document.getElementById('size').value+
+    "\n\nSkontaktujemy się mailowo."
+  );
   closeModal();
-};
-
-function addToCart(p,size){
-  cart.push({...p,size});
-  updateCart();
-  cartPopup.classList.add('active');
 }
-
-function updateCart(){
-  cartItemsContainer.innerHTML='';
-  let sum=0;
-  cart.forEach(i=>{
-    sum+=i.price;
-    cartItemsContainer.innerHTML+=`<div>${i.name} (${i.size}) - ${i.price} zł</div>`;
-  });
-  cartTotal.textContent=`Suma: ${sum} zł`;
-  cartCount.textContent=cart.length;
-}
-
-cart-icon.onclick=()=>cartPopup.classList.toggle('active');
 </script>
 
 </body>

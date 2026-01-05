@@ -49,6 +49,7 @@ li.active>.submenu{max-height:500px;opacity:1}
 .price{margin-bottom:10px;font-size:1rem}
 .old-price{text-decoration: line-through;color:#aaa;margin-right:8px}
 .new-price{color:#ff4a4a;font-weight:bold}
+.discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
 
 /* MODAL */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
@@ -91,26 +92,28 @@ footer a:hover{color:#fff;transform:scale(1.2)}
     <li><a href="#opinie">Opinie</a></li>
     <li><a href="#contact">Kontakt</a></li>
     <li><a href="#about">O nas</a></li>
+    <li><a href="regulamin.html" target="_blank">Regulamin</a></li>
+    <li><a href="rodo.html" target="_blank">RODO</a></li>
   </ul>
 </nav>
 
 <div class="container" id="products">
   <h2>Koszulki</h2>
   <div class="products">
-    <div class="product" id="white-basic-logo" onclick="openModal('Biała Koszulka A8M','250','115','bialaprzod.png')">
+    <div class="product" id="white-basic-logo" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png')">
       <img src="bialaprzod.png" alt="Biała przód">
       <h3>Biała Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
     </div>
-    <div class="product" id="white-basic" onclick="openModal('Czarna Koszulka A8M','250','115','koszulka2.png')">
+    <div class="product" id="white-basic" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png')">
       <img src="koszulka2.png" alt="Czarna Przód">
       <h3>Czarna Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
     </div>
-    <div class="product" id="fioletova" onclick="openModal('Fioletowa Koszulka A8M','250','115','fioletova.png')">
+    <div class="product" id="fioletova" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png')">
       <img src="fioletova.png" alt="Fioletowa Przód">
       <h3>Fioletowa Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span></p>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
     </div>
   </div>
 </div>
@@ -147,32 +150,45 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 
 <script>
 // HAMBURGER MENU
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobile-menu');
-const menuOverlay=document.getElementById('menu-overlay');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
 
-hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active')});
-menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active')});
-mobileMenu.querySelectorAll('li>a').forEach(link=>{
-  const parentLi=link.parentElement;
-  if(parentLi.querySelector('.submenu')){
-    link.addEventListener('click',e=>{e.preventDefault();parentLi.classList.toggle('active')});
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('active');
+  menuOverlay.classList.toggle('active');
+});
+menuOverlay.addEventListener('click', () => {
+  mobileMenu.classList.remove('active');
+  menuOverlay.classList.remove('active');
+});
+mobileMenu.querySelectorAll('li > a').forEach(link => {
+  const parentLi = link.parentElement;
+  if (parentLi.querySelector('.submenu')) {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      parentLi.classList.toggle('active');
+    });
   }
+});
+mobileMenu.querySelectorAll('li > a:not(:has(.submenu))').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  });
 });
 
 // MODAL ZAMÓWIENIA
 function openModal(name,oldPrice,newPrice,img){
   document.getElementById('modal-name').textContent=name;
-  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
+  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";
   document.getElementById('overlay').style.display='block';
   document.getElementById('modal').style.display='block';
 }
-
 function closeModal(){
   document.getElementById('overlay').style.display='none';
   document.getElementById('modal').style.display='none';
 }
-
 function sendOrder(){
   const agree=document.getElementById('modal-agree');
   if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}

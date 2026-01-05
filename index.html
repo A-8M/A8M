@@ -11,6 +11,7 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
+html{scroll-behavior:smooth}
 
 /* HEADER */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);position:relative;z-index:100;color:#fff}
@@ -56,6 +57,9 @@ li.active>.submenu{max-height:500px;opacity:1}
 #modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:420px;z-index:100}
 input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none}
 label{display:block;margin:10px 0}
+
+/* ABOUT & CONTACT */
+section#about{padding:50px 20px;text-align:center;background:#111;color:#fff}
 
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
@@ -118,6 +122,12 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
+<!-- ABOUT -->
+<section id="about">
+  <h2>O nas</h2>
+  <p>Jesteśmy marką streetwear A8M. Limitowane kolekcje, najwyższa jakość materiałów, unikatowy design.</p>
+</section>
+
 <!-- MODAL ZAMÓWIENIA -->
 <div id="overlay" onclick="closeModal()"></div>
 <div id="modal">
@@ -139,6 +149,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   <button onclick="sendOrder()">Zamawiam</button>
 </div>
 
+<!-- FOOTER -->
 <footer id="contact">
   <p>Kontakt:
     <a href="https://www.instagram.com/aspire8more/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -201,4 +212,3 @@ function sendOrder(){
 
 </body>
 </html>
-

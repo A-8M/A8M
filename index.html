@@ -11,7 +11,6 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
-html{scroll-behavior:smooth}
 
 /* HEADER */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);position:relative;z-index:100;color:#fff}
@@ -58,9 +57,6 @@ li.active>.submenu{max-height:500px;opacity:1}
 input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none}
 label{display:block;margin:10px 0}
 
-/* ABOUT & CONTACT */
-section#about{padding:50px 20px;text-align:center;background:#111;color:#fff}
-
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
 footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
@@ -93,9 +89,9 @@ footer a:hover{color:#fff;transform:scale(1.2)}
         <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
       </ul>
     </li>
-    <li><a href="#opinie">Opinie</a></li>
-    <li><a href="#contact">Kontakt</a></li>
-    <li><a href="#about">O nas</a></li>
+    <li><a href="opinie.html">Opinie</a></li>
+    <li><a href="contact.html">Kontakt</a></li>
+    <li><a href="about.html">O nas</a></li>
     <li><a href="regulamin.html" target="_blank">Regulamin</a></li>
     <li><a href="rodo.html" target="_blank">RODO</a></li>
   </ul>
@@ -122,12 +118,6 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <h2>O nas</h2>
-  <p>Jesteśmy marką streetwear A8M. Limitowane kolekcje, najwyższa jakość materiałów, unikatowy design.</p>
-</section>
-
 <!-- MODAL ZAMÓWIENIA -->
 <div id="overlay" onclick="closeModal()"></div>
 <div id="modal">
@@ -150,7 +140,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 </div>
 
 <!-- FOOTER -->
-<footer id="contact">
+<footer>
   <p>Kontakt:
     <a href="https://www.instagram.com/aspire8more/" target="_blank"><i class="fab fa-instagram"></i></a>
     <a href="https://www.facebook.com/profile.php?id=61585811125484" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -174,19 +164,20 @@ menuOverlay.addEventListener('click', () => {
   menuOverlay.classList.remove('active');
 });
 
-// Wszystkie linki w menu
+// Menu links
 mobileMenu.querySelectorAll('li > a').forEach(link => {
-  link.addEventListener('click', e => {
-    const parentLi = link.parentElement;
-    if(parentLi.querySelector('.submenu')){
+  const parentLi = link.parentElement;
+  if(parentLi.querySelector('.submenu')){
+    link.addEventListener('click', e => {
       e.preventDefault();
       parentLi.classList.toggle('active');
-    } else {
-      // normalny link -> zamknij menu
+    });
+  } else {
+    link.addEventListener('click', () => {
       mobileMenu.classList.remove('active');
       menuOverlay.classList.remove('active');
-    }
-  });
+    });
+  }
 });
 
 // MODAL ZAMÓWIENIA

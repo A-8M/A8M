@@ -19,13 +19,13 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 #cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s}
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
 #cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
+
 /* AUTH BUTTONS */
-#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;color:#fff;position:relative}
+#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
 #auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
-#login-btn{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;}
-#login-btn:hover{background:#ff1a1a;transform:scale(1.05);}
 #logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
 #logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
+
 /* MOBILE MENU */
 #menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
 #menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
@@ -40,6 +40,7 @@ li.active>.submenu{max-height:500px;opacity:1}
 .submenu li{margin-bottom:12px}
 .submenu a{font-size:16px;font-weight:500;color:#ccc}
 .submenu a:hover{color:#ff1a1a}
+
 /* PRODUCTS */
 .container{max-width:1200px;margin:auto;padding:40px 20px}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:center}
@@ -52,26 +53,29 @@ li.active>.submenu{max-height:500px;opacity:1}
 .old-price{text-decoration: line-through;color:#aaa;margin-right:8px}
 .new-price{color:#ff4a4a;font-weight:bold}
 .discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
+
 /* MODAL ZAMÓWIENIA */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
 #modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:420px;z-index:100}
 input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none;background:#111;color:#fff}
 label{display:block;margin:10px 0}
+
 /* MODAL LOGOWANIA */
 #auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
 #auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100}
 #auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff}
 #auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
 #auth-modal button:hover{transform:scale(1.05)}
-#auth-toggle-text{margin-top:10px;text-align:center;color:#ccc}
 #auth-toggle-text span:hover{color:#fff;cursor:pointer}
+
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
 footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
 footer a:hover{color:#fff;transform:scale(1.2)}
+
 /* RESPONSIVE */
 @media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}#user-info{max-width:80px;font-size:12px}#login-btn,#logout-icon{padding:4px 8px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
 <body>
@@ -85,8 +89,8 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
     <div id="auth-button">
+      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
       <span id="user-info"></span>
-      <button id="login-btn">Zaloguj / Zarejestruj</button>
       <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
@@ -140,10 +144,19 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 <div id="auth-overlay" onclick="closeAuthModal()"></div>
 <div id="auth-modal">
   <h3 id="auth-modal-title">Zaloguj się</h3>
+
+  <div id="register-fields" style="display:none;">
+    <input id="auth-name" type="text" placeholder="Imię">
+    <input id="auth-surname" type="text" placeholder="Nazwisko">
+  </div>
+
   <input id="auth-email" type="email" placeholder="Email">
   <input id="auth-password" type="password" placeholder="Hasło">
+
   <button id="auth-action-btn">Zaloguj</button>
-  <p id="auth-toggle-text">Nie masz konta? <span id="toggle-auth">Zarejestruj się</span></p>
+  <p id="auth-toggle-text" style="text-align:center;margin-top:10px;color:#ccc">
+    Nie masz konta? <span id="toggle-auth" style="cursor:pointer;color:#fff">Zarejestruj się</span>
+  </p>
 </div>
 
 <footer>
@@ -166,29 +179,112 @@ const mobileMenu=document.getElementById('mobile-menu');
 const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-mobileMenu.querySelectorAll('li > a').forEach(link=>{const parentLi=link.parentElement;if(parentLi.querySelector('.submenu')){link.addEventListener('click',e=>{e.preventDefault();parentLi.classList.toggle('active');});}else{link.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});}});
+mobileMenu.querySelectorAll('li > a').forEach(link=>{
+    const parentLi=link.parentElement;
+    if(parentLi.querySelector('.submenu')){
+        link.addEventListener('click',e=>{e.preventDefault();parentLi.classList.toggle('active');});
+    }else{
+        link.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
+    }
+});
 
 // MODAL ZAMÓWIENIA
-function openModal(name,oldPrice,newPrice){document.getElementById('modal-name').textContent=name;document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";document.getElementById('overlay').style.display='block';document.getElementById('modal').style.display='block';}
+function openModal(name,oldPrice,newPrice){
+    document.getElementById('modal-name').textContent=name;
+    document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";
+    document.getElementById('overlay').style.display='block';
+    document.getElementById('modal').style.display='block';
+}
 function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
-function sendOrder(){const agree=document.getElementById('modal-agree');if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}alert("Zamówienie przyjęte!\nProdukt: "+document.getElementById('modal-name').textContent+"\nRozmiar: "+document.getElementById('modal-size').value+"\nSkontaktujemy się mailowo.");closeModal();}
+function sendOrder(){
+    const agree=document.getElementById('modal-agree');
+    if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}
+    alert("Zamówienie przyjęte!\nProdukt: "+document.getElementById('modal-name').textContent+"\nRozmiar: "+document.getElementById('modal-size').value+"\nSkontaktujemy się mailowo.");
+    closeModal();
+}
 
 // MODAL LOGOWANIA
-const authOverlay=document.getElementById('auth-overlay');
-const authModal=document.getElementById('auth-modal');
-const authTitle=document.getElementById('auth-modal-title');
-const authActionBtn=document.getElementById('auth-action-btn');
-const toggleAuth=document.getElementById('toggle-auth');
-const loginBtn=document.getElementById('login-btn');
-const userInfo=document.getElementById('user-info');
-const logoutIcon=document.getElementById('logout-icon');
-let isLogin=true;
-loginBtn.addEventListener('click',()=>{authOverlay.style.display='block';authModal.style.display='block';});
-function closeAuthModal(){authOverlay.style.display='none';authModal.style.display='none';}
-toggleAuth.addEventListener('click',()=>{isLogin=!isLogin;if(isLogin){authTitle.textContent='Zaloguj się';authActionBtn.textContent='Zaloguj';toggleAuth.textContent='Zarejestruj się';}else{authTitle.textContent='Zarejestruj się';authActionBtn.textContent='Zarejestruj';toggleAuth.textContent='Zaloguj się';}});
-authActionBtn.addEventListener('click',()=>{const email=document.getElementById('auth-email').value;const password=document.getElementById('auth-password').value;if(!email||!password){alert("Wpisz email i hasło!");return;}if(isLogin){auth.signInWithEmailAndPassword(email,password).then(u=>{alert("Zalogowano jako "+u.user.email);closeAuthModal();}).catch(e=>alert(e.message));}else{auth.createUserWithEmailAndPassword(email,password).then(u=>{alert("Konto utworzone! Zalogowano jako "+u.user.email);closeAuthModal();}).catch(e=>alert(e.message));}});
-auth.onAuthStateChanged(user=>{if(user){userInfo.textContent=user.email;userInfo.style.display='inline-block';loginBtn.style.display='none';logoutIcon.style.display='inline-flex';}else{userInfo.textContent='';userInfo.style.display='none';loginBtn.style.display='inline-block';logoutIcon.style.display='none';}});
-logoutIcon.addEventListener('click',()=>{auth.signOut().then(()=>{alert("Wylogowano");});});
+const userIcon = document.getElementById('user-icon');
+const authOverlayEl = document.getElementById('auth-overlay');
+const authModalEl = document.getElementById('auth-modal');
+const authTitle = document.getElementById('auth-modal-title');
+const authActionBtn = document.getElementById('auth-action-btn');
+const toggleAuth = document.getElementById('toggle-auth');
+const userInfo = document.getElementById('user-info');
+const logoutIcon = document.getElementById('logout-icon');
+const registerFields = document.getElementById('register-fields');
+let isLogin = true;
+
+userIcon.addEventListener('click', () => {
+    authOverlayEl.style.display = 'block';
+    authModalEl.style.display = 'block';
+});
+
+function closeAuthModal() {
+    authOverlayEl.style.display = 'none';
+    authModalEl.style.display = 'none';
+}
+
+toggleAuth.addEventListener('click', () => {
+    isLogin = !isLogin;
+    if(isLogin){
+        authTitle.textContent = 'Zaloguj się';
+        authActionBtn.textContent = 'Zaloguj';
+        toggleAuth.textContent = 'Zarejestruj się';
+        registerFields.style.display = 'none';
+    } else {
+        authTitle.textContent = 'Zarejestruj się';
+        authActionBtn.textContent = 'Zarejestruj';
+        toggleAuth.textContent = 'Zaloguj się';
+        registerFields.style.display = 'block';
+    }
+});
+
+authActionBtn.addEventListener('click', () => {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    const name = document.getElementById('auth-name')?.value;
+    const surname = document.getElementById('auth-surname')?.value;
+
+    if(!email || !password || (!isLogin && (!name || !surname))){
+        alert("Wypełnij wszystkie wymagane pola!");
+        return;
+    }
+
+    if(isLogin){
+        auth.signInWithEmailAndPassword(email,password)
+            .then(u=>{
+                alert("Zalogowano jako "+u.user.email);
+                closeAuthModal();
+            })
+            .catch(e=>alert(e.message));
+    } else {
+        auth.createUserWithEmailAndPassword(email,password)
+            .then(u=>{
+                alert("Konto utworzone! Zalogowano jako "+u.user.email);
+                closeAuthModal();
+            })
+            .catch(e=>alert(e.message));
+    }
+});
+
+auth.onAuthStateChanged(user=>{
+    if(user){
+        userInfo.textContent = user.email;
+        userInfo.style.display = 'inline-block';
+        userIcon.style.display = 'none';
+        logoutIcon.style.display = 'inline-flex';
+    } else {
+        userInfo.textContent = '';
+        userInfo.style.display = 'none';
+        userIcon.style.display = 'inline-block';
+        logoutIcon.style.display = 'none';
+    }
+});
+
+logoutIcon.addEventListener('click', ()=>{
+    auth.signOut().then(()=>{alert("Wylogowano");});
+});
 </script>
 
 </body>

@@ -19,11 +19,13 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center}
 #hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;position:relative;transition: transform 0.2s}
 #hamburger:hover{transform:scale(1.2)}
-#cart-icon{cursor:pointer;font-size:26px;z-index:20;transition: transform 0.2s,color 0.2s;color:#fff}
+#cart-icon{cursor:pointer;font-size:26px;z-index:20;transition: transform 0.2s,color 0.2s;color:#fff;display:flex;align-items:center}
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
 #cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
-#auth-button{cursor:pointer;font-size:16px;display:flex;align-items:center;gap:5px;color:#fff;transition:transform 0.2s,color 0.2s}
-#auth-button:hover{transform:scale(1.1); color:#ff4a4a}
+#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;color:#fff;position:relative}
+#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
+#logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
+#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
 
 /* MOBILE MENU */
 #menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
@@ -66,7 +68,7 @@ label{display:block;margin:10px 0}
 #auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
 #auth-modal button:hover{transform:scale(1.05)}
 #auth-toggle-text{margin-top:10px;text-align:center;color:#ccc}
-#auth-toggle-text span:hover{color:#fff}
+#auth-toggle-text span:hover{color:#fff;cursor:pointer;}
 
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
@@ -84,6 +86,8 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   #cart-icon,#auth-button{margin:5px 0}
   .products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
   .product img{max-height:150px}
+  #user-info{max-width:80px;font-size:12px;}
+  #logout-icon{padding:4px 8px;}
 }
 </style>
 </head>
@@ -92,10 +96,19 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 
 <header>
   <div id="hamburger">&#9776;</div>
-  <div class="header-center"><h1>A𒆙M</h1><p>Streetwear • Limited Drop</p></div>
-  <div style="display:flex;align-items:center;gap:15px;flex-wrap:wrap;">
-    <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
-    <div id="auth-button"><i class="fas fa-user"></i> Zaloguj / Zarejestruj</div>
+  <div class="header-center">
+    <h1>A𒆙M</h1>
+    <p>Streetwear • Limited Drop</p>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div id="cart-icon" title="Koszyk">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cart-count">0</span>
+    </div>
+    <div id="auth-button">
+      <span id="user-info"></span>
+      <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
   </div>
 </header>
 
@@ -168,7 +181,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   <input id="auth-password" type="password" placeholder="Hasło">
   <button id="auth-action-btn" onclick="authAction()">Zaloguj</button>
   <p id="auth-toggle-text">
-    Nie masz konta? <span id="toggle-auth" style="color:#ff4a4a;cursor:pointer;">Zarejestruj się</span>
+    Nie masz konta? <span id="toggle-auth">Zarejestruj się</span>
   </p>
 </div>
 
@@ -214,9 +227,19 @@ mobileMenu.querySelectorAll('li > a').forEach(link=>{
 });
 
 // MODAL ZAMÓWIENIA
-function openModal(name,oldPrice,newPrice){document.getElementById('modal-name').textContent=name;document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";document.getElementById('overlay').style.display='block';document.getElementById('modal').style.display='block';}
+function openModal(name,oldPrice,newPrice){
+  document.getElementById('modal-name').textContent=name;
+  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";
+  document.getElementById('overlay').style.display='block';
+  document.getElementById('modal').style.display='block';
+}
 function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
-function sendOrder(){const agree=document.getElementById('modal-agree');if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}alert("Zamówienie przyjęte!\n\nProdukt: "+document.getElementById('modal-name').textContent+"\nRozmiar: "+document.getElementById('modal-size').value+"\n\nSkontaktujemy się mailowo.");closeModal();}
+function sendOrder(){
+  const agree=document.getElementById('modal-agree');
+  if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}
+  alert("Zamówienie przyjęte!\n\nProdukt: "+document.getElementById('modal-name').textContent+"\nRozmiar: "+document.getElementById('modal-size').value+"\n\nSkontaktujemy się mailowo.");
+  closeModal();
+}
 
 // MODAL AUTH
 const authOverlay=document.getElementById('auth-overlay');
@@ -227,14 +250,28 @@ const toggleAuth=document.getElementById('toggle-auth');
 let isLogin=true;
 document.getElementById('auth-button').addEventListener('click',()=>{authOverlay.style.display='block';authModal.style.display='block';});
 function closeAuthModal(){authOverlay.style.display='none';authModal.style.display='none';}
-toggleAuth.addEventListener('click',()=>{isLogin=!isLogin;if(isLogin){authTitle.textContent='Zaloguj się';authActionBtn.textContent='Zaloguj';toggleAuth.textContent='Zarejestruj się';} else {authTitle.textContent='Zarejestruj się';authActionBtn.textContent='Zarejestruj';toggleAuth.textContent='Zaloguj się';}});
-function authAction(){const email=document.getElementById('auth-email').value;const password=document.getElementById('auth-password').value;if(!email||!password){alert("Wpisz email i hasło!");return;}if(isLogin){auth.signInWithEmailAndPassword(email,password).then(userCredential=>{alert("Zalogowano jako "+userCredential.user.email);closeAuthModal();}).catch(err=>alert(err.message));} else {auth.createUserWithEmailAndPassword(email,password).then(userCredential=>{alert("Konto utworzone! Zalogowano jako "+userCredential.user.email);closeAuthModal();}).catch(err=>alert(err.message));}}
+toggleAuth.addEventListener('click',()=>{
+  isLogin=!isLogin;
+  if(isLogin){authTitle.textContent='Zaloguj się';authActionBtn.textContent='Zaloguj';toggleAuth.textContent='Zarejestruj się';} 
+  else {authTitle.textContent='Zarejestruj się';authActionBtn.textContent='Zarejestruj';toggleAuth.textContent='Zaloguj się';}
+});
+function authAction(){
+  const email=document.getElementById('auth-email').value;
+  const password=document.getElementById('auth-password').value;
+  if(!email||!password){alert("Wpisz email i hasło!");return;}
+  if(isLogin){auth.signInWithEmailAndPassword(email,password).then(u=>{alert("Zalogowano jako "+u.user.email);closeAuthModal();}).catch(e=>alert(e.message));} 
+  else {auth.createUserWithEmailAndPassword(email,password).then(u=>{alert("Konto utworzone! Zalogowano jako "+u.user.email);closeAuthModal();}).catch(e=>alert(e.message));}
+}
 
-// Wyświetlanie zalogowanego użytkownika
+// HEADER USER INFO
 auth.onAuthStateChanged(user=>{
-  const authBtn=document.getElementById('auth-button');
-  if(user){authBtn.innerHTML=`Witaj, ${user.email} <span id="logout-btn" style="cursor:pointer;color:#ff4a4a;margin-left:10px;">Wyloguj</span>`;document.getElementById('logout-btn').addEventListener('click',()=>{auth.signOut().then(()=>{alert("Wylogowano");authBtn.innerHTML='<i class="fas fa-user"></i> Zaloguj / Zarejestruj';});});}
-  else{authBtn.innerHTML='<i class="fas fa-user"></i> Zaloguj / Zarejestruj';}
+  const userInfo=document.getElementById('user-info');
+  const logoutIcon=document.getElementById('logout-icon');
+  if(user){userInfo.textContent=user.email;logoutIcon.style.display='inline-flex';} 
+  else{userInfo.textContent='';logoutIcon.style.display='none';}
+});
+document.getElementById('logout-icon').addEventListener('click',()=>{
+  auth.signOut().then(()=>{alert("Wylogowano");});
 });
 </script>
 

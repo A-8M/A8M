@@ -9,6 +9,7 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
+
 /* HEADER */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);flex-wrap:wrap}
 .header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1;margin:5px 0}
@@ -54,11 +55,12 @@ li.active>.submenu{max-height:500px;opacity:1}
 .new-price{color:#ff4a4a;font-weight:bold}
 .discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
 
-/* MODAL ZAMÓWIENIA */
+/* MODAL PRODUKTU */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:420px;z-index:100}
-input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none;background:#111;color:#fff}
-label{display:block;margin:10px 0}
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:500px;z-index:100}
+#modal img{width:200px;height:200px;object-fit:cover;border-radius:10px}
+#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
+#modal button:hover{transform:scale(1.05)}
 
 /* MODAL LOGOWANIA */
 #auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
@@ -118,59 +120,54 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 <div class="container" id="products">
   <h2>Koszulki</h2>
   <div class="products">
-    <div class="product" onclick="openModal('Biała Koszulka A8M',250,115)"><img src="bialaprzod.png"><h3>Biała Koszulka A8M</h3><p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p></div>
-    <div class="product" onclick="openModal('Czarna Koszulka A8M',250,115)"><img src="koszulka2.png"><h3>Czarna Koszulka A8M</h3><p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p></div>
-    <div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115)"><img src="fioletova.png"><h3>Fioletowa Koszulka A8M</h3><p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p></div>
+    <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')">
+      <img src="bialaprzod.png">
+      <h3>Biała Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+    </div>
+    <div class="product" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png','Klasyczna czarna koszulka A8M, komfortowa i modna.')">
+      <img src="koszulka2.png">
+      <h3>Czarna Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+    </div>
+    <div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png','Fioletowa koszulka A8M, wyjątkowa w swoim stylu.')">
+      <img src="fioletova.png">
+      <h3>Fioletowa Koszulka A8M</h3>
+      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+    </div>
   </div>
 </div>
 
-<!-- MODAL ZAMÓWIENIA -->
+<!-- MODAL PRODUKTU -->
 <div id="overlay" onclick="closeModal()"></div>
 <div id="modal">
-  <h3 id="modal-name"></h3>
-  <p id="modal-price"></p>
-  <label>Rozmiar:
-    <select id="modal-size"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-  </label>
-  <input id="modal-name-input" placeholder="Imię i nazwisko">
-  <input id="modal-email" placeholder="Email">
-  <input id="modal-phone" placeholder="Telefon">
-  <textarea id="modal-address" placeholder="Adres dostawy"></textarea>
-  <label><input type="checkbox" id="modal-agree"> Akceptuję <a href="regulamin.html" target="_blank">Regulamin</a> i <a href="rodo.html" target="_blank">RODO</a></label>
-  <button onclick="sendOrder()">Zamawiam</button>
-</div>
-
-<!-- MODAL LOGOWANIA -->
-<div id="auth-overlay" onclick="closeAuthModal()"></div>
-<div id="auth-modal">
-  <h3 id="auth-modal-title">Zaloguj się</h3>
-
-  <div id="register-fields" style="display:none;">
-    <input id="auth-name" type="text" placeholder="Imię">
-    <input id="auth-surname" type="text" placeholder="Nazwisko">
+  <div style="display:flex;gap:15px;flex-wrap:wrap;align-items:center">
+    <img id="modal-img" src="" style="width:200px;height:200px;object-fit:cover;border-radius:10px">
+    <div style="flex:1">
+      <h3 id="modal-name"></h3>
+      <p id="modal-price"></p>
+      <p id="modal-desc">Opis produktu...</p>
+      <label>Rozmiar:
+        <select id="modal-size">
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
+        </select>
+      </label>
+      <label>Ilość:
+        <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
+      </label>
+      <button onclick="addToCart()">Dodaj do koszyka</button>
+    </div>
   </div>
-
-  <input id="auth-email" type="email" placeholder="Email">
-  <input id="auth-password" type="password" placeholder="Hasło">
-
-  <button id="auth-action-btn">Zaloguj</button>
-  <p id="auth-toggle-text" style="text-align:center;margin-top:10px;color:#ccc">
-    Nie masz konta? <span id="toggle-auth" style="cursor:pointer;color:#fff">Zarejestruj się</span>
-  </p>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
   <p>© 2025 A8M</p>
 </footer>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig={apiKey:"AIzaSyDBnVClzjBir7CHb4SNJwiUX5Wk6tPptps",authDomain:"a8m-store.firebaseapp.com",projectId:"a8m-store",storageBucket:"a8m-store.firebasestorage.app",messagingSenderId:"18266864248",appId:"1:18266864248:web:347cd344e0998066bbcb8d"};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-</script>
 
 <script>
 // MENU
@@ -179,112 +176,31 @@ const mobileMenu=document.getElementById('mobile-menu');
 const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-mobileMenu.querySelectorAll('li > a').forEach(link=>{
-    const parentLi=link.parentElement;
-    if(parentLi.querySelector('.submenu')){
-        link.addEventListener('click',e=>{e.preventDefault();parentLi.classList.toggle('active');});
-    }else{
-        link.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-    }
-});
 
-// MODAL ZAMÓWIENIA
-function openModal(name,oldPrice,newPrice){
-    document.getElementById('modal-name').textContent=name;
-    document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł, -"+Math.round((oldPrice-newPrice)/oldPrice*100)+"%)";
-    document.getElementById('overlay').style.display='block';
-    document.getElementById('modal').style.display='block';
+// MODAL PRODUKTU
+function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
+    document.getElementById('modal-name').textContent = name;
+    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
+    document.getElementById('modal-img').src = imgSrc;
+    document.getElementById('modal-desc').textContent = desc;
+    document.getElementById('modal-qty').value = 1;
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('modal').style.display = 'block';
 }
-function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
-function sendOrder(){
-    const agree=document.getElementById('modal-agree');
-    if(!agree.checked){alert("Musisz zaakceptować Regulamin i RODO");return;}
-    alert("Zamówienie przyjęte!\nProdukt: "+document.getElementById('modal-name').textContent+"\nRozmiar: "+document.getElementById('modal-size').value+"\nSkontaktujemy się mailowo.");
+
+function closeModal() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
+}
+
+function addToCart(){
+    const name = document.getElementById('modal-name').textContent;
+    const price = document.getElementById('modal-price').textContent;
+    const size = document.getElementById('modal-size').value;
+    const qty = document.getElementById('modal-qty').value;
+    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
     closeModal();
 }
-
-// MODAL LOGOWANIA
-const userIcon = document.getElementById('user-icon');
-const authOverlayEl = document.getElementById('auth-overlay');
-const authModalEl = document.getElementById('auth-modal');
-const authTitle = document.getElementById('auth-modal-title');
-const authActionBtn = document.getElementById('auth-action-btn');
-const toggleAuth = document.getElementById('toggle-auth');
-const userInfo = document.getElementById('user-info');
-const logoutIcon = document.getElementById('logout-icon');
-const registerFields = document.getElementById('register-fields');
-let isLogin = true;
-
-userIcon.addEventListener('click', () => {
-    authOverlayEl.style.display = 'block';
-    authModalEl.style.display = 'block';
-});
-
-function closeAuthModal() {
-    authOverlayEl.style.display = 'none';
-    authModalEl.style.display = 'none';
-}
-
-toggleAuth.addEventListener('click', () => {
-    isLogin = !isLogin;
-    if(isLogin){
-        authTitle.textContent = 'Zaloguj się';
-        authActionBtn.textContent = 'Zaloguj';
-        toggleAuth.textContent = 'Zarejestruj się';
-        registerFields.style.display = 'none';
-    } else {
-        authTitle.textContent = 'Zarejestruj się';
-        authActionBtn.textContent = 'Zarejestruj';
-        toggleAuth.textContent = 'Zaloguj się';
-        registerFields.style.display = 'block';
-    }
-});
-
-authActionBtn.addEventListener('click', () => {
-    const email = document.getElementById('auth-email').value;
-    const password = document.getElementById('auth-password').value;
-    const name = document.getElementById('auth-name')?.value;
-    const surname = document.getElementById('auth-surname')?.value;
-
-    if(!email || !password || (!isLogin && (!name || !surname))){
-        alert("Wypełnij wszystkie wymagane pola!");
-        return;
-    }
-
-    if(isLogin){
-        auth.signInWithEmailAndPassword(email,password)
-            .then(u=>{
-                alert("Zalogowano jako "+u.user.email);
-                closeAuthModal();
-            })
-            .catch(e=>alert(e.message));
-    } else {
-        auth.createUserWithEmailAndPassword(email,password)
-            .then(u=>{
-                alert("Konto utworzone! Zalogowano jako "+u.user.email);
-                closeAuthModal();
-            })
-            .catch(e=>alert(e.message));
-    }
-});
-
-auth.onAuthStateChanged(user=>{
-    if(user){
-        userInfo.textContent = user.email;
-        userInfo.style.display = 'inline-block';
-        userIcon.style.display = 'none';
-        logoutIcon.style.display = 'inline-flex';
-    } else {
-        userInfo.textContent = '';
-        userInfo.style.display = 'none';
-        userIcon.style.display = 'inline-block';
-        logoutIcon.style.display = 'none';
-    }
-});
-
-logoutIcon.addEventListener('click', ()=>{
-    auth.signOut().then(()=>{alert("Wylogowano");});
-});
 </script>
 
 </body>

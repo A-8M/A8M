@@ -21,10 +21,10 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
 #cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
 
-/* AUTH BUTTONS ICON */
+/* AUTH ICON */
 #auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative;cursor:pointer}
 #auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
-#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
+#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;margin-left:5px}
 #logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
 
 /* MOBILE MENU */
@@ -62,14 +62,6 @@ li.active>.submenu{max-height:500px;opacity:1}
 #modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
 #modal button:hover{transform:scale(1.05)}
 #modal-info{font-size:14px;margin-top:8px;color:#ccc}
-
-/* MODAL LOGOWANIA */
-#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100}
-#auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff}
-#auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
-#auth-modal button:hover{transform:scale(1.05)}
-#auth-toggle-text span:hover{color:#fff;cursor:pointer}
 
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
@@ -179,15 +171,12 @@ const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
 
-// ROZWIJANIE SUBMENU
+// SUBMENU
 document.querySelectorAll('#mobile-menu > ul > li > a').forEach(item=>{
-  item.addEventListener('click',(e)=>{
-    const parentLi = e.target.parentElement;
-    const submenu = parentLi.querySelector('.submenu');
-    if(submenu){
-      e.preventDefault();
-      parentLi.classList.toggle('active');
-    }
+  item.addEventListener('click', e=>{
+    const parentLi=e.target.parentElement;
+    const submenu=parentLi.querySelector('.submenu');
+    if(submenu){e.preventDefault(); parentLi.classList.toggle('active');}
   });
 });
 
@@ -201,30 +190,30 @@ function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
     document.getElementById('overlay').style.display = 'block';
     document.getElementById('modal').style.display = 'block';
 }
-function closeModal() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('modal').style.display = 'none';
-}
+function closeModal(){document.getElementById('overlay').style.display='none'; document.getElementById('modal').style.display='none';}
 function addToCart(){
-    const name = document.getElementById('modal-name').textContent;
-    const price = document.getElementById('modal-price').textContent;
-    const size = document.getElementById('modal-size').value;
-    const qty = document.getElementById('modal-qty').value;
-    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
-    closeModal();
+  const name=document.getElementById('modal-name').textContent;
+  const price=document.getElementById('modal-price').textContent;
+  const size=document.getElementById('modal-size').value;
+  const qty=document.getElementById('modal-qty').value;
+  alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
+  closeModal();
 }
 
-// LOGIN/REGISTER (Firebase)
+// LOGIN / REGISTER
 const userIcon=document.getElementById('user-icon');
 const logoutBtn=document.getElementById('logout-icon');
 const userInfo=document.getElementById('user-info');
+let loggedUser=null;
 
-userIcon.addEventListener('click',()=>{openAuthModal(false)}); // logowanie
+userIcon.addEventListener('click',()=>{openAuthModal(false)});
 
-// --- MODAL AUTH ---
-let isRegister=false;
 function openAuthModal(register){
-  isRegister=register;
+  const overlay=document.createElement('div');
+  overlay.id='auth-overlay';
+  document.body.appendChild(overlay);
+  overlay.style.display='block';
+
   const modal=document.createElement('div');
   modal.id='auth-modal';
   modal.innerHTML=`
@@ -235,38 +224,44 @@ function openAuthModal(register){
     <button id="auth-submit">${register?'Zarejestruj':'Zaloguj'}</button>
     <p id="auth-toggle-text">${register?'Masz konto? <span id="toggle-login">Zaloguj</span>':'Nie masz konta? <span id="toggle-register">Zarejestruj</span>'}</p>
   `;
-  const overlay=document.createElement('div');
-  overlay.id='auth-overlay';
-  document.body.appendChild(overlay);
   document.body.appendChild(modal);
-  overlay.style.display='block';
   modal.style.display='block';
 
   overlay.addEventListener('click',()=>{closeAuthModal(modal,overlay)});
+
   if(register) modal.querySelector('#toggle-login')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(false)});
   else modal.querySelector('#toggle-register')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(true)});
 
   modal.querySelector('#auth-submit').addEventListener('click',()=>{
     const email=modal.querySelector('#auth-email').value;
     const pass=modal.querySelector('#auth-pass').value;
-    if(isRegister){
+    if(register){
       const first=modal.querySelector('#auth-first').value;
       const last=modal.querySelector('#auth-last').value;
-      // Tutaj dodajesz rejestrację Firebase
+      loggedUser={first,last,email};
       alert(`Zarejestrowano: ${first} ${last} (${email})`);
-      closeAuthModal(modal,overlay);
     } else {
-      // Tutaj logowanie Firebase
+      loggedUser={first:'Użytkownik',last:'',email};
       alert(`Zalogowano: ${email}`);
-      closeAuthModal(modal,overlay);
     }
+    userInfo.textContent=loggedUser.first;
+    logoutBtn.style.display='inline-block';
+    closeAuthModal(modal,overlay);
   });
 }
+
 function closeAuthModal(modal,overlay){
   modal.remove();
   overlay.remove();
 }
 
+// WYLOGOWANIE
+logoutBtn.addEventListener('click',()=>{
+  loggedUser=null;
+  userInfo.textContent='';
+  logoutBtn.style.display='none';
+  alert('Wylogowano');
+});
 </script>
 </body>
 </html>

@@ -60,37 +60,20 @@ footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
 footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
 footer a:hover{color:#fff;transform:scale(1.2)}
 
-/* MODAL PRODUKTU – HOUSEBRAND STYLE */
-#overlay {
-  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99;
-}
-
-#modal {
-  display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-  background:#1a1a1a; border-radius:20px; max-width:800px; width:90%; z-index:100; 
-  box-shadow:0 10px 30px rgba(0,0,0,0.7); overflow:hidden; font-family:'Montserrat',sans-serif;
-}
-
-#modal button.close-modal {
-  position:absolute; top:10px; right:15px; background:none; border:none; color:#fff; font-size:28px; cursor:pointer;
-}
-
-.modal-content { display:flex; flex-wrap:wrap; }
-.modal-left { flex:1 1 300px; min-width:250px; background:#111; display:flex; justify-content:center; align-items:center; padding:20px; }
-.modal-left img { width:100%; max-height:400px; object-fit:cover; border-radius:15px; }
-.modal-right { flex:1 1 300px; padding:25px 20px; display:flex; flex-direction:column; justify-content:flex-start; }
-.modal-right h2 { margin-top:0; font-size:1.8rem; color:#fff; }
-.modal-right p.price { color:#ff4a4a; font-weight:bold; font-size:1.2rem; margin:10px 0; }
-.modal-right p.desc { color:#ccc; margin:10px 0 20px 0; line-height:1.4; }
-.modal-options { display:flex; gap:15px; align-items:center; margin-bottom:20px; }
-.modal-options label { display:flex; flex-direction:column; font-size:14px; color:#fff; }
-.modal-options select, .modal-options input { margin-top:5px; padding:8px; border-radius:8px; border:none; background:#111; color:#fff; }
-.modal-add { padding:12px; background:#ff4a4a; border:none; border-radius:10px; font-size:16px; font-weight:bold; color:#fff; cursor:pointer; transition:transform 0.2s; }
-.modal-add:hover { transform:scale(1.05); }
-
-@media(max-width:768px) { .modal-content {flex-direction:column;} .modal-left, .modal-right {flex:1 1 100%; padding:15px;} .modal-left img {max-height:300px;} }
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
+/* MODAL PRODUKTU */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;z-index:100;max-width:600px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.7);}
+#modal button.close-modal{float:right;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;margin-bottom:10px;}
+#modal img{width:100%;border-radius:10px;margin-bottom:15px;}
+#modal h3{margin:5px 0;color:#fff;}
+#modal p{margin:5px 0;color:#ccc;}
+#modal p.price{color:#ff4a4a;font-weight:bold;font-size:1.2rem;margin:10px 0;}
+#modal label{display:block;margin:10px 0;color:#fff;}
+#modal select,#modal input{width:100%;padding:8px;margin-top:5px;background:#111;color:#fff;border:none;border-radius:5px;}
+#modal .add-cart{width:100%;padding:10px;background:#ff4a4a;border:none;color:#fff;border-radius:8px;cursor:pointer;margin-top:10px;}
+#modal .add-cart:hover{transform:scale(1.05);transition:0.2s;}
+#modal .info{text-align:left;color:#ccc;font-size:13px;margin-top:10px;line-height:1.4;}
+@media(max-width:600px){.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
 <body>
@@ -151,34 +134,27 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
-<!-- MODAL PRODUKTU -->
+<!-- MODAL -->
 <div id="overlay"></div>
 <div id="modal">
   <button class="close-modal" onclick="closeModal()">×</button>
-  <div class="modal-content">
-    <div class="modal-left">
-      <img id="modal-img" src="">
-    </div>
-    <div class="modal-right">
-      <h2 id="modal-name">Produkt</h2>
-      <p id="modal-price" class="price">Cena</p>
-      <p id="modal-desc" class="desc">Opis produktu</p>
-      <div class="modal-options">
-        <label>Rozmiar:
-          <select id="modal-size">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </label>
-        <label>Ilość:
-          <input type="number" id="modal-qty" value="1" min="1">
-        </label>
-      </div>
-      <button class="modal-add" onclick="addToCart()">Dodaj do koszyka</button>
-    </div>
-  </div>
+  <img id="modal-img" src="">
+  <h3 id="modal-name"></h3>
+  <p id="modal-price" class="price"></p>
+  <p id="modal-desc"></p>
+  <label>Rozmiar:
+    <select id="modal-size">
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+    </select>
+  </label>
+  <label>Ilość:
+    <input type="number" id="modal-qty" value="1" min="1">
+  </label>
+  <button class="add-cart" onclick="addToCart()">Dodaj do koszyka</button>
+  <p class="info">Czas na zwrot: 14 dni.<br>Dostawa tylko na terenie kraju.</p>
 </div>
 
 <footer>
@@ -202,7 +178,7 @@ function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
     document.getElementById('modal-desc').textContent = desc;
     document.getElementById('modal-qty').value = 1;
     document.getElementById('overlay').style.display = 'block';
-    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('modal').style.display = 'block';
 }
 
 function closeModal() {
@@ -219,6 +195,5 @@ function addToCart(){
     closeModal();
 }
 </script>
-
 </body>
 </html>

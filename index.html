@@ -56,12 +56,20 @@ li.active>.submenu{max-height:500px;opacity:1}
 .discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
 
 /* MODAL PRODUKTU */
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:20px;width:90%;max-width:450px;z-index:100}
-#modal img{width:150px;height:150px;object-fit:cover;border-radius:10px}
-#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
-#modal button:hover{transform:scale(1.05)}
+#overlay, #cart-overlay, #auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+#modal, #cart-modal, #auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:20px;width:90%;max-width:450px;z-index:100}
+#modal img,#cart-modal img{width:150px;height:150px;object-fit:cover;border-radius:10px}
+#modal button,#cart-modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
+#modal button:hover,#cart-modal button:hover{transform:scale(1.05)}
 #modal-info{font-size:14px;margin-top:8px;color:#ccc}
+
+/* CART */
+#cart-modal table{width:100%;border-collapse:collapse;color:#fff;font-size:14px}
+#cart-modal th, #cart-modal td{padding:8px;text-align:left;border-bottom:1px solid #555}
+#cart-modal th{color:#ff4a4a}
+#cart-total{font-weight:bold;margin-top:10px;font-size:16px;text-align:right}
+.cart-actions{display:flex;justify-content:space-between;margin-top:10px}
+.cart-actions button{flex:1;margin:0 5px}
 
 /* FOOTER */
 footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
@@ -69,8 +77,8 @@ footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transiti
 footer a:hover{color:#fff;transform:scale(1.2)}
 
 /* RESPONSIVE */
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px} #modal img{width:120px;height:120px}}
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px} #modal img{width:100px;height:100px}}
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px} #modal img,#cart-modal img{width:120px;height:120px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px} #modal img,#cart-modal img{width:100px;height:100px}}
 </style>
 </head>
 <body>
@@ -157,6 +165,23 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
+<!-- MODAL KOSZYKA -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-modal">
+  <h3>Koszyk</h3>
+  <table id="cart-table">
+    <thead>
+      <tr><th>Produkt</th><th>Rozmiar</th><th>Ilość</th><th>Cena</th><th></th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div id="cart-total"></div>
+  <div class="cart-actions">
+    <button onclick="checkout()">Kup teraz</button>
+    <button onclick="clearCart()">Wyczyść koszyk</button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
@@ -170,8 +195,6 @@ const mobileMenu=document.getElementById('mobile-menu');
 const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-
-// SUBMENU
 document.querySelectorAll('#mobile-menu > ul > li > a').forEach(item=>{
   item.addEventListener('click', e=>{
     const parentLi=e.target.parentElement;
@@ -191,14 +214,52 @@ function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
     document.getElementById('modal').style.display = 'block';
 }
 function closeModal(){document.getElementById('overlay').style.display='none'; document.getElementById('modal').style.display='none';}
+
+// KOSZYK
+let cart=[];
+
+const cartIcon=document.getElementById('cart-icon');
+cartIcon.addEventListener('click',openCart);
+
 function addToCart(){
   const name=document.getElementById('modal-name').textContent;
-  const price=document.getElementById('modal-price').textContent;
+  const priceText=document.getElementById('modal-price').textContent;
+  const price=parseFloat(priceText.replace(/[^0-9]/g,'')); // tylko liczba
   const size=document.getElementById('modal-size').value;
-  const qty=document.getElementById('modal-qty').value;
-  alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
+  const qty=parseInt(document.getElementById('modal-qty').value);
+  
+  cart.push({name,price,size,qty});
+  updateCartCount();
   closeModal();
 }
+
+function updateCartCount(){document.getElementById('cart-count').textContent=cart.length;}
+
+function openCart(){
+  document.getElementById('cart-overlay').style.display='block';
+  document.getElementById('cart-modal').style.display='block';
+  renderCart();
+}
+
+function closeCart(){document.getElementById('cart-overlay').style.display='none';document.getElementById('cart-modal').style.display='none';}
+
+function renderCart(){
+  const tbody=document.querySelector('#cart-table tbody');
+  tbody.innerHTML='';
+  let total=0;
+  cart.forEach((item,i)=>{
+    total+=item.price*item.qty;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${item.name}</td><td>${item.size}</td><td>${item.qty}</td><td>${item.price} zł</td>
+    <td><button onclick="removeCart(${i})">Usuń</button></td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('cart-total').textContent='Łącznie: '+total+' zł';
+}
+
+function removeCart(index){cart.splice(index,1);updateCartCount();renderCart();}
+function clearCart(){cart=[];updateCartCount();renderCart();}
+function checkout(){if(cart.length===0){alert('Koszyk jest pusty');return;}alert('Zakupiono produkty!');clearCart();}
 
 // LOGIN / REGISTER
 const userIcon=document.getElementById('user-icon');
@@ -217,51 +278,46 @@ function openAuthModal(register){
   const modal=document.createElement('div');
   modal.id='auth-modal';
   modal.innerHTML=`
-    <input type="text" id="auth-first" placeholder="Imię" ${register?'':'style="display:none;"'}>
-    <input type="text" id="auth-last" placeholder="Nazwisko" ${register?'':'style="display:none;"'}>
+    <input type="text" id="auth-first" placeholder="Imię">
+    <input type="text" id="auth-last" placeholder="Nazwisko">
     <input type="email" id="auth-email" placeholder="Email">
     <input type="password" id="auth-pass" placeholder="Hasło">
     <button id="auth-submit">${register?'Zarejestruj':'Zaloguj'}</button>
-    <p id="auth-toggle-text">${register?'Masz konto? <span id="toggle-login">Zaloguj</span>':'Nie masz konta? <span id="toggle-register">Zarejestruj</span>'}</p>
+    <p id="auth-toggle-text" style="text-align:center;cursor:pointer;color:#ff4a4a">${register?'Masz już konto? Zaloguj się':'Nie masz konta? Zarejestruj się'}</p>
   `;
   document.body.appendChild(modal);
-  modal.style.display='block';
 
-  overlay.addEventListener('click',()=>{closeAuthModal(modal,overlay)});
+  modal.querySelector('#auth-toggle-text').addEventListener('click',()=>{
+    document.body.removeChild(modal);
+    document.body.removeChild(overlay);
+    openAuthModal(!register);
+  });
 
-  if(register) modal.querySelector('#toggle-login')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(false)});
-  else modal.querySelector('#toggle-register')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(true)});
+  overlay.addEventListener('click',()=>{
+    document.body.removeChild(modal);
+    document.body.removeChild(overlay);
+  });
 
   modal.querySelector('#auth-submit').addEventListener('click',()=>{
-    const email=modal.querySelector('#auth-email').value;
-    const pass=modal.querySelector('#auth-pass').value;
-    if(register){
-      const first=modal.querySelector('#auth-first').value;
-      const last=modal.querySelector('#auth-last').value;
-      loggedUser={first,last,email};
-      alert(`Zarejestrowano: ${first} ${last} (${email})`);
-    } else {
-      loggedUser={first:'Użytkownik',last:'',email};
-      alert(`Zalogowano: ${email}`);
-    }
-    userInfo.textContent=loggedUser.first;
+    const first=document.getElementById('auth-first').value;
+    const last=document.getElementById('auth-last').value;
+    const email=document.getElementById('auth-email').value;
+    const pass=document.getElementById('auth-pass').value;
+    if(!email||!pass||!first||!last){alert('Wypełnij wszystkie pola');return;}
+    loggedUser={first,last,email};
+    userInfo.textContent=`${first} ${last}`;
     logoutBtn.style.display='inline-block';
-    closeAuthModal(modal,overlay);
+    document.body.removeChild(modal);
+    document.body.removeChild(overlay);
   });
 }
 
-function closeAuthModal(modal,overlay){
-  modal.remove();
-  overlay.remove();
-}
-
-// WYLOGOWANIE
 logoutBtn.addEventListener('click',()=>{
   loggedUser=null;
   userInfo.textContent='';
   logoutBtn.style.display='none';
-  alert('Wylogowano');
 });
 </script>
+
 </body>
 </html>

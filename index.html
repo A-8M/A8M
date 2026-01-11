@@ -21,8 +21,8 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
 #cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
 
-/* AUTH BUTTONS */
-#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
+/* AUTH BUTTONS ICON */
+#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative;cursor:pointer}
 #auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
 #logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
 #logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
@@ -58,14 +58,14 @@ li.active>.submenu{max-height:500px;opacity:1}
 /* MODAL PRODUKTU */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
 #modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:20px;width:90%;max-width:450px;z-index:100}
-#modal img{width:150px;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+#modal img{width:150px;height:150px;object-fit:cover;border-radius:10px}
 #modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
 #modal button:hover{transform:scale(1.05)}
-.modal-info p{margin:5px 0;font-size:0.95rem}
+#modal-info{font-size:14px;margin-top:8px;color:#ccc}
 
-/* AUTH MODAL */
+/* MODAL LOGOWANIA */
 #auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100;flex-direction:column}
+#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100}
 #auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff}
 #auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
 #auth-modal button:hover{transform:scale(1.05)}
@@ -77,8 +77,8 @@ footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transiti
 footer a:hover{color:#fff;transform:scale(1.2)}
 
 /* RESPONSIVE */
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px} }
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px} #modal img{width:120px;height:120px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px} #modal img{width:100px;height:100px}}
 </style>
 </head>
 <body>
@@ -92,12 +92,10 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
     <div id="auth-button">
-      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
+      <i class="fas fa-user" id="user-icon" style="font-size:24px;"></i>
       <span id="user-info"></span>
       <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
     </div>
-    <button id="login-btn">Login</button>
-    <button id="register-btn">Zarejestruj</button>
   </div>
 </header>
 
@@ -144,35 +142,27 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 <!-- MODAL PRODUKTU -->
 <div id="overlay" onclick="closeModal()"></div>
 <div id="modal">
-  <img id="modal-img" src="">
-  <div class="modal-info">
-    <h3 id="modal-name"></h3>
-    <p id="modal-price"></p>
-    <p id="modal-desc"></p>
-    <p><b>Dostawa:</b> tylko na terenie kraju</p>
-    <p><b>Czas zwrotu:</b> do 14 dni</p>
-    <label>Rozmiar:
-      <select id="modal-size">
-        <option>S</option><option>M</option><option>L</option><option>XL</option>
-      </select>
-    </label>
-    <label>Ilość:
-      <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
-    </label>
-    <button onclick="addToCart()">Dodaj do koszyka</button>
+  <div style="display:flex;gap:15px;flex-wrap:wrap;align-items:center">
+    <img id="modal-img" src="" alt="Produkt">
+    <div style="flex:1">
+      <h3 id="modal-name"></h3>
+      <p id="modal-price"></p>
+      <p id="modal-desc"></p>
+      <p id="modal-info">Dostawa: Tylko krajowa • Zwrot: 14 dni</p>
+      <label>Rozmiar:
+        <select id="modal-size">
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
+        </select>
+      </label>
+      <label>Ilość:
+        <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
+      </label>
+      <button onclick="addToCart()">Dodaj do koszyka</button>
+    </div>
   </div>
-</div>
-
-<!-- AUTH MODAL -->
-<div id="auth-overlay"></div>
-<div id="auth-modal">
-  <h3 id="auth-title">Logowanie / Rejestracja</h3>
-  <input type="text" id="auth-firstname" placeholder="Imię" style="display:none">
-  <input type="text" id="auth-lastname" placeholder="Nazwisko" style="display:none">
-  <input type="email" id="auth-email" placeholder="Email">
-  <input type="password" id="auth-pass" placeholder="Hasło">
-  <button id="auth-submit">Zaloguj</button>
-  <p id="auth-toggle-text">Nie masz konta? <span id="toggle-register" style="color:#ff4a4a;cursor:pointer">Zarejestruj</span></p>
 </div>
 
 <!-- FOOTER -->
@@ -181,123 +171,102 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   <p>© 2025 A8M</p>
 </footer>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script>
-// Tu wstaw konfigurację Firebase
-var firebaseConfig = {
-  apiKey: "APIKEY",
-  authDomain: "PROJECT.firebaseapp.com",
-  projectId: "PROJECT",
-  storageBucket: "PROJECT.appspot.com",
-  messagingSenderId: "SENDER",
-  appId: "APPID"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-</script>
-
-<script>
-/* HAMBURGER */
+// MENU
 const hamburger=document.getElementById('hamburger');
 const mobileMenu=document.getElementById('mobile-menu');
 const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
 
-/* MODAL PRODUKTU */
-function openModal(name, oldPrice, newPrice, imgSrc, desc){
-    document.getElementById('modal-name').textContent=name;
-    document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
-    document.getElementById('modal-img').src=imgSrc;
-    document.getElementById('modal-desc').textContent=desc;
-    document.getElementById('modal-qty').value=1;
-    document.getElementById('overlay').style.display='block';
-    document.getElementById('modal').style.display='flex';
-}
-function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
+// ROZWIJANIE SUBMENU
+document.querySelectorAll('#mobile-menu > ul > li > a').forEach(item=>{
+  item.addEventListener('click',(e)=>{
+    const parentLi = e.target.parentElement;
+    const submenu = parentLi.querySelector('.submenu');
+    if(submenu){
+      e.preventDefault();
+      parentLi.classList.toggle('active');
+    }
+  });
+});
 
-/* KOSZYK */
-let cart = [];
-function updateCartCount(){document.getElementById('cart-count').textContent=cart.length;}
+// MODAL PRODUKTU
+function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
+    document.getElementById('modal-name').textContent = name;
+    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
+    document.getElementById('modal-img').src = imgSrc;
+    document.getElementById('modal-desc').textContent = desc;
+    document.getElementById('modal-qty').value = 1;
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('modal').style.display = 'block';
+}
+function closeModal() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
+}
 function addToCart(){
-  const name=document.getElementById('modal-name').textContent;
-  const price=document.getElementById('modal-price').textContent;
-  const size=document.getElementById('modal-size').value;
-  const qty=parseInt(document.getElementById('modal-qty').value);
-  cart.push({name,price,size,qty});
-  updateCartCount();
-  closeModal();
-  alert("Dodano do koszyka!");
+    const name = document.getElementById('modal-name').textContent;
+    const price = document.getElementById('modal-price').textContent;
+    const size = document.getElementById('modal-size').value;
+    const qty = document.getElementById('modal-qty').value;
+    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
+    closeModal();
 }
 
-/* LOGIN / REGISTER */
-const loginBtn=document.getElementById('login-btn');
-const registerBtn=document.getElementById('register-btn');
-const authOverlay=document.getElementById('auth-overlay');
-const authModal=document.getElementById('auth-modal');
-const authTitle=document.getElementById('auth-title');
-const authFirst=document.getElementById('auth-firstname');
-const authLast=document.getElementById('auth-lastname');
-const authEmail=document.getElementById('auth-email');
-const authPass=document.getElementById('auth-pass');
-const authSubmit=document.getElementById('auth-submit');
-const toggleRegister=document.getElementById('toggle-register');
+// LOGIN/REGISTER (Firebase)
+const userIcon=document.getElementById('user-icon');
 const logoutBtn=document.getElementById('logout-icon');
 const userInfo=document.getElementById('user-info');
+
+userIcon.addEventListener('click',()=>{openAuthModal(false)}); // logowanie
+
+// --- MODAL AUTH ---
 let isRegister=false;
-
-function openAuthModal(register=false){
+function openAuthModal(register){
   isRegister=register;
-  authOverlay.style.display='block';
-  authModal.style.display='flex';
-  authTitle.textContent=register?'Rejestracja':'Logowanie';
-  authSubmit.textContent=register?'Zarejestruj':'Zaloguj';
-  authFirst.style.display=register?'block':'none';
-  authLast.style.display=register?'block':'none';
+  const modal=document.createElement('div');
+  modal.id='auth-modal';
+  modal.innerHTML=`
+    <input type="text" id="auth-first" placeholder="Imię" ${register?'':'style="display:none;"'}>
+    <input type="text" id="auth-last" placeholder="Nazwisko" ${register?'':'style="display:none;"'}>
+    <input type="email" id="auth-email" placeholder="Email">
+    <input type="password" id="auth-pass" placeholder="Hasło">
+    <button id="auth-submit">${register?'Zarejestruj':'Zaloguj'}</button>
+    <p id="auth-toggle-text">${register?'Masz konto? <span id="toggle-login">Zaloguj</span>':'Nie masz konta? <span id="toggle-register">Zarejestruj</span>'}</p>
+  `;
+  const overlay=document.createElement('div');
+  overlay.id='auth-overlay';
+  document.body.appendChild(overlay);
+  document.body.appendChild(modal);
+  overlay.style.display='block';
+  modal.style.display='block';
+
+  overlay.addEventListener('click',()=>{closeAuthModal(modal,overlay)});
+  if(register) modal.querySelector('#toggle-login')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(false)});
+  else modal.querySelector('#toggle-register')?.addEventListener('click',()=>{closeAuthModal(modal,overlay); openAuthModal(true)});
+
+  modal.querySelector('#auth-submit').addEventListener('click',()=>{
+    const email=modal.querySelector('#auth-email').value;
+    const pass=modal.querySelector('#auth-pass').value;
+    if(isRegister){
+      const first=modal.querySelector('#auth-first').value;
+      const last=modal.querySelector('#auth-last').value;
+      // Tutaj dodajesz rejestrację Firebase
+      alert(`Zarejestrowano: ${first} ${last} (${email})`);
+      closeAuthModal(modal,overlay);
+    } else {
+      // Tutaj logowanie Firebase
+      alert(`Zalogowano: ${email}`);
+      closeAuthModal(modal,overlay);
+    }
+  });
 }
-function closeAuthModal(){authModal.style.display='none';authOverlay.style.display='none';}
+function closeAuthModal(modal,overlay){
+  modal.remove();
+  overlay.remove();
+}
 
-loginBtn.addEventListener('click',()=>openAuthModal(false));
-registerBtn.addEventListener('click',()=>openAuthModal(true));
-toggleRegister.addEventListener('click',()=>openAuthModal(!isRegister));
-authOverlay.addEventListener('click',closeAuthModal);
-
-authSubmit.addEventListener('click',()=>{
-  const email=authEmail.value;
-  const pass=authPass.value;
-  if(isRegister){
-    const first=authFirst.value;
-    const last=authLast.value;
-    auth.createUserWithEmailAndPassword(email,pass)
-      .then(userCredential=>{
-        userCredential.user.updateProfile({displayName:first+" "+last});
-        closeAuthModal();
-      }).catch(e=>alert(e.message));
-  } else {
-    auth.signInWithEmailAndPassword(email,pass)
-      .then(()=>closeAuthModal())
-      .catch(e=>alert(e.message));
-  }
-});
-
-logoutBtn.addEventListener('click',()=>{auth.signOut();});
-
-/* Sprawdzanie stanu użytkownika */
-auth.onAuthStateChanged(user=>{
-  if(user){
-    userInfo.textContent=user.displayName||user.email;
-    logoutBtn.style.display='inline-block';
-    loginBtn.style.display='none';
-    registerBtn.style.display='none';
-    closeAuthModal();
-  } else {
-    userInfo.textContent='';
-    logoutBtn.style.display='none';
-    loginBtn.style.display='inline-block';
-    registerBtn.style.display='inline-block';
-  }
-});
 </script>
 </body>
 </html>

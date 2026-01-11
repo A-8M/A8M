@@ -31,7 +31,10 @@ header{
 }
 
 /* MENU */
-#menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:90}
+#menu-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  display:none;z-index:90
+}
 #mobile-menu{
   position:fixed;top:0;left:0;width:260px;height:100%;
   background:#111;padding:60px 20px;
@@ -52,8 +55,10 @@ header{
 }
 .product{
   background:#1a1a1a;padding:15px;border-radius:14px;
-  cursor:pointer;text-align:center
+  cursor:pointer;text-align:center;
+  transition:.2s
 }
+.product:hover{transform:translateY(-5px)}
 .product img{width:100%;border-radius:10px}
 .price{color:#ff4a4a;font-weight:bold}
 
@@ -66,14 +71,15 @@ header{
   position:fixed;top:50%;left:50%;
   transform:translate(-50%,-50%);
   background:#1a1a1a;padding:20px;
-  border-radius:16px;width:90%;max-width:360px;
+  border-radius:16px;width:90%;max-width:380px;
   display:none;z-index:201
 }
-input,button{
+.modal img{width:100%;border-radius:10px;margin-bottom:10px}
+input,select,button{
   width:100%;padding:10px;margin:6px 0;
   border:none;border-radius:8px
 }
-input{background:#111;color:#fff}
+input,select{background:#111;color:#fff}
 button{background:#ff4a4a;color:#fff;cursor:pointer}
 </style>
 </head>
@@ -106,22 +112,44 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
 
 <div class="container" id="products">
   <div class="products">
-    <div class="product">
+    <div class="product" onclick="openProduct('Biała Koszulka A8M','bialaprzod.png',115,'Klasyczna biała koszulka A8M')">
       <img src="bialaprzod.png">
       <h3>Biała Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
-    <div class="product">
+
+    <div class="product" onclick="openProduct('Czarna Koszulka A8M','koszulka2.png',115,'Klasyczna czarna koszulka A8M')">
       <img src="koszulka2.png">
       <h3>Czarna Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
-    <div class="product">
+
+    <div class="product" onclick="openProduct('Fioletowa Koszulka A8M','fioletova.png',115,'Fioletowa koszulka A8M')">
       <img src="fioletova.png">
       <h3>Fioletowa Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
   </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="overlay" id="product-overlay"></div>
+<div class="modal" id="product-modal">
+  <img id="p-img">
+  <h3 id="p-name"></h3>
+  <p id="p-desc"></p>
+  <p><b>Cena:</b> <span id="p-price"></span> zł</p>
+
+  <select id="p-size">
+    <option>S</option><option>M</option><option>L</option><option>XL</option>
+  </select>
+
+  <p style="font-size:13px;color:#aaa">
+    Dostawa: tylko Polska<br>
+    Zwrot: 14 dni
+  </p>
+
+  <button onclick="addToCart()">Dodaj do koszyka</button>
 </div>
 
 <!-- AUTH MODAL -->
@@ -136,88 +164,92 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
   </p>
 </div>
 
+<script>
+// HAMBURGER
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobile-menu");
+const menuOverlay = document.getElementById("menu-overlay");
+
+hamburger.onclick = () => {
+  mobileMenu.classList.toggle("active");
+  menuOverlay.style.display = "block";
+};
+menuOverlay.onclick = () => {
+  mobileMenu.classList.remove("active");
+  menuOverlay.style.display = "none";
+};
+
+// PRODUCT MODAL
+function openProduct(name,img,price,desc){
+  p-name.innerText=name;
+  p-img.src=img;
+  p-price.innerText=price;
+  p-desc.innerText=desc;
+  product-overlay.style.display="block";
+  product-modal.style.display="block";
+}
+product-overlay.onclick=()=>{
+  product-overlay.style.display="none";
+  product-modal.style.display="none";
+};
+
+function addToCart(){
+  alert("Dodano do koszyka (demo)");
+}
+</script>
+
 <!-- FIREBASE AUTH -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut }
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-/* 🔴 TU WKLEJ SWOJE FIREBASE */
+/* 🔴 TU WKLEJ SWOJE DANE */
 const firebaseConfig = {
-  apiKey: "AIzaSyDBnVClzjBir7CHb4SNJwiUX5Wk6tPptps",
-  authDomain: "a8m-store.firebaseapp.com",
-  projectId: "a8m-store",
-  appId: "1:18266864248:web:347cd344e0998066bbcb8d"
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_AUTH_DOMAIN",
+  projectId: "TU_PROJECT_ID",
+  appId: "TU_APP_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* ELEMENTY */
-const userIcon = document.getElementById('user-icon');
-const authOverlay = document.getElementById('auth-overlay');
-const authModal = document.getElementById('auth-modal');
-const authSubmit = document.getElementById('auth-submit');
-const authToggle = document.getElementById('auth-toggle');
-const userName = document.getElementById('user-name');
-const logoutBtn = document.getElementById('logout-btn');
+let isRegister=false;
 
-let isRegister = false;
-
-/* OTWIERANIE */
-userIcon.onclick = () => {
-  authOverlay.style.display = 'block';
-  authModal.style.display = 'block';
+user-icon.onclick=()=>{
+  auth-overlay.style.display="block";
+  auth-modal.style.display="block";
 };
-
-/* ZAMYKANIE */
-authOverlay.onclick = () => {
-  authOverlay.style.display = 'none';
-  authModal.style.display = 'none';
+auth-overlay.onclick=()=>{
+  auth-overlay.style.display="none";
+  auth-modal.style.display="none";
 };
-
-/* TOGGLE */
-authToggle.onclick = () => {
-  isRegister = !isRegister;
-  authTitle.textContent = isRegister ? 'Rejestracja' : 'Logowanie';
-  authSubmit.textContent = isRegister ? 'Zarejestruj' : 'Zaloguj';
-  authToggle.textContent = isRegister
-    ? 'Masz konto? Zaloguj się'
-    : 'Nie masz konta? Zarejestruj się';
+auth-toggle.onclick=()=>{
+  isRegister=!isRegister;
+  auth-title.innerText=isRegister?"Rejestracja":"Logowanie";
+  auth-submit.innerText=isRegister?"Zarejestruj":"Zaloguj";
+  auth-toggle.innerText=isRegister?"Masz konto? Zaloguj się":"Nie masz konta? Zarejestruj się";
 };
-
-/* SUBMIT */
-authSubmit.onclick = async () => {
+auth-submit.onclick=async()=>{
   try{
-    if(isRegister){
-      await createUserWithEmailAndPassword(auth,email.value,password.value);
-    }else{
-      await signInWithEmailAndPassword(auth,email.value,password.value);
-    }
-    authOverlay.style.display = authModal.style.display = 'none';
-  }catch(e){
-    alert(e.message);
-  }
+    isRegister
+      ? await createUserWithEmailAndPassword(auth,email.value,password.value)
+      : await signInWithEmailAndPassword(auth,email.value,password.value);
+    auth-overlay.style.display="none";
+    auth-modal.style.display="none";
+  }catch(e){alert(e.message)}
 };
-
-/* STAN */
-onAuthStateChanged(auth,user=>{
-  if(user){
-    userName.textContent = user.email;
-    logoutBtn.style.display = 'inline-block';
+onAuthStateChanged(auth,u=>{
+  if(u){
+    user-name.innerText=u.email;
+    logout-btn.style.display="inline-block";
   }else{
-    userName.textContent = '';
-    logoutBtn.style.display = 'none';
+    user-name.innerText="";
+    logout-btn.style.display="none";
   }
 });
-
-/* LOGOUT */
-logoutBtn.onclick = ()=>signOut(auth);
+logout-btn.onclick=()=>signOut(auth);
 </script>
 
 </body>

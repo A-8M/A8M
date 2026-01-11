@@ -69,6 +69,7 @@ li.active>.submenu{max-height:500px;opacity:1}
 #auth-modal input{width:100%;padding:10px;border-radius:8px;border:none;background:#111;color:#fff;}
 #auth-modal button{padding:10px;background:#ff4a4a;color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;transition:0.2s;}
 #auth-modal button:hover{transform:scale(1.05);}
+#auth-firstname, #auth-lastname{display:none;}
 #auth-toggle-text span{color:#ff4a4a;cursor:pointer;}
 #auth-toggle-text span:hover{color:#fff;}
 
@@ -79,6 +80,37 @@ li.active>.submenu{max-height:500px;opacity:1}
 #cart-modal li{margin-bottom:10px;}
 #cart-modal button{margin-top:10px;padding:10px 15px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;font-weight:bold;transition:0.2s;}
 #cart-modal button:hover{transform:scale(1.05);}
+
+/* STOPKA */
+footer {
+  text-align: center;
+  padding: 25px 20px;
+  background: #000;
+  font-size: 14px;
+  color: #aaa;
+}
+
+footer .social {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+footer .social a {
+  color: #ff4a4a;
+  font-size: 20px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+footer .social a:hover { 
+  color: #fff; 
+  transform: scale(1.2); 
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
 <body>
@@ -92,9 +124,8 @@ li.active>.submenu{max-height:500px;opacity:1}
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
     <div id="auth-button">
-      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
       <span id="user-info"></span>
-      <button id="logout-icon" title="Wyloguj"></button>
+      <button id="logout-icon" title="Wyloguj">Wyloguj</button>
       <button class="auth-btn" id="login-btn">Zaloguj</button>
       <button class="auth-btn" id="register-btn">Zarejestruj</button>
     </div>
@@ -188,15 +219,19 @@ li.active>.submenu{max-height:500px;opacity:1}
 </div>
 
 <footer>
-  <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
-  <p>© 2025 A8M</p>
+  <div class="social">
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-tiktok"></i></a>
+  </div>
+  <div>© 2025 A8M</div>
 </footer>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
 <script>
-// Firebase
+// Firebase Config
 const firebaseConfig = {
   apiKey: "TWOJE_API_KEY",
   authDomain: "TWOJ_PROJEKT.firebaseapp.com",
@@ -210,85 +245,72 @@ const auth = firebase.auth();
 </script>
 
 <script>
-// HAMBURGER MENU
+// Hamburger
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuOverlay = document.getElementById('menu-overlay');
-hamburger.addEventListener('click', () => {mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
-menuOverlay.addEventListener('click', () => {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
+hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
+menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
 document.querySelectorAll('#mobile-menu > ul > li > a').forEach(link=>{
   link.addEventListener('click', e=>{
-    const parentLi = e.target.parentElement;
+    const parentLi=e.target.parentElement;
     if(parentLi.querySelector('.submenu')){
-      e.preventDefault();
-      parentLi.classList.toggle('active');
+      e.preventDefault(); parentLi.classList.toggle('active');
     }
   });
 });
 
-// MODAL PRODUKTU
-function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu"){
-  document.getElementById('modal-name').textContent = name;
-  document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
-  document.getElementById('modal-img').src = imgSrc;
-  document.getElementById('modal-desc').textContent = desc;
-  document.getElementById('modal-qty').value = 1;
-  document.getElementById('overlay').style.display = 'block';
-  document.getElementById('modal').style.display = 'flex';
+// Modal produktu
+function openModal(name,oldPrice,newPrice,imgSrc,desc="Brak opisu"){
+  document.getElementById('modal-name').textContent=name;
+  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
+  document.getElementById('modal-img').src=imgSrc;
+  document.getElementById('modal-desc').textContent=desc;
+  document.getElementById('modal-qty').value=1;
+  document.getElementById('overlay').style.display='block';
+  document.getElementById('modal').style.display='flex';
 }
 function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
 document.getElementById('overlay').addEventListener('click',closeModal);
 
-// KOSZYK
+// Koszyk
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-function updateCartCount(){
-  document.getElementById('cart-count').textContent = cart.length;
-}
+function updateCartCount(){document.getElementById('cart-count').textContent=cart.length;}
 function addToCart(){
-  const product = {
-    name: document.getElementById('modal-name').textContent,
-    price: document.getElementById('modal-price').textContent,
-    size: document.getElementById('modal-size').value,
-    qty: document.getElementById('modal-qty').value
-  };
-  cart.push(product);
+  const name=document.getElementById('modal-name').textContent;
+  const price=document.getElementById('modal-price').textContent;
+  const size=document.getElementById('modal-size').value;
+  const qty=parseInt(document.getElementById('modal-qty').value);
+  cart.push({name,price,size,qty});
   localStorage.setItem('cart',JSON.stringify(cart));
-  updateCartCount();
+  updateCartCount(); closeModal();
   alert("Dodano do koszyka!");
-  closeModal();
 }
 document.getElementById('cart-icon').addEventListener('click',()=>{
-  const cartItems = document.getElementById('cart-items');
-  cartItems.innerHTML = '';
-  cart.forEach((p,i)=>{
-    const li = document.createElement('li');
-    li.textContent = `${p.name} (${p.size}) x${p.qty} - ${p.price}`;
-    cartItems.appendChild(li);
-  });
+  const list=document.getElementById('cart-items'); list.innerHTML='';
+  cart.forEach(p=>list.innerHTML+=`<li>${p.name} (${p.size}) x${p.qty} - ${p.price}</li>`);
   document.getElementById('cart-modal').style.display='block';
 });
 function checkout(){
-  if(cart.length===0){alert("Koszyk jest pusty!");return;}
   alert("Zakupiono produkty:\n"+cart.map(p=>`${p.name} (${p.size}) x${p.qty} - ${p.price}`).join("\n"));
-  cart=[];localStorage.setItem('cart',JSON.stringify(cart));
-  updateCartCount();
+  cart=[]; localStorage.setItem('cart',JSON.stringify(cart)); updateCartCount();
   document.getElementById('cart-modal').style.display='none';
 }
 
 // LOGIN / REGISTER
-const loginBtn = document.getElementById('login-btn');
-const registerBtn = document.getElementById('register-btn');
-const authOverlay = document.getElementById('auth-overlay');
-const authModal = document.getElementById('auth-modal');
-const authTitle = document.getElementById('auth-title');
-const authFirst = document.getElementById('auth-firstname');
-const authLast = document.getElementById('auth-lastname');
-const authEmail = document.getElementById('auth-email');
-const authPass = document.getElementById('auth-pass');
-const authSubmit = document.getElementById('auth-submit');
-const toggleRegister = document.getElementById('toggle-register');
-const logoutBtn = document.getElementById('logout-icon');
-const userInfo = document.getElementById('user-info');
+const loginBtn=document.getElementById('login-btn');
+const registerBtn=document.getElementById('register-btn');
+const authOverlay=document.getElementById('auth-overlay');
+const authModal=document.getElementById('auth-modal');
+const authTitle=document.getElementById('auth-title');
+const authFirst=document.getElementById('auth-firstname');
+const authLast=document.getElementById('auth-lastname');
+const authEmail=document.getElementById('auth-email');
+const authPass=document.getElementById('auth-pass');
+const authSubmit=document.getElementById('auth-submit');
+const toggleRegister=document.getElementById('toggle-register');
+const logoutBtn=document.getElementById('logout-icon');
+const userInfo=document.getElementById('user-info');
 let isRegister=false;
 
 function openAuthModal(register=false){
@@ -303,8 +325,8 @@ function openAuthModal(register=false){
 function closeAuthModal(){authModal.style.display='none';authOverlay.style.display='none';}
 loginBtn.addEventListener('click',()=>openAuthModal(false));
 registerBtn.addEventListener('click',()=>openAuthModal(true));
-authOverlay.addEventListener('click',closeAuthModal);
 toggleRegister.addEventListener('click',()=>openAuthModal(!isRegister));
+authOverlay.addEventListener('click',closeAuthModal);
 
 authSubmit.addEventListener('click',()=>{
   const email=authEmail.value;
@@ -330,7 +352,6 @@ auth.onAuthStateChanged(user=>{
 });
 logoutBtn.addEventListener('click',()=>auth.signOut());
 
-// inicjalizacja koszyka
 updateCartCount();
 </script>
 

@@ -1,207 +1,207 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A8M – Streetwear</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
+<!DOCTYPE html> 
+<html lang="pl"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>A8M – Streetwear</title> 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+<style> 
+*{box-sizing:border-box} 
+body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden} 
 
-/* HEADER */
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);flex-wrap:wrap}
-.header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1;margin:5px 0}
-.header-center h1{margin:0;font-size:2rem;text-align:center}
-.header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center}
-#hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;transition: transform 0.2s}
-#hamburger:hover{transform:scale(1.2)}
-#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s}
-#cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
-#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
+/* HEADER */ 
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);flex-wrap:wrap} 
+.header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1;margin:5px 0} 
+.header-center h1{margin:0;font-size:2rem;text-align:center} 
+.header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center} 
+#hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;transition: transform 0.2s} 
+#hamburger:hover{transform:scale(1.2)} 
+#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s} 
+#cart-icon:hover{transform:scale(1.15);color:#ff4a4a} 
+#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px} 
 
-/* AUTH BUTTONS */
-#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
-#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
-#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
-#logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
+/* AUTH BUTTONS */ 
+#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative} 
+#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;} 
+#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;} 
+#logout-icon:hover{background:#ff1a1a;transform:scale(1.05);} 
 
-/* MOBILE MENU */
-#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
-#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
-#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
-#mobile-menu.active{transform:translateX(0)}
-#mobile-menu ul{list-style:none;padding:0;margin:0}
-#mobile-menu li{margin-bottom:20px;position:relative}
-#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
-#mobile-menu a:hover{color:#fff}
-.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
-li.active>.submenu{max-height:500px;opacity:1}
-.submenu li{margin-bottom:12px}
-.submenu a{font-size:16px;font-weight:500;color:#ccc}
-.submenu a:hover{color:#ff1a1a}
+/* MOBILE MENU */ 
+#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90} 
+#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto} 
+#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto} 
+#mobile-menu.active{transform:translateX(0)} 
+#mobile-menu ul{list-style:none;padding:0;margin:0} 
+#mobile-menu li{margin-bottom:20px;position:relative} 
+#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s} 
+#mobile-menu a:hover{color:#fff} 
+.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0} 
+li.active>.submenu{max-height:500px;opacity:1} 
+.submenu li{margin-bottom:12px} 
+.submenu a{font-size:16px;font-weight:500;color:#ccc} 
+.submenu a:hover{color:#ff1a1a} 
 
-/* PRODUCTS */
-.container{max-width:1200px;margin:auto;padding:40px 20px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:center}
-.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
-.product:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(255,0,0,0.3)}
-.product img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;transition:transform 0.3s}
-.product img:hover{transform:scale(1.05)}
-.product h3{margin:12px 0 6px;font-size:1.2rem}
-.price{margin-bottom:10px;font-size:1rem}
-.old-price{text-decoration: line-through;color:#aaa;margin-right:8px}
-.new-price{color:#ff4a4a;font-weight:bold}
-.discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
+/* PRODUCTS */ 
+.container{max-width:1200px;margin:auto;padding:40px 20px} 
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:center} 
+.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer} 
+.product:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(255,0,0,0.3)} 
+.product img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;transition:transform 0.3s} 
+.product img:hover{transform:scale(1.05)} 
+.product h3{margin:12px 0 6px;font-size:1.2rem} 
+.price{margin-bottom:10px;font-size:1rem} 
+.old-price{text-decoration: line-through;color:#aaa;margin-right:8px} 
+.new-price{color:#ff4a4a;font-weight:bold} 
+.discount{color:#ff4a4a;font-weight:bold;margin-left:5px} 
 
-/* MODAL PRODUKTU */
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100}
-#modal img{width:200px;height:200px;object-fit:cover;border-radius:10px;display:block;margin-bottom:15px}
-#modal .modal-info{display:flex;flex-direction:column;gap:8px}
-#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
-#modal button:hover{transform:scale(1.05)}
+/* MODAL PRODUKTU */ 
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99} 
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:500px;z-index:100} 
+#modal img{width:200px;height:200px;object-fit:cover;border-radius:10px} 
+#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s} 
+#modal button:hover{transform:scale(1.05)} 
 
-/* FOOTER */
-footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
-footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
-footer a:hover{color:#fff;transform:scale(1.2)}
+/* MODAL LOGOWANIA */ 
+#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99} 
+#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100} 
+#auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff} 
+#auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s} 
+#auth-modal button:hover{transform:scale(1.05)} 
+#auth-toggle-text span:hover{color:#fff;cursor:pointer} 
 
-/* RESPONSIVE */
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
-</style>
-</head>
-<body>
+/* FOOTER */ 
+footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa} 
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s} 
+footer a:hover{color:#fff;transform:scale(1.2)} 
 
-<header>
-  <div id="hamburger">&#9776;</div>
-  <div class="header-center">
-    <h1>A𒆙M</h1>
-    <p>Streetwear • Limited Drop</p>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
-    <div id="auth-button">
-      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
-      <span id="user-info"></span>
-      <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
-    </div>
-  </div>
-</header>
+/* RESPONSIVE */ 
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}} 
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}} 
+</style> 
+</head> 
+<body> 
 
-<div id="menu-overlay"></div>
-<nav id="mobile-menu">
-  <ul>
-    <li>
-      <a href="#">Produkty ▾</a>
-      <ul class="submenu">
-        <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
-        <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
-        <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
-      </ul>
-    </li>
-    <li><a href="opinie.html">Opinie</a></li>
-    <li><a href="contact.html">Kontakt</a></li>
-    <li><a href="about.html">O nas</a></li>
-    <li><a href="regulamin.html" target="_blank">Regulamin</a></li>
-    <li><a href="rodo.html" target="_blank">RODO</a></li>
-  </ul>
-</nav>
+<header> 
+<div id="hamburger">&#9776;</div> 
+<div class="header-center"> 
+<h1>A𒆙M</h1> 
+<p>Streetwear • Limited Drop</p> 
+</div> 
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"> 
+<div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div> 
+<div id="auth-button"> 
+<i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i> 
+<span id="user-info"></span> 
+<button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button> 
+</div> 
+</div> 
+</header> 
 
-<div class="container" id="products">
-  <h2>Koszulki</h2>
-  <div class="products">
-    <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa. Czas zwrotu: 14 dni. Dostawa tylko w Polsce.')">
-      <img src="bialaprzod.png">
-      <h3>Biała Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
-    </div>
-    <div class="product" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png','Klasyczna czarna koszulka A8M, komfortowa i modna. Czas zwrotu: 14 dni. Dostawa tylko w Polsce.')">
-      <img src="koszulka2.png">
-      <h3>Czarna Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
-    </div>
-    <div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png','Fioletowa koszulka A8M, wyjątkowa w swoim stylu. Czas zwrotu: 14 dni. Dostawa tylko w Polsce.')">
-      <img src="fioletova.png">
-      <h3>Fioletowa Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
-    </div>
-  </div>
-</div>
+<div id="menu-overlay"></div> 
+<nav id="mobile-menu"> 
+<ul> 
+<li> 
+<a href="#">Produkty ▾</a> 
+<ul class="submenu"> 
+<li><a href="#white-basic-logo">Biała Koszulka A8M</a></li> 
+<li><a href="#white-basic">Czarna Koszulka A8M</a></li> 
+<li><a href="#fioletova">Fioletowa Koszulka A8M</a></li> 
+</ul> 
+</li> 
+<li><a href="opinie.html">Opinie</a></li> 
+<li><a href="contact.html">Kontakt</a></li> 
+<li><a href="about.html">O nas</a></li> 
+<li><a href="regulamin.html" target="_blank">Regulamin</a></li> 
+<li><a href="rodo.html" target="_blank">RODO</a></li> 
+</ul> 
+</nav> 
 
-<!-- MODAL PRODUKTU -->
-<div id="overlay" onclick="closeModal()"></div>
-<div id="modal">
-  <img id="modal-img" src="">
-  <div class="modal-info">
-    <h3 id="modal-name"></h3>
-    <p id="modal-price"></p>
-    <p id="modal-desc"></p>
-    <label>Rozmiar:
-      <select id="modal-size">
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
-        <option>XL</option>
-      </select>
-    </label>
-    <label>Ilość:
-      <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
-    </label>
-    <button onclick="addToCart()">Dodaj do koszyka</button>
-  </div>
-</div>
+<div class="container" id="products"> 
+<h2>Koszulki</h2> 
+<div class="products"> 
+<div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')"> 
+<img src="bialaprzod.png"> 
+<h3>Biała Koszulka A8M</h3> 
+<p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p> 
+</div> 
+<div class="product" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png','Klasyczna czarna koszulka A8M, komfortowa i modna.')"> 
+<img src="koszulka2.png"> 
+<h3>Czarna Koszulka A8M</h3> 
+<p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p> 
+</div> 
+<div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png','Fioletowa koszulka A8M, wyjątkowa w swoim stylu.')"> 
+<img src="fioletova.png"> 
+<h3>Fioletowa Koszulka A8M</h3> 
+<p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p> 
+</div> 
+</div> 
+</div> 
 
-<!-- FOOTER -->
-<footer>
-  <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
-  <p>© 2025 A8M</p>
-</footer>
+<!-- MODAL PRODUKTU --> 
+<div id="overlay" onclick="closeModal()"></div> 
+<div id="modal"> 
+<div style="display:flex;gap:15px;flex-wrap:wrap;align-items:center"> 
+<img id="modal-img" src="" style="width:200px;height:200px;object-fit:cover;border-radius:10px"> 
+<div style="flex:1"> 
+<h3 id="modal-name"></h3> 
+<p id="modal-price"></p> 
+<p id="modal-desc">Opis produktu...</p> 
+<label>Rozmiar: 
+<select id="modal-size"> 
+<option>S</option> 
+<option>M</option> 
+<option>L</option> 
+<option>XL</option> 
+</select> 
+</label> 
+<label>Ilość: 
+<input type="number" id="modal-qty" value="1" min="1" style="width:60px"> 
+</label> 
+<button onclick="addToCart()">Dodaj do koszyka</button> 
+</div> 
+</div> 
+</div> 
 
-<script>
-// MENU
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobile-menu');
-const menuOverlay=document.getElementById('menu-overlay');
-hamburger.addEventListener('click',()=>{
-  mobileMenu.classList.toggle('active');
-  menuOverlay.classList.toggle('active');
-});
-menuOverlay.addEventListener('click',()=>{
-  mobileMenu.classList.remove('active');
-  menuOverlay.classList.remove('active');
-});
+<!-- FOOTER --> 
+<footer> 
+<p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p> 
+<p>© 2025 A8M</p> 
+</footer> 
 
-// MODAL PRODUKTU
-function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
-    document.getElementById('modal-name').textContent = name;
-    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
-    document.getElementById('modal-img').src = imgSrc;
-    document.getElementById('modal-desc').textContent = desc;
-    document.getElementById('modal-qty').value = 1;
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('modal').style.display = 'flex';
-}
+<script> 
+// MENU 
+const hamburger=document.getElementById('hamburger'); 
+const mobileMenu=document.getElementById('mobile-menu'); 
+const menuOverlay=document.getElementById('menu-overlay'); 
+hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');}); 
+menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');}); 
 
-function closeModal() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('modal').style.display = 'none';
-}
+// MODAL PRODUKTU 
+function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") { 
+    document.getElementById('modal-name').textContent = name; 
+    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)"; 
+    document.getElementById('modal-img').src = imgSrc; 
+    document.getElementById('modal-desc').textContent = desc; 
+    document.getElementById('modal-qty').value = 1; 
+    document.getElementById('overlay').style.display = 'block'; 
+    document.getElementById('modal').style.display = 'block'; 
+} 
 
-let cart = [];
-function addToCart(){
-    const name = document.getElementById('modal-name').textContent;
-    const priceText = document.getElementById('modal-price').textContent;
-    const size = document.getElementById('modal-size').value;
-    const qty = parseInt(document.getElementById('modal-qty').value);
-    cart.push({name, priceText, size, qty});
-    document.getElementById('cart-count').textContent = cart.length;
-    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${priceText}`);
-    closeModal();
-}
-</script>
+function closeModal() { 
+    document.getElementById('overlay').style.display = 'none'; 
+    document.getElementById('modal').style.display = 'none'; 
+} 
 
-</body>
+function addToCart(){ 
+    const name = document.getElementById('modal-name').textContent; 
+    const price = document.getElementById('modal-price').textContent; 
+    const size = document.getElementById('modal-size').value; 
+    const qty = document.getElementById('modal-qty').value; 
+    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`); 
+    closeModal(); 
+} 
+</script> 
+
+</body> 
 </html>

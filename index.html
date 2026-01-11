@@ -61,11 +61,10 @@ footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transiti
 footer a:hover{color:#fff;transform:scale(1.2)}
 
 /* MODAL PRODUKTU */
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;z-index:100;max-width:600px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.7);}
-#modal button.close-modal{float:right;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;margin-bottom:10px;}
-#modal img{width:100%;border-radius:10px;margin-bottom:15px;}
-#modal h3{margin:5px 0;color:#fff;}
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;z-index:100;max-width:800px;width:80%;display:flex;flex-wrap:wrap;gap:20px;box-shadow:0 10px 30px rgba(0,0,0,0.7);}
+#modal img{flex:1 1 300px;max-width:300px;border-radius:10px;}
+#modal div{flex:2 1 300px;display:flex;flex-direction:column;justify-content:space-between;}
+#modal h3{margin:0 0 10px;color:#fff;}
 #modal p{margin:5px 0;color:#ccc;}
 #modal p.price{color:#ff4a4a;font-weight:bold;font-size:1.2rem;margin:10px 0;}
 #modal label{display:block;margin:10px 0;color:#fff;}
@@ -73,7 +72,10 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 #modal .add-cart{width:100%;padding:10px;background:#ff4a4a;border:none;color:#fff;border-radius:8px;cursor:pointer;margin-top:10px;}
 #modal .add-cart:hover{transform:scale(1.05);transition:0.2s;}
 #modal .info{text-align:left;color:#ccc;font-size:13px;margin-top:10px;line-height:1.4;}
-@media(max-width:600px){.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
+
+/* RESPONSIVE */
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}#modal{flex-wrap:wrap;width:90%;max-width:600px;}#modal img{flex:1 1 100%;max-width:100%;margin-bottom:15px;}#modal div{flex:1 1 100%;}}
 </style>
 </head>
 <body>
@@ -137,24 +139,30 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 <!-- MODAL -->
 <div id="overlay"></div>
 <div id="modal">
-  <button class="close-modal" onclick="closeModal()">×</button>
   <img id="modal-img" src="">
-  <h3 id="modal-name"></h3>
-  <p id="modal-price" class="price"></p>
-  <p id="modal-desc"></p>
-  <label>Rozmiar:
-    <select id="modal-size">
-      <option>S</option>
-      <option>M</option>
-      <option>L</option>
-      <option>XL</option>
-    </select>
-  </label>
-  <label>Ilość:
-    <input type="number" id="modal-qty" value="1" min="1">
-  </label>
-  <button class="add-cart" onclick="addToCart()">Dodaj do koszyka</button>
-  <p class="info">Czas na zwrot: 14 dni.<br>Dostawa tylko na terenie kraju.</p>
+  <div>
+    <div>
+      <h3 id="modal-name"></h3>
+      <p id="modal-price" class="price"></p>
+      <p id="modal-desc"></p>
+      <label>Rozmiar:
+        <select id="modal-size">
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
+        </select>
+      </label>
+      <label>Ilość:
+        <input type="number" id="modal-qty" value="1" min="1">
+      </label>
+    </div>
+    <div>
+      <button class="add-cart" onclick="addToCart()">Dodaj do koszyka</button>
+      <p class="info">Czas na zwrot: 14 dni.<br>Dostawa tylko na terenie kraju.</p>
+      <button onclick="closeModal()" style="margin-top:10px;background:none;border:none;color:#fff;cursor:pointer;">Zamknij</button>
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -163,14 +171,43 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 </footer>
 
 <script>
-// MENU
+// HAMBURGER
 const hamburger=document.getElementById('hamburger');
 const mobileMenu=document.getElementById('mobile-menu');
 const menuOverlay=document.getElementById('menu-overlay');
-hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
-menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
+hamburger.addEventListener('click',()=>{
+    mobileMenu.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+});
+menuOverlay.addEventListener('click',()=>{
+    mobileMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+});
 
-// MODAL PRODUKTU
+// LOGIN / LOGOUT
+const userIcon = document.getElementById('user-icon');
+const logoutBtn = document.getElementById('logout-icon');
+const userInfo = document.getElementById('user-info');
+let loggedIn = false;
+
+userIcon.addEventListener('click',()=>{
+    if(!loggedIn){
+        const name = prompt("Podaj swoje imię:");
+        if(name){
+            userInfo.textContent = name;
+            logoutBtn.style.display = "inline-block";
+            loggedIn = true;
+        }
+    }
+});
+
+logoutBtn.addEventListener('click',()=>{
+    userInfo.textContent = "";
+    logoutBtn.style.display = "none";
+    loggedIn = false;
+});
+
+// MODAL
 function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
     document.getElementById('modal-name').textContent = name;
     document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
@@ -178,7 +215,7 @@ function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
     document.getElementById('modal-desc').textContent = desc;
     document.getElementById('modal-qty').value = 1;
     document.getElementById('overlay').style.display = 'block';
-    document.getElementById('modal').style.display = 'block';
+    document.getElementById('modal').style.display = 'flex';
 }
 
 function closeModal() {
@@ -195,5 +232,6 @@ function addToCart(){
     closeModal();
 }
 </script>
+
 </body>
 </html>

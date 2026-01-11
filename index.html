@@ -26,15 +26,16 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 #auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
 #logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
 #logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
+.auth-btn{cursor:pointer;background:#ff4a4a;border:none;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;}
+.auth-btn:hover{background:#ff1a1a;transform:scale(1.05);}
 
 /* MOBILE MENU */
-#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
-#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
+#menu-overlay,#overlay,#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;}
 #mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
 #mobile-menu.active{transform:translateX(0)}
 #mobile-menu ul{list-style:none;padding:0;margin:0}
 #mobile-menu li{margin-bottom:20px;position:relative}
-#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
+#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s;cursor:pointer;}
 #mobile-menu a:hover{color:#fff}
 .submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
 li.active>.submenu{max-height:500px;opacity:1}
@@ -55,14 +56,9 @@ li.active>.submenu{max-height:500px;opacity:1}
 .new-price{color:#ff4a4a;font-weight:bold}
 .discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
 
-/* FOOTER */
-footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
-footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
-footer a:hover{color:#fff;transform:scale(1.2)}
-
 /* MODAL PRODUKTU */
 #modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;z-index:100;max-width:800px;width:80%;display:flex;flex-wrap:wrap;gap:20px;box-shadow:0 10px 30px rgba(0,0,0,0.7);}
-#modal img{flex:1 1 300px;max-width:300px;border-radius:10px;}
+#modal img{flex:1 1 300px;max-width:100%;object-fit:cover;border-radius:10px;}
 #modal div{flex:2 1 300px;display:flex;flex-direction:column;justify-content:space-between;}
 #modal h3{margin:0 0 10px;color:#fff;}
 #modal p{margin:5px 0;color:#ccc;}
@@ -72,6 +68,19 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 #modal .add-cart{width:100%;padding:10px;background:#ff4a4a;border:none;color:#fff;border-radius:8px;cursor:pointer;margin-top:10px;}
 #modal .add-cart:hover{transform:scale(1.05);transition:0.2s;}
 #modal .info{text-align:left;color:#ccc;font-size:13px;margin-top:10px;line-height:1.4;}
+
+/* MODAL LOGOWANIA */
+#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100;display:flex;flex-direction:column;}
+#auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff;}
+#auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s;}
+#auth-modal button:hover{transform:scale(1.05);}
+#auth-toggle-text{color:#ccc;text-align:center;margin-top:10px;}
+#auth-toggle-text span{color:#ff4a4a;cursor:pointer;}
+
+/* FOOTER */
+footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
+footer a:hover{color:#fff;transform:scale(1.2)}
 
 /* RESPONSIVE */
 @media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
@@ -92,6 +101,8 @@ footer a:hover{color:#fff;transform:scale(1.2)}
       <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
       <span id="user-info"></span>
       <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
+      <button class="auth-btn" id="login-btn">Zaloguj</button>
+      <button class="auth-btn" id="register-btn">Zarejestruj</button>
     </div>
   </div>
 </header>
@@ -100,7 +111,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 <nav id="mobile-menu">
   <ul>
     <li>
-      <a href="#">Produkty ▾</a>
+      <a>Produkty ▾</a>
       <ul class="submenu">
         <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
         <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
@@ -136,7 +147,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL PRODUKTU -->
 <div id="overlay"></div>
 <div id="modal">
   <img id="modal-img" src="">
@@ -165,6 +176,16 @@ footer a:hover{color:#fff;transform:scale(1.2)}
   </div>
 </div>
 
+<!-- MODAL LOGIN/REGISTER -->
+<div id="auth-overlay"></div>
+<div id="auth-modal">
+  <h3 id="auth-title">Logowanie</h3>
+  <input type="text" id="auth-name" placeholder="Imię">
+  <input type="password" id="auth-pass" placeholder="Hasło">
+  <button id="auth-submit">Zaloguj</button>
+  <div id="auth-toggle-text">Nie masz konta? <span id="toggle-register">Zarejestruj się</span></div>
+</div>
+
 <footer>
   <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
   <p>© 2025 A8M</p>
@@ -172,65 +193,111 @@ footer a:hover{color:#fff;transform:scale(1.2)}
 
 <script>
 // HAMBURGER
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobile-menu');
-const menuOverlay=document.getElementById('menu-overlay');
-hamburger.addEventListener('click',()=>{
-    mobileMenu.classList.toggle('active');
-    menuOverlay.classList.toggle('active');
-});
-menuOverlay.addEventListener('click',()=>{
-    mobileMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('active');
+  menuOverlay.classList.toggle('active');
 });
 
-// LOGIN / LOGOUT
-const userIcon = document.getElementById('user-icon');
-const logoutBtn = document.getElementById('logout-icon');
-const userInfo = document.getElementById('user-info');
-let loggedIn = false;
+menuOverlay.addEventListener('click', () => {
+  mobileMenu.classList.remove('active');
+  menuOverlay.classList.remove('active');
+});
 
-userIcon.addEventListener('click',()=>{
-    if(!loggedIn){
-        const name = prompt("Podaj swoje imię:");
-        if(name){
-            userInfo.textContent = name;
-            logoutBtn.style.display = "inline-block";
-            loggedIn = true;
-        }
+// ROZWIJANIE SUBMENU
+document.querySelectorAll('#mobile-menu > ul > li > a').forEach(link => {
+  link.addEventListener('click', e => {
+    const parentLi = e.target.parentElement;
+    if(parentLi.querySelector('.submenu')){
+      e.preventDefault();
+      parentLi.classList.toggle('active');
     }
+  });
+});
+
+// LOGIN / REGISTER MODAL
+const loginBtn = document.getElementById('login-btn');
+const registerBtn = document.getElementById('register-btn');
+const authModal = document.getElementById('auth-modal');
+const authOverlay = document.getElementById('auth-overlay');
+const authTitle = document.getElementById('auth-title');
+const authSubmit = document.getElementById('auth-submit');
+const toggleRegister = document.getElementById('toggle-register');
+const authName = document.getElementById('auth-name');
+const authPass = document.getElementById('auth-pass');
+const userInfo = document.getElementById('user-info');
+const logoutBtn = document.getElementById('logout-icon');
+
+let isRegister = false;
+
+function openAuthModal(register=false){
+  isRegister = register;
+  authModal.style.display = 'flex';
+  authOverlay.style.display = 'block';
+  authTitle.textContent = register ? "Rejestracja" : "Logowanie";
+  authSubmit.textContent = register ? "Zarejestruj" : "Zaloguj";
+}
+
+function closeAuthModal(){
+  authModal.style.display = 'none';
+  authOverlay.style.display = 'none';
+  authName.value = '';
+  authPass.value = '';
+}
+
+loginBtn.addEventListener('click',()=>openAuthModal(false));
+registerBtn.addEventListener('click',()=>openAuthModal(true));
+authOverlay.addEventListener('click', closeAuthModal);
+toggleRegister.addEventListener('click',()=>openAuthModal(!isRegister));
+
+authSubmit.addEventListener('click',()=>{
+  const name = authName.value.trim();
+  if(name){
+    userInfo.textContent = name;
+    logoutBtn.style.display = 'inline-block';
+    closeAuthModal();
+  } else {
+    alert("Wpisz imię i hasło!");
+  }
 });
 
 logoutBtn.addEventListener('click',()=>{
-    userInfo.textContent = "";
-    logoutBtn.style.display = "none";
-    loggedIn = false;
+  userInfo.textContent = "";
+  logoutBtn.style.display = "none";
 });
 
-// MODAL
-function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
-    document.getElementById('modal-name').textContent = name;
-    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
-    document.getElementById('modal-img').src = imgSrc;
-    document.getElementById('modal-desc').textContent = desc;
-    document.getElementById('modal-qty').value = 1;
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('modal').style.display = 'flex';
+// MODAL PRODUKTU
+const overlay = document.getElementById('overlay');
+const modal = document.getElementById('modal');
+
+function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu"){
+  document.getElementById('modal-name').textContent = name;
+  document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
+  document.getElementById('modal-img').src = imgSrc;
+  document.getElementById('modal-desc').textContent = desc;
+  document.getElementById('modal-qty').value = 1;
+  overlay.style.display = 'block';
+  modal.style.display = 'flex';
 }
 
-function closeModal() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('modal').style.display = 'none';
+function closeModal(){
+  overlay.style.display = 'none';
+  modal.style.display = 'none';
 }
 
 function addToCart(){
-    const name = document.getElementById('modal-name').textContent;
-    const price = document.getElementById('modal-price').textContent;
-    const size = document.getElementById('modal-size').value;
-    const qty = document.getElementById('modal-qty').value;
-    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
-    closeModal();
+  const name = document.getElementById('modal-name').textContent;
+  const price = document.getElementById('modal-price').textContent;
+  const size = document.getElementById('modal-size').value;
+  const qty = document.getElementById('modal-qty').value;
+  alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
+  closeModal();
 }
+
+overlay.addEventListener('click', closeModal);
 </script>
 
 </body>

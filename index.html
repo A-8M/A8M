@@ -27,14 +27,11 @@ header{
 #auth-button{display:flex;align-items:center;gap:8px}
 #logout-btn{
   display:none;background:#ff4a4a;border:none;color:#fff;
-  padding:6px 8px;border-radius:6px;cursor:pointer
+  padding:6px;border-radius:6px;cursor:pointer
 }
 
 /* MENU */
-#menu-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);
-  display:none;z-index:90
-}
+#menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:90}
 #mobile-menu{
   position:fixed;top:0;left:0;width:260px;height:100%;
   background:#111;padding:60px 20px;
@@ -69,17 +66,15 @@ header{
   position:fixed;top:50%;left:50%;
   transform:translate(-50%,-50%);
   background:#1a1a1a;padding:20px;
-  border-radius:16px;width:90%;max-width:420px;
+  border-radius:16px;width:90%;max-width:360px;
   display:none;z-index:201
 }
-.modal img{width:100%;border-radius:10px}
-input,select,button{
+input,button{
   width:100%;padding:10px;margin:6px 0;
   border:none;border-radius:8px
 }
-input,select{background:#111;color:#fff}
+input{background:#111;color:#fff}
 button{background:#ff4a4a;color:#fff;cursor:pointer}
-.small{font-size:13px;color:#aaa}
 </style>
 </head>
 
@@ -111,69 +106,45 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
 
 <div class="container" id="products">
   <div class="products">
-    <div class="product" onclick="openProduct(
-      'Biała Koszulka A8M',
-      115,
-      'bialaprzod.png',
-      'Klasyczna koszulka streetwear.'
-    )">
+    <div class="product">
       <img src="bialaprzod.png">
       <h3>Biała Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
+    <div class="product">
+      <img src="koszulka2.png">
+      <h3>Czarna Koszulka A8M</h3>
+      <p class="price">115 zł</p>
+    </div>
+    <div class="product">
+      <img src="fioletova.png">
+      <h3>Fioletowa Koszulka A8M</h3>
+      <p class="price">115 zł</p>
+    </div>
   </div>
-</div>
-
-<!-- PRODUCT MODAL -->
-<div class="overlay" id="product-overlay"></div>
-<div class="modal" id="product-modal">
-  <img id="p-img">
-  <h3 id="p-name"></h3>
-  <p id="p-desc"></p>
-  <p class="price" id="p-price"></p>
-
-  <select id="p-size">
-    <option>S</option><option>M</option>
-    <option>L</option><option>XL</option>
-  </select>
-
-  <input type="number" id="p-qty" value="1" min="1">
-  <button onclick="addToCart()">Dodaj do koszyka</button>
-
-  <p class="small">Dostawa tylko na terenie kraju</p>
-  <p class="small">Zwrot do 14 dni</p>
-</div>
-
-<!-- CART MODAL -->
-<div class="overlay" id="cart-overlay"></div>
-<div class="modal" id="cart-modal">
-  <h3>Koszyk</h3>
-  <div id="cart-items"></div>
-  <p id="cart-total"></p>
-  <button onclick="checkout()">Kup teraz</button>
 </div>
 
 <!-- AUTH MODAL -->
 <div class="overlay" id="auth-overlay"></div>
 <div class="modal" id="auth-modal">
   <h3 id="auth-title">Logowanie</h3>
-  <input id="firstName" placeholder="Imię">
-  <input id="lastName" placeholder="Nazwisko">
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Hasło">
   <button id="auth-submit">Zaloguj</button>
-  <p id="auth-toggle" style="color:#ff4a4a;text-align:center;cursor:pointer">
+  <p id="auth-toggle" style="text-align:center;color:#ff4a4a;cursor:pointer">
     Nie masz konta? Zarejestruj się
   </p>
 </div>
 
-<!-- FIREBASE + LOGIC -->
+<!-- FIREBASE AUTH -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import {
-  getAuth,createUserWithEmailAndPassword,
+  getAuth,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,signOut,updateProfile
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 /* 🔴 TU WKLEJ SWOJE FIREBASE */
@@ -187,94 +158,66 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* HAMBURGER */
-hamburger.onclick=()=>{
-  mobileMenu.classList.toggle('active');
-  menuOverlay.style.display='block';
-};
-menuOverlay.onclick=()=>{
-  mobileMenu.classList.remove('active');
-  menuOverlay.style.display='none';
+/* ELEMENTY */
+const userIcon = document.getElementById('user-icon');
+const authOverlay = document.getElementById('auth-overlay');
+const authModal = document.getElementById('auth-modal');
+const authSubmit = document.getElementById('auth-submit');
+const authToggle = document.getElementById('auth-toggle');
+const userName = document.getElementById('user-name');
+const logoutBtn = document.getElementById('logout-btn');
+
+let isRegister = false;
+
+/* OTWIERANIE */
+userIcon.onclick = () => {
+  authOverlay.style.display = 'block';
+  authModal.style.display = 'block';
 };
 
-/* PRODUCT */
-let currentProduct={};
-window.openProduct=(n,p,i,d)=>{
-  currentProduct={name:n,price:p,img:i};
-  pName.textContent=n;
-  pDesc.textContent=d;
-  pPrice.textContent=p+' zł';
-  pImg.src=i;
-  productOverlay.style.display=productModal.style.display='block';
-};
-productOverlay.onclick=()=>{
-  productOverlay.style.display=productModal.style.display='none';
+/* ZAMYKANIE */
+authOverlay.onclick = () => {
+  authOverlay.style.display = 'none';
+  authModal.style.display = 'none';
 };
 
-/* CART */
-let cart=[];
-window.addToCart=()=>{
-  cart.push({
-    ...currentProduct,
-    size:pSize.value,
-    qty:Number(pQty.value)
-  });
-  cartCount.textContent=cart.reduce((s,i)=>s+i.qty,0);
-  productOverlay.style.display=productModal.style.display='none';
-};
-cartIcon.onclick=()=>{
-  cartItems.innerHTML='';
-  let total=0;
-  cart.forEach(p=>{
-    total+=p.price*p.qty;
-    cartItems.innerHTML+=`<p>${p.name} (${p.size}) x${p.qty}</p>`;
-  });
-  cartTotal.textContent='Razem: '+total+' zł';
-  cartOverlay.style.display=cartModal.style.display='block';
-};
-cartOverlay.onclick=()=>{
-  cartOverlay.style.display=cartModal.style.display='none';
-};
-window.checkout=()=>{
-  if(!auth.currentUser){alert('Zaloguj się');return;}
-  alert('Zamówienie złożone');
-  cart=[];cartCount.textContent=0;
-  cartOverlay.style.display=cartModal.style.display='none';
+/* TOGGLE */
+authToggle.onclick = () => {
+  isRegister = !isRegister;
+  authTitle.textContent = isRegister ? 'Rejestracja' : 'Logowanie';
+  authSubmit.textContent = isRegister ? 'Zarejestruj' : 'Zaloguj';
+  authToggle.textContent = isRegister
+    ? 'Masz konto? Zaloguj się'
+    : 'Nie masz konta? Zarejestruj się';
 };
 
-/* AUTH */
-let register=false;
-userIcon.onclick=()=>{
-  authOverlay.style.display=authModal.style.display='block';
-};
-authToggle.onclick=()=>{
-  register=!register;
-  firstName.style.display=lastName.style.display=register?'block':'none';
-  authTitle.textContent=register?'Rejestracja':'Logowanie';
-  authSubmit.textContent=register?'Zarejestruj':'Zaloguj';
-};
-authSubmit.onclick=async()=>{
-  if(register){
-    const cred=await createUserWithEmailAndPassword(auth,email.value,password.value);
-    await updateProfile(cred.user,{displayName:firstName.value+' '+lastName.value});
-  }else{
-    await signInWithEmailAndPassword(auth,email.value,password.value);
+/* SUBMIT */
+authSubmit.onclick = async () => {
+  try{
+    if(isRegister){
+      await createUserWithEmailAndPassword(auth,email.value,password.value);
+    }else{
+      await signInWithEmailAndPassword(auth,email.value,password.value);
+    }
+    authOverlay.style.display = authModal.style.display = 'none';
+  }catch(e){
+    alert(e.message);
   }
-  authOverlay.style.display=authModal.style.display='none';
 };
-onAuthStateChanged(auth,u=>{
-  if(u){
-    userName.textContent=u.displayName||u.email;
-    logoutBtn.style.display='inline-block';
+
+/* STAN */
+onAuthStateChanged(auth,user=>{
+  if(user){
+    userName.textContent = user.email;
+    logoutBtn.style.display = 'inline-block';
   }else{
-    userName.textContent='';
-    logoutBtn.style.display='none';
+    userName.textContent = '';
+    logoutBtn.style.display = 'none';
   }
 });
-logoutBtn.onclick=()=>signOut(auth);
-authOverlay.onclick=()=>{
-  authOverlay.style.display=authModal.style.display='none';
-};
+
+/* LOGOUT */
+logoutBtn.onclick = ()=>signOut(auth);
 </script>
 
 </body>

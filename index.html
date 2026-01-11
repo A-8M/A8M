@@ -217,14 +217,12 @@ function closeModal(){document.getElementById('overlay').style.display='none'; d
 
 // KOSZYK
 let cart=[];
-
 const cartIcon=document.getElementById('cart-icon');
 cartIcon.addEventListener('click',openCart);
 
 function addToCart(){
   const name=document.getElementById('modal-name').textContent;
-  const priceText=document.getElementById('modal-price').textContent;
-  const price=parseFloat(priceText.replace(/[^0-9]/g,'')); // tylko liczba
+  const price=parseFloat(document.getElementById('modal-price').textContent.match(/\d+/)[0]); 
   const size=document.getElementById('modal-size').value;
   const qty=parseInt(document.getElementById('modal-qty').value);
   
@@ -250,7 +248,7 @@ function renderCart(){
   cart.forEach((item,i)=>{
     total+=item.price*item.qty;
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${item.name}</td><td>${item.size}</td><td>${item.qty}</td><td>${item.price} zł</td>
+    tr.innerHTML=`<td>${item.name}</td><td>${item.size}</td><td>${item.qty}</td><td>${item.price*item.qty} zł</td>
     <td><button onclick="removeCart(${i})">Usuń</button></td>`;
     tbody.appendChild(tr);
   });
@@ -278,12 +276,13 @@ function openAuthModal(register){
   const modal=document.createElement('div');
   modal.id='auth-modal';
   modal.innerHTML=`
+    <h3>${register?'Rejestracja':'Logowanie'}</h3>
     <input type="text" id="auth-first" placeholder="Imię">
     <input type="text" id="auth-last" placeholder="Nazwisko">
     <input type="email" id="auth-email" placeholder="Email">
     <input type="password" id="auth-pass" placeholder="Hasło">
     <button id="auth-submit">${register?'Zarejestruj':'Zaloguj'}</button>
-    <p id="auth-toggle-text" style="text-align:center;cursor:pointer;color:#ff4a4a">${register?'Masz już konto? Zaloguj się':'Nie masz konta? Zarejestruj się'}</p>
+    <p id="auth-toggle-text" style="text-align:center;cursor:pointer;color:#ff4a4a">${register?'Masz konto? Zaloguj się':'Nie masz konta? Zarejestruj się'}</p>
   `;
   document.body.appendChild(modal);
 
@@ -321,3 +320,4 @@ logoutBtn.addEventListener('click',()=>{
 
 </body>
 </html>
+

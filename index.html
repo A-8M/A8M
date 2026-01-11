@@ -7,34 +7,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Montserrat',sans-serif;}
-body{background:#0d0d0d;color:#fff;overflow-x:hidden;}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
+
+/* HEADER */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);flex-wrap:wrap}
 .header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1;margin:5px 0}
-.header-center h1{font-size:2rem;text-align:center}
-.header-center p{font-size:1rem;color:#f0f0f0;text-align:center}
+.header-center h1{margin:0;font-size:2rem;text-align:center}
+.header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center}
 #hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;transition: transform 0.2s}
 #hamburger:hover{transform:scale(1.2)}
 #cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s}
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
 #cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
+
+/* AUTH BUTTONS */
 #auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
-#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
 #logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
 #logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
-.auth-btn{padding:6px 10px;border:none;border-radius:8px;background:#ff4a4a;color:#fff;cursor:pointer;transition:0.2s;}
-.auth-btn:hover{background:#ff1a1a;transform:scale(1.05);}
 
 /* MOBILE MENU */
-#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:0.3s;z-index:90}
+#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
 #menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
-#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:0.35s;z-index:100;overflow-y:auto}
+#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
 #mobile-menu.active{transform:translateX(0)}
 #mobile-menu ul{list-style:none;padding:0;margin:0}
 #mobile-menu li{margin-bottom:20px;position:relative}
-#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition:0.3s}
+#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
 #mobile-menu a:hover{color:#fff}
-.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:0.35s;opacity:0}
+.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
 li.active>.submenu{max-height:500px;opacity:1}
 .submenu li{margin-bottom:12px}
 .submenu a{font-size:16px;font-weight:500;color:#ccc}
@@ -43,9 +45,9 @@ li.active>.submenu{max-height:500px;opacity:1}
 /* PRODUCTS */
 .container{max-width:1200px;margin:auto;padding:40px 20px}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:center}
-.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:0.3s;cursor:pointer}
+.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
 .product:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(255,0,0,0.3)}
-.product img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;transition:0.3s}
+.product img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;transition:transform 0.3s}
 .product img:hover{transform:scale(1.05)}
 .product h3{margin:12px 0 6px;font-size:1.2rem}
 .price{margin-bottom:10px;font-size:1rem}
@@ -55,61 +57,27 @@ li.active>.submenu{max-height:500px;opacity:1}
 
 /* MODAL PRODUKTU */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;width:90%;max-width:600px;z-index:100;box-shadow:0 8px 20px rgba(0,0,0,0.7);display:flex;flex-direction:column;gap:15px;}
-#modal-content{display:flex;flex-direction:column;gap:15px;}
-#modal img{width:100%;max-width:250px;object-fit:cover;border-radius:10px;margin:auto;}
-#modal-info{display:flex;flex-direction:column;gap:10px;}
-#modal button{padding:10px 15px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;font-weight:bold;transition:0.2s;}
-#modal button:hover{transform:scale(1.05);}
-@media(min-width:768px){#modal-content{flex-direction:row;align-items:flex-start;}#modal-info{flex:1;}}
+#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:20px;width:90%;max-width:450px;z-index:100}
+#modal img{width:150px;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
+#modal button:hover{transform:scale(1.05)}
+.modal-info p{margin:5px 0;font-size:0.95rem}
 
-/* MODAL LOGIN/REGISTER */
-#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:15px;width:90%;max-width:400px;z-index:100;display:flex;flex-direction:column;gap:10px;}
-#auth-modal input{width:100%;padding:10px;border-radius:8px;border:none;background:#111;color:#fff;}
-#auth-modal button{padding:10px;background:#ff4a4a;color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;transition:0.2s;}
-#auth-modal button:hover{transform:scale(1.05);}
-#auth-firstname, #auth-lastname{display:none;}
-#auth-toggle-text span{color:#ff4a4a;cursor:pointer;}
-#auth-toggle-text span:hover{color:#fff;}
+/* AUTH MODAL */
+#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100;flex-direction:column}
+#auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff}
+#auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
+#auth-modal button:hover{transform:scale(1.05)}
+#auth-toggle-text span:hover{color:#fff;cursor:pointer}
 
-/* KOSZYK */
-#cart-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:15px;width:90%;max-width:500px;z-index:100;box-shadow:0 8px 20px rgba(0,0,0,0.7);}
-#cart-modal h3{margin-bottom:15px;}
-#cart-modal ul{list-style:none;padding:0;margin:0;}
-#cart-modal li{margin-bottom:10px;}
-#cart-modal button{margin-top:10px;padding:10px 15px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;font-weight:bold;transition:0.2s;}
-#cart-modal button:hover{transform:scale(1.05);}
-
-/* STOPKA */
-footer {
-  text-align: center;
-  padding: 25px 20px;
-  background: #000;
-  font-size: 14px;
-  color: #aaa;
-}
-
-footer .social {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 8px;
-}
-
-footer .social a {
-  color: #ff4a4a;
-  font-size: 20px;
-  transition: color 0.3s, transform 0.3s;
-}
-
-footer .social a:hover { 
-  color: #fff; 
-  transform: scale(1.2); 
-}
+/* FOOTER */
+footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
+footer a:hover{color:#fff;transform:scale(1.2)}
 
 /* RESPONSIVE */
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px} }
 @media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
@@ -124,11 +92,12 @@ footer .social a:hover {
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
     <div id="auth-button">
+      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
       <span id="user-info"></span>
-      <button id="logout-icon" title="Wyloguj">Wyloguj</button>
-      <button class="auth-btn" id="login-btn">Zaloguj</button>
-      <button class="auth-btn" id="register-btn">Zarejestruj</button>
+      <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
     </div>
+    <button id="login-btn">Login</button>
+    <button id="register-btn">Zarejestruj</button>
   </div>
 </header>
 
@@ -136,7 +105,7 @@ footer .social a:hover {
 <nav id="mobile-menu">
   <ul>
     <li>
-      <a>Produkty ▾</a>
+      <a href="#">Produkty ▾</a>
       <ul class="submenu">
         <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
         <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
@@ -173,108 +142,83 @@ footer .social a:hover {
 </div>
 
 <!-- MODAL PRODUKTU -->
-<div id="overlay"></div>
+<div id="overlay" onclick="closeModal()"></div>
 <div id="modal">
-  <div id="modal-content">
-    <img id="modal-img" src="">
-    <div id="modal-info">
-      <h3 id="modal-name"></h3>
-      <p id="modal-price"></p>
-      <p id="modal-desc"></p>
-      <p><strong>Dostawa:</strong> tylko na terenie kraju</p>
-      <p><strong>Czas na zwrot:</strong> 14 dni</p>
-      <label>Rozmiar:
-        <select id="modal-size">
-          <option>S</option>
-          <option>M</option>
-          <option>L</option>
-          <option>XL</option>
-        </select>
-      </label>
-      <label>Ilość:
-        <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
-      </label>
-      <button onclick="addToCart()">Dodaj do koszyka</button>
-    </div>
+  <img id="modal-img" src="">
+  <div class="modal-info">
+    <h3 id="modal-name"></h3>
+    <p id="modal-price"></p>
+    <p id="modal-desc"></p>
+    <p><b>Dostawa:</b> tylko na terenie kraju</p>
+    <p><b>Czas zwrotu:</b> do 14 dni</p>
+    <label>Rozmiar:
+      <select id="modal-size">
+        <option>S</option><option>M</option><option>L</option><option>XL</option>
+      </select>
+    </label>
+    <label>Ilość:
+      <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
+    </label>
+    <button onclick="addToCart()">Dodaj do koszyka</button>
   </div>
 </div>
 
-<!-- MODAL LOGIN/REGISTER -->
+<!-- AUTH MODAL -->
 <div id="auth-overlay"></div>
 <div id="auth-modal">
-  <h3 id="auth-title">Logowanie</h3>
-  <input type="text" id="auth-firstname" placeholder="Imię">
-  <input type="text" id="auth-lastname" placeholder="Nazwisko">
+  <h3 id="auth-title">Logowanie / Rejestracja</h3>
+  <input type="text" id="auth-firstname" placeholder="Imię" style="display:none">
+  <input type="text" id="auth-lastname" placeholder="Nazwisko" style="display:none">
   <input type="email" id="auth-email" placeholder="Email">
   <input type="password" id="auth-pass" placeholder="Hasło">
   <button id="auth-submit">Zaloguj</button>
-  <div id="auth-toggle-text">Nie masz konta? <span id="toggle-register">Zarejestruj się</span></div>
+  <p id="auth-toggle-text">Nie masz konta? <span id="toggle-register" style="color:#ff4a4a;cursor:pointer">Zarejestruj</span></p>
 </div>
 
-<!-- MODAL KOSZYK -->
-<div id="cart-modal">
-  <h3>Twój koszyk</h3>
-  <ul id="cart-items"></ul>
-  <button onclick="checkout()">Kup teraz</button>
-</div>
-
+<!-- FOOTER -->
 <footer>
-  <div class="social">
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-tiktok"></i></a>
-  </div>
-  <div>© 2025 A8M</div>
+  <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
+  <p>© 2025 A8M</p>
 </footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script>
-// Firebase Config
-const firebaseConfig = {
-  apiKey: "TWOJE_API_KEY",
-  authDomain: "TWOJ_PROJEKT.firebaseapp.com",
-  projectId: "TWOJ_PROJEKT",
-  storageBucket: "TWOJ_PROJEKT.appspot.com",
-  messagingSenderId: "TWOJ_ID",
-  appId: "TWOJE_APP_ID"
+// Tu wstaw konfigurację Firebase
+var firebaseConfig = {
+  apiKey: "APIKEY",
+  authDomain: "PROJECT.firebaseapp.com",
+  projectId: "PROJECT",
+  storageBucket: "PROJECT.appspot.com",
+  messagingSenderId: "SENDER",
+  appId: "APPID"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 </script>
 
 <script>
-// Hamburger
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
-const menuOverlay = document.getElementById('menu-overlay');
+/* HAMBURGER */
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobile-menu');
+const menuOverlay=document.getElementById('menu-overlay');
 hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
 menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-document.querySelectorAll('#mobile-menu > ul > li > a').forEach(link=>{
-  link.addEventListener('click', e=>{
-    const parentLi=e.target.parentElement;
-    if(parentLi.querySelector('.submenu')){
-      e.preventDefault(); parentLi.classList.toggle('active');
-    }
-  });
-});
 
-// Modal produktu
-function openModal(name,oldPrice,newPrice,imgSrc,desc="Brak opisu"){
-  document.getElementById('modal-name').textContent=name;
-  document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
-  document.getElementById('modal-img').src=imgSrc;
-  document.getElementById('modal-desc').textContent=desc;
-  document.getElementById('modal-qty').value=1;
-  document.getElementById('overlay').style.display='block';
-  document.getElementById('modal').style.display='flex';
+/* MODAL PRODUKTU */
+function openModal(name, oldPrice, newPrice, imgSrc, desc){
+    document.getElementById('modal-name').textContent=name;
+    document.getElementById('modal-price').textContent=newPrice+" zł (poprzednio "+oldPrice+" zł)";
+    document.getElementById('modal-img').src=imgSrc;
+    document.getElementById('modal-desc').textContent=desc;
+    document.getElementById('modal-qty').value=1;
+    document.getElementById('overlay').style.display='block';
+    document.getElementById('modal').style.display='flex';
 }
 function closeModal(){document.getElementById('overlay').style.display='none';document.getElementById('modal').style.display='none';}
-document.getElementById('overlay').addEventListener('click',closeModal);
 
-// Koszyk
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+/* KOSZYK */
+let cart = [];
 function updateCartCount(){document.getElementById('cart-count').textContent=cart.length;}
 function addToCart(){
   const name=document.getElementById('modal-name').textContent;
@@ -282,22 +226,12 @@ function addToCart(){
   const size=document.getElementById('modal-size').value;
   const qty=parseInt(document.getElementById('modal-qty').value);
   cart.push({name,price,size,qty});
-  localStorage.setItem('cart',JSON.stringify(cart));
-  updateCartCount(); closeModal();
+  updateCartCount();
+  closeModal();
   alert("Dodano do koszyka!");
 }
-document.getElementById('cart-icon').addEventListener('click',()=>{
-  const list=document.getElementById('cart-items'); list.innerHTML='';
-  cart.forEach(p=>list.innerHTML+=`<li>${p.name} (${p.size}) x${p.qty} - ${p.price}</li>`);
-  document.getElementById('cart-modal').style.display='block';
-});
-function checkout(){
-  alert("Zakupiono produkty:\n"+cart.map(p=>`${p.name} (${p.size}) x${p.qty} - ${p.price}`).join("\n"));
-  cart=[]; localStorage.setItem('cart',JSON.stringify(cart)); updateCartCount();
-  document.getElementById('cart-modal').style.display='none';
-}
 
-// LOGIN / REGISTER
+/* LOGIN / REGISTER */
 const loginBtn=document.getElementById('login-btn');
 const registerBtn=document.getElementById('register-btn');
 const authOverlay=document.getElementById('auth-overlay');
@@ -323,6 +257,7 @@ function openAuthModal(register=false){
   authLast.style.display=register?'block':'none';
 }
 function closeAuthModal(){authModal.style.display='none';authOverlay.style.display='none';}
+
 loginBtn.addEventListener('click',()=>openAuthModal(false));
 registerBtn.addEventListener('click',()=>openAuthModal(true));
 toggleRegister.addEventListener('click',()=>openAuthModal(!isRegister));
@@ -331,29 +266,38 @@ authOverlay.addEventListener('click',closeAuthModal);
 authSubmit.addEventListener('click',()=>{
   const email=authEmail.value;
   const pass=authPass.value;
-  const first=authFirst.value;
-  const last=authLast.value;
   if(isRegister){
-    auth.createUserWithEmailAndPassword(email,pass).then(user=>{
-      alert("Zarejestrowano "+first+" "+last+"!");
-      closeAuthModal();
-    }).catch(e=>alert(e.message));
-  }else{
-    auth.signInWithEmailAndPassword(email,pass).then(user=>{
-      alert("Zalogowano!");
-      closeAuthModal();
-    }).catch(e=>alert(e.message));
+    const first=authFirst.value;
+    const last=authLast.value;
+    auth.createUserWithEmailAndPassword(email,pass)
+      .then(userCredential=>{
+        userCredential.user.updateProfile({displayName:first+" "+last});
+        closeAuthModal();
+      }).catch(e=>alert(e.message));
+  } else {
+    auth.signInWithEmailAndPassword(email,pass)
+      .then(()=>closeAuthModal())
+      .catch(e=>alert(e.message));
   }
 });
 
+logoutBtn.addEventListener('click',()=>{auth.signOut();});
+
+/* Sprawdzanie stanu użytkownika */
 auth.onAuthStateChanged(user=>{
-  if(user){userInfo.textContent=user.email;logoutBtn.style.display='inline-block';loginBtn.style.display='none';registerBtn.style.display='none';}
-  else{userInfo.textContent='';logoutBtn.style.display='none';loginBtn.style.display='inline-block';registerBtn.style.display='inline-block';}
+  if(user){
+    userInfo.textContent=user.displayName||user.email;
+    logoutBtn.style.display='inline-block';
+    loginBtn.style.display='none';
+    registerBtn.style.display='none';
+    closeAuthModal();
+  } else {
+    userInfo.textContent='';
+    logoutBtn.style.display='none';
+    loginBtn.style.display='inline-block';
+    registerBtn.style.display='inline-block';
+  }
 });
-logoutBtn.addEventListener('click',()=>auth.signOut());
-
-updateCartCount();
 </script>
-
 </body>
 </html>

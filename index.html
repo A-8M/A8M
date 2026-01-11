@@ -17,9 +17,30 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center}
 #hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;transition: transform 0.2s}
 #hamburger:hover{transform:scale(1.2)}
-#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s;position:relative}
+#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s}
 #cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
-#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px;position:absolute;top:-8px;right:-8px}
+#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
+
+/* AUTH BUTTONS */
+#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
+#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
+#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
+#logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
+
+/* MOBILE MENU */
+#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
+#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
+#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
+#mobile-menu.active{transform:translateX(0)}
+#mobile-menu ul{list-style:none;padding:0;margin:0}
+#mobile-menu li{margin-bottom:20px;position:relative}
+#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
+#mobile-menu a:hover{color:#fff}
+.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
+li.active>.submenu{max-height:500px;opacity:1}
+.submenu li{margin-bottom:12px}
+.submenu a{font-size:16px;font-weight:500;color:#ccc}
+.submenu a:hover{color:#ff1a1a}
 
 /* PRODUCTS */
 .container{max-width:1200px;margin:auto;padding:40px 20px}
@@ -34,185 +55,42 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .new-price{color:#ff4a4a;font-weight:bold}
 .discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
 
-/* MODAL PRODUKTU */
+/* FOOTER */
+footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
+footer a:hover{color:#fff;transform:scale(1.2)}
+
+/* MODAL PRODUKTU – HOUSEBRAND STYLE */
 #overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  z-index:99;
-  opacity:0;
-  transition: opacity 0.3s;
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99;
 }
 
-.product-modal {
-  display:none;
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:90%;
-  max-width:800px;
-  background:#1a1a1a;
-  border-radius:20px;
-  z-index:100;
-  box-shadow:0 10px 40px rgba(0,0,0,0.7);
-  overflow:hidden;
-  animation:fadeIn 0.3s ease-out;
+#modal {
+  display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:#1a1a1a; border-radius:20px; max-width:800px; width:90%; z-index:100; 
+  box-shadow:0 10px 30px rgba(0,0,0,0.7); overflow:hidden; font-family:'Montserrat',sans-serif;
 }
 
-.product-modal.active {
-  display:block;
+#modal button.close-modal {
+  position:absolute; top:10px; right:15px; background:none; border:none; color:#fff; font-size:28px; cursor:pointer;
 }
 
-#modal-close {
-  position:absolute;
-  top:10px;
-  right:15px;
-  background:none;
-  border:none;
-  font-size:28px;
-  color:#fff;
-  cursor:pointer;
-  transition: color 0.2s;
-}
-#modal-close:hover {
-  color:#ff4a4a;
-}
+.modal-content { display:flex; flex-wrap:wrap; }
+.modal-left { flex:1 1 300px; min-width:250px; background:#111; display:flex; justify-content:center; align-items:center; padding:20px; }
+.modal-left img { width:100%; max-height:400px; object-fit:cover; border-radius:15px; }
+.modal-right { flex:1 1 300px; padding:25px 20px; display:flex; flex-direction:column; justify-content:flex-start; }
+.modal-right h2 { margin-top:0; font-size:1.8rem; color:#fff; }
+.modal-right p.price { color:#ff4a4a; font-weight:bold; font-size:1.2rem; margin:10px 0; }
+.modal-right p.desc { color:#ccc; margin:10px 0 20px 0; line-height:1.4; }
+.modal-options { display:flex; gap:15px; align-items:center; margin-bottom:20px; }
+.modal-options label { display:flex; flex-direction:column; font-size:14px; color:#fff; }
+.modal-options select, .modal-options input { margin-top:5px; padding:8px; border-radius:8px; border:none; background:#111; color:#fff; }
+.modal-add { padding:12px; background:#ff4a4a; border:none; border-radius:10px; font-size:16px; font-weight:bold; color:#fff; cursor:pointer; transition:transform 0.2s; }
+.modal-add:hover { transform:scale(1.05); }
 
-.modal-content {
-  display:flex;
-  flex-wrap:wrap;
-}
-
-.modal-left {
-  flex:1 1 300px;
-  min-width:250px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#111;
-  padding:20px;
-}
-
-.modal-left img {
-  max-width:100%;
-  max-height:400px;
-  border-radius:15px;
-  object-fit:cover;
-  transition:transform 0.3s;
-}
-
-.modal-left img:hover {
-  transform:scale(1.05);
-}
-
-.modal-right {
-  flex:1 1 300px;
-  padding:25px 20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-}
-
-.modal-right h2 {
-  margin-top:0;
-  font-size:1.8rem;
-}
-
-.modal-price {
-  color:#ff4a4a;
-  font-weight:bold;
-  margin:10px 0;
-  font-size:1.2rem;
-}
-
-.modal-desc {
-  color:#ccc;
-  margin:10px 0 20px 0;
-  line-height:1.4;
-}
-
-.modal-options {
-  display:flex;
-  gap:15px;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.modal-options label {
-  display:flex;
-  flex-direction:column;
-  font-size:14px;
-  color:#fff;
-}
-
-.modal-options select,
-.modal-options input {
-  margin-top:5px;
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  background:#111;
-  color:#fff;
-}
-
-.modal-add {
-  padding:12px;
-  background:#ff4a4a;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  font-weight:bold;
-  color:#fff;
-  cursor:pointer;
-  transition:transform 0.2s;
-}
-
-.modal-add:hover {
-  transform:scale(1.05);
-}
-
-/* KOSZYK */
-#cart-popup {
-  display:none;
-  position:fixed;
-  top:70px;
-  right:20px;
-  width:300px;
-  background:#1a1a1a;
-  color:#fff;
-  padding:15px;
-  border-radius:15px;
-  z-index:101;
-  max-height:400px;
-  overflow-y:auto;
-}
-
-#cart-popup h3 {margin-top:0;}
-#cart-popup button {
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  background:#ff4a4a;
-  border:none;
-  color:#fff;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* ANIMACJA MODALA */
-@keyframes fadeIn {
-  from {opacity:0; transform:translate(-50%,-45%);}
-  to {opacity:1; transform:translate(-50%,-50%);}
-}
-
-/* RESPONSIVE */
-@media(max-width:768px) {
-  .modal-content {flex-direction:column;}
-  .modal-left, .modal-right {flex:1 1 100%; padding:15px;}
-  .modal-left img {max-height:300px;}
-}
+@media(max-width:768px) { .modal-content {flex-direction:column;} .modal-left, .modal-right {flex:1 1 100%; padding:15px;} .modal-left img {max-height:300px;} }
+@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
+@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
 <body>
@@ -225,19 +103,30 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
     <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
+    <div id="auth-button">
+      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
+      <span id="user-info"></span>
+      <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
   </div>
 </header>
 
 <div id="menu-overlay"></div>
 <nav id="mobile-menu">
   <ul>
-    <li><a href="#">Produkty ▾</a>
+    <li>
+      <a href="#">Produkty ▾</a>
       <ul class="submenu">
         <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
         <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
         <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
       </ul>
     </li>
+    <li><a href="opinie.html">Opinie</a></li>
+    <li><a href="contact.html">Kontakt</a></li>
+    <li><a href="about.html">O nas</a></li>
+    <li><a href="regulamin.html" target="_blank">Regulamin</a></li>
+    <li><a href="rodo.html" target="_blank">RODO</a></li>
   </ul>
 </nav>
 
@@ -263,17 +152,17 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 </div>
 
 <!-- MODAL PRODUKTU -->
-<div id="overlay" onclick="closeModal()"></div>
-<div id="modal" class="product-modal">
-  <button id="modal-close" onclick="closeModal()">×</button>
+<div id="overlay"></div>
+<div id="modal">
+  <button class="close-modal" onclick="closeModal()">×</button>
   <div class="modal-content">
     <div class="modal-left">
       <img id="modal-img" src="">
     </div>
     <div class="modal-right">
       <h2 id="modal-name">Produkt</h2>
-      <p id="modal-price" class="modal-price">Cena</p>
-      <p id="modal-desc" class="modal-desc">Opis produktu...</p>
+      <p id="modal-price" class="price">Cena</p>
+      <p id="modal-desc" class="desc">Opis produktu</p>
       <div class="modal-options">
         <label>Rozmiar:
           <select id="modal-size">
@@ -292,15 +181,8 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
   </div>
 </div>
 
-<!-- KOSZYK -->
-<div id="cart-popup">
-  <h3>Koszyk</h3>
-  <ul id="cart-items" style="list-style:none;padding:0;margin:0;"></ul>
-  <p id="cart-total" style="font-weight:bold;margin-top:10px;">Suma: 0 zł</p>
-  <button onclick="checkout()">Przejdź do płatności</button>
-</div>
-
 <footer>
+  <p>Kontakt: <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i class="fab fa-tiktok"></i></a></p>
   <p>© 2025 A8M</p>
 </footer>
 
@@ -314,88 +196,29 @@ menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');
 
 // MODAL PRODUKTU
 function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
-    const modal = document.getElementById('modal');
-    const overlay = document.getElementById('overlay');
-
     document.getElementById('modal-name').textContent = name;
     document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
     document.getElementById('modal-img').src = imgSrc;
     document.getElementById('modal-desc').textContent = desc;
     document.getElementById('modal-qty').value = 1;
-
-    modal.classList.add('active');
-    overlay.style.display = 'block';
-    setTimeout(()=>overlay.style.opacity=1,10);
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('modal').style.display = 'flex';
 }
 
 function closeModal() {
-    const modal = document.getElementById('modal');
-    const overlay = document.getElementById('overlay');
-
-    modal.classList.remove('active');
-    overlay.style.opacity=0;
-    setTimeout(()=>overlay.style.display='none',300);
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
 }
 
-// KOSZYK
-let cart = [];
 function addToCart(){
     const name = document.getElementById('modal-name').textContent;
-    const priceText = document.getElementById('modal-price').textContent;
-    const price = parseInt(priceText.match(/\d+/g)[0]);
+    const price = document.getElementById('modal-price').textContent;
     const size = document.getElementById('modal-size').value;
-    const qty = parseInt(document.getElementById('modal-qty').value);
-
-    let existing = cart.find(item => item.name===name && item.size===size);
-    if(existing){ existing.qty += qty; } 
-    else { cart.push({name,size,price,qty}); }
-
-    updateCart();
+    const qty = document.getElementById('modal-qty').value;
+    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
     closeModal();
 }
-
-function updateCart(){
-    const cartItems = document.getElementById('cart-items');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotal = document.getElementById('cart-total');
-
-    cartItems.innerHTML = '';
-    let total = 0, count = 0;
-
-    cart.forEach((item,index)=>{
-        total += item.price*item.qty;
-        count += item.qty;
-        const li = document.createElement('li');
-        li.style.marginBottom='10px';
-        li.innerHTML = `${item.name} (${item.size}) x ${item.qty} - ${item.price*item.qty} zł 
-        <button onclick="removeFromCart(${index})" style="float:right;background:#ff1a1a;border:none;color:#fff;padding:2px 6px;border-radius:5px;cursor:pointer;">X</button>`;
-        cartItems.appendChild(li);
-    });
-
-    cartCount.textContent = count;
-    cartTotal.textContent = `Suma: ${total} zł`;
-}
-
-function removeFromCart(index){
-    cart.splice(index,1);
-    updateCart();
-}
-
-const cartIcon = document.getElementById('cart-icon');
-const cartPopup = document.getElementById('cart-popup');
-cartIcon.addEventListener('click',()=>{
-    cartPopup.style.display = cartPopup.style.display==='block'?'none':'block';
-});
-
-function checkout(){
-    if(cart.length===0){ alert("Koszyk jest pusty!"); return; }
-    let summary = cart.map(i=>`${i.name} (${i.size}) x ${i.qty} = ${i.price*i.qty} zł`).join("\n");
-    let total = cart.reduce((sum,i)=>sum+i.price*i.qty,0);
-    alert(`Podsumowanie:\n${summary}\n\nSuma: ${total} zł\n\nDziękujemy za zakupy!`);
-    cart=[];
-    updateCart();
-    cartPopup.style.display='none';
-}
 </script>
+
 </body>
 </html>

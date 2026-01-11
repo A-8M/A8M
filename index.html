@@ -4,103 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A8M – Streetwear</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#0d0d0d;color:#fff}
-
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:15px 20px;
-  background:linear-gradient(135deg,#ff4a4a,#ff1a1a)
-}
-#hamburger{font-size:26px;cursor:pointer}
-.header-center{text-align:center}
-#cart-icon{cursor:pointer}
-#cart-count{
-  background:#fff;color:#ff1a1a;
-  border-radius:50%;padding:2px 6px;margin-left:4px
-}
-#auth-button{display:flex;align-items:center;gap:8px}
-#logout-btn{
-  display:none;background:#ff4a4a;border:none;color:#fff;
-  padding:6px;border-radius:6px;cursor:pointer
-}
-
-/* MENU */
-#menu-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);
-  display:none;z-index:90
-}
-#mobile-menu{
-  position:fixed;top:0;left:0;width:260px;height:100%;
-  background:#111;padding:60px 20px;
-  transform:translateX(-100%);transition:.3s;z-index:100
-}
+body{margin:0;font-family:Arial,sans-serif;background:#0d0d0d;color:#fff}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:linear-gradient(135deg,#ff4a4a,#ff1a1a);flex-wrap:wrap}
+.header-center{text-align:center;margin:5px 0}
+.header-center h1{margin:0;font-size:2rem}
+.header-center p{margin:0;color:#f0f0f0}
+#hamburger{font-size:28px;cursor:pointer}
+#cart-icon{cursor:pointer;display:flex;align-items:center}
+#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:2px 6px;margin-left:4px;font-size:14px;font-weight:bold}
+#auth-button{display:flex;align-items:center;gap:6px}
+#logout-btn{display:none;background:#ff4a4a;border:none;color:#fff;padding:6px;border-radius:6px;cursor:pointer}
+#mobile-menu{position:fixed;top:0;left:0;width:260px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:0.3s;z-index:100}
 #mobile-menu.active{transform:translateX(0)}
-#mobile-menu a{
-  display:block;color:#ff4a4a;
-  text-decoration:none;font-size:18px;margin-bottom:16px
-}
-
-/* PRODUCTS */
+#mobile-menu a{display:block;color:#ff4a4a;text-decoration:none;font-size:18px;margin-bottom:16px}
+#menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;z-index:90}
 .container{max-width:1100px;margin:auto;padding:30px}
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px
-}
-.product{
-  background:#1a1a1a;padding:15px;border-radius:14px;
-  cursor:pointer;text-align:center;
-  transition:.2s
-}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.product{background:#1a1a1a;padding:15px;border-radius:14px;cursor:pointer;text-align:center;transition:.2s}
 .product:hover{transform:translateY(-5px)}
 .product img{width:100%;border-radius:10px}
 .price{color:#ff4a4a;font-weight:bold}
-
-/* MODALS */
-.overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:none;z-index:200
-}
-.modal{
-  position:fixed;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  background:#1a1a1a;padding:20px;
-  border-radius:16px;width:90%;max-width:380px;
-  display:none;z-index:201
-}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:200}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:20px;border-radius:16px;width:90%;max-width:400px;display:none;z-index:201}
 .modal img{width:100%;border-radius:10px;margin-bottom:10px}
-input,select,button{
-  width:100%;padding:10px;margin:6px 0;
-  border:none;border-radius:8px
-}
+input,select,button{width:100%;padding:10px;margin:6px 0;border:none;border-radius:8px}
 input,select{background:#111;color:#fff}
 button{background:#ff4a4a;color:#fff;cursor:pointer}
+footer{padding:25px;background:#000;color:#aaa;font-size:14px}
+footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px}
+footer a:hover{color:#fff;transform:scale(1.2)}
+footer .footer-media{text-align:center;margin-bottom:8px;}
+footer .footer-copy{text-align:center;}
+@media(max-width:600px){.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
 </style>
 </head>
-
 <body>
 
 <header>
   <div id="hamburger">&#9776;</div>
   <div class="header-center">
-    <h2>A𒆙M</h2>
-    <small>Streetwear</small>
+    <h1>A𒆙M</h1>
+    <p>Streetwear • Limited Drop</p>
   </div>
-  <div style="display:flex;gap:14px;align-items:center">
-    <div id="cart-icon">
-      <i class="fa fa-bag-shopping"></i>
-      <span id="cart-count">0</span>
-    </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
     <div id="auth-button">
-      <i class="fa fa-user" id="user-icon"></i>
+      <i class="fas fa-user" id="user-icon" style="font-size:24px;cursor:pointer"></i>
       <span id="user-name"></span>
-      <button id="logout-btn"><i class="fa fa-sign-out"></i></button>
+      <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
 </header>
@@ -117,13 +72,11 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
       <h3>Biała Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
-
     <div class="product" onclick="openProduct('Czarna Koszulka A8M','koszulka2.png',115,'Klasyczna czarna koszulka A8M')">
       <img src="koszulka2.png">
       <h3>Czarna Koszulka A8M</h3>
       <p class="price">115 zł</p>
     </div>
-
     <div class="product" onclick="openProduct('Fioletowa Koszulka A8M','fioletova.png',115,'Fioletowa koszulka A8M')">
       <img src="fioletova.png">
       <h3>Fioletowa Koszulka A8M</h3>
@@ -139,16 +92,13 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
   <h3 id="p-name"></h3>
   <p id="p-desc"></p>
   <p><b>Cena:</b> <span id="p-price"></span> zł</p>
-
   <select id="p-size">
     <option>S</option><option>M</option><option>L</option><option>XL</option>
   </select>
-
   <p style="font-size:13px;color:#aaa">
     Dostawa: tylko Polska<br>
     Zwrot: 14 dni
   </p>
-
   <button onclick="addToCart()">Dodaj do koszyka</button>
 </div>
 
@@ -164,93 +114,106 @@ button{background:#ff4a4a;color:#fff;cursor:pointer}
   </p>
 </div>
 
-<script>
+<footer>
+  <div class="footer-media">
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-tiktok"></i></a>
+  </div>
+  <div class="footer-copy">© 2026 A8M</div>
+</footer>
+
+<script type="module">
 // HAMBURGER
 const hamburger = document.getElementById("hamburger");
 const mobileMenu = document.getElementById("mobile-menu");
 const menuOverlay = document.getElementById("menu-overlay");
-
-hamburger.onclick = () => {
-  mobileMenu.classList.toggle("active");
-  menuOverlay.style.display = "block";
-};
-menuOverlay.onclick = () => {
-  mobileMenu.classList.remove("active");
-  menuOverlay.style.display = "none";
-};
+hamburger.onclick = () => { mobileMenu.classList.toggle("active"); menuOverlay.style.display="block";}
+menuOverlay.onclick = () => { mobileMenu.classList.remove("active"); menuOverlay.style.display="none"; }
 
 // PRODUCT MODAL
 function openProduct(name,img,price,desc){
-  p-name.innerText=name;
-  p-img.src=img;
-  p-price.innerText=price;
-  p-desc.innerText=desc;
-  product-overlay.style.display="block";
-  product-modal.style.display="block";
+  document.getElementById("p-name").innerText=name;
+  document.getElementById("p-img").src=img;
+  document.getElementById("p-price").innerText=price;
+  document.getElementById("p-desc").innerText=desc;
+  document.getElementById("product-overlay").style.display="block";
+  document.getElementById("product-modal").style.display="block";
 }
-product-overlay.onclick=()=>{
-  product-overlay.style.display="none";
-  product-modal.style.display="none";
-};
-
+document.getElementById("product-overlay").onclick=()=>{
+  document.getElementById("product-overlay").style.display="none";
+  document.getElementById("product-modal").style.display="none";
+}
 function addToCart(){
-  alert("Dodano do koszyka (demo)");
+  let count=document.getElementById("cart-count");
+  count.innerText=parseInt(count.innerText)+1;
+  alert("Dodano do koszyka!");
 }
-</script>
 
-<!-- FIREBASE AUTH -->
-<script type="module">
+// FIREBASE AUTH
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut }
+import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut } 
 from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-/* 🔴 TU WKLEJ SWOJE DANE */
+// 🔴 WSTAW SWOJE DANE
 const firebaseConfig = {
   apiKey: "TU_API_KEY",
   authDomain: "TU_AUTH_DOMAIN",
   projectId: "TU_PROJECT_ID",
   appId: "TU_APP_ID"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 let isRegister=false;
+const userIcon = document.getElementById("user-icon");
+const authOverlay = document.getElementById("auth-overlay");
+const authModal = document.getElementById("auth-modal");
+const authTitle = document.getElementById("auth-title");
+const authToggle = document.getElementById("auth-toggle");
+const authSubmit = document.getElementById("auth-submit");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const userName = document.getElementById("user-name");
+const logoutBtn = document.getElementById("logout-btn");
 
-user-icon.onclick=()=>{
-  auth-overlay.style.display="block";
-  auth-modal.style.display="block";
+userIcon.onclick=()=>{
+  authOverlay.style.display="block";
+  authModal.style.display="block";
 };
-auth-overlay.onclick=()=>{
-  auth-overlay.style.display="none";
-  auth-modal.style.display="none";
+authOverlay.onclick=()=>{
+  authOverlay.style.display="none";
+  authModal.style.display="none";
 };
-auth-toggle.onclick=()=>{
+authToggle.onclick=()=>{
   isRegister=!isRegister;
-  auth-title.innerText=isRegister?"Rejestracja":"Logowanie";
-  auth-submit.innerText=isRegister?"Zarejestruj":"Zaloguj";
-  auth-toggle.innerText=isRegister?"Masz konto? Zaloguj się":"Nie masz konta? Zarejestruj się";
+  authTitle.innerText=isRegister?"Rejestracja":"Logowanie";
+  authSubmit.innerText=isRegister?"Zarejestruj":"Zaloguj";
+  authToggle.innerText=isRegister?"Masz konto? Zaloguj się":"Nie masz konta? Zarejestruj się";
 };
-auth-submit.onclick=async()=>{
+authSubmit.onclick=async()=>{
   try{
-    isRegister
-      ? await createUserWithEmailAndPassword(auth,email.value,password.value)
-      : await signInWithEmailAndPassword(auth,email.value,password.value);
-    auth-overlay.style.display="none";
-    auth-modal.style.display="none";
-  }catch(e){alert(e.message)}
+    if(isRegister){
+      await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    }else{
+      await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    }
+    authOverlay.style.display="none";
+    authModal.style.display="none";
+    emailInput.value=""; passwordInput.value="";
+  }catch(e){alert(e.message);}
 };
-onAuthStateChanged(auth,u=>{
-  if(u){
-    user-name.innerText=u.email;
-    logout-btn.style.display="inline-block";
+onAuthStateChanged(auth,user=>{
+  if(user){
+    userName.innerText=user.email;
+    logoutBtn.style.display="inline-block";
   }else{
-    user-name.innerText="";
-    logout-btn.style.display="none";
+    userName.innerText="";
+    logoutBtn.style.display="none";
   }
 });
-logout-btn.onclick=()=>signOut(auth);
-</script>
+logoutBtn.onclick=()=>signOut(auth);
 
+</script>
 </body>
 </html>

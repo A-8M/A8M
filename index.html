@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A8M – Streetwear</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
@@ -15,71 +17,72 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .header-center{display:flex;flex-direction:column;align-items:center;flex-grow:1;margin:5px 0}
 .header-center h1{margin:0;font-size:2rem;text-align:center}
 .header-center p{margin:0;font-size:1rem;color:#f0f0f0;text-align:center}
-#hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff;transition: transform 0.2s}
-#hamburger:hover{transform:scale(1.2)}
-#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center;transition: transform 0.2s,color 0.2s}
-#cart-icon:hover{transform:scale(1.15);color:#ff4a4a}
-#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;font-weight:bold;margin-left:5px}
-
-/* AUTH BUTTONS */
-#auth-button{display:flex;align-items:center;gap:6px;font-size:14px;position:relative}
-#auth-button span{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
-#logout-icon{cursor:pointer;border:none;background:#ff4a4a;color:#fff;padding:6px 10px;border-radius:8px;transition:0.2s;display:none;}
-#logout-icon:hover{background:#ff1a1a;transform:scale(1.05);}
-
-/* MOBILE MENU */
-#menu-overlay{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s,background 0.3s;z-index:90}
-#menu-overlay.active{background:rgba(0,0,0,0.5);opacity:1;visibility:visible;pointer-events:auto}
-#mobile-menu{position:fixed;top:0;left:0;width:300px;height:100%;background:#111;padding:60px 20px;transform:translateX(-100%);transition:transform 0.35s ease;z-index:100;overflow-y:auto}
-#mobile-menu.active{transform:translateX(0)}
-#mobile-menu ul{list-style:none;padding:0;margin:0}
-#mobile-menu li{margin-bottom:20px;position:relative}
-#mobile-menu a{text-decoration:none;color:#ff4a4a;font-size:18px;font-weight:bold;display:block;transition: color 0.3s}
-#mobile-menu a:hover{color:#fff}
-.submenu{list-style:none;padding-left:15px;margin-top:5px;max-height:0;overflow:hidden;transition:max-height 0.35s ease,opacity 0.35s ease;opacity:0}
-li.active>.submenu{max-height:500px;opacity:1}
-.submenu li{margin-bottom:12px}
-.submenu a{font-size:16px;font-weight:500;color:#ccc}
-.submenu a:hover{color:#ff1a1a}
+#hamburger{font-size:28px;cursor:pointer;border:none;background:none;padding:5px;color:#fff}
+#cart-icon{cursor:pointer;font-size:26px;display:flex;align-items:center}
+#cart-icon span{background:#fff;color:#ff1a1a;border-radius:50%;padding:3px 7px;font-size:14px;margin-left:5px}
 
 /* PRODUCTS */
 .container{max-width:1200px;margin:auto;padding:40px 20px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:center}
-.product{background:#1a1a1a;border-radius:15px;overflow:hidden;padding:15px;text-align:center;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
-.product:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(255,0,0,0.3)}
-.product img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;transition:transform 0.3s}
-.product img:hover{transform:scale(1.05)}
-.product h3{margin:12px 0 6px;font-size:1.2rem}
-.price{margin-bottom:10px;font-size:1rem}
-.old-price{text-decoration: line-through;color:#aaa;margin-right:8px}
-.new-price{color:#ff4a4a;font-weight:bold}
-.discount{color:#ff4a4a;font-weight:bold;margin-left:5px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.product{background:#1a1a1a;border-radius:15px;padding:15px;text-align:center}
+.product img{width:100%;border-radius:10px}
+.price{color:#ff4a4a}
 
-/* MODAL PRODUKTU */
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:500px;z-index:100}
-#modal img{width:200px;height:200px;object-fit:cover;border-radius:10px}
-#modal button{padding:10px 15px;margin-top:10px;background:#ff4a4a;border:none;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
-#modal button:hover{transform:scale(1.05)}
+/* ===================== */
+/* === DODANE: ACCORDION === */
+/* ===================== */
+.a8m-accordion{
+  max-width:800px;
+  margin:20px auto 80px;
+  padding:0 20px;
+}
+.a8m-accordion h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#ff4a4a;
+}
+.accordion-item{
+  background:#111;
+  border-radius:14px;
+  margin-bottom:14px;
+  overflow:hidden;
+  border:1px solid #1f1f1f;
+}
+.accordion-header{
+  width:100%;
+  background:none;
+  border:none;
+  color:#fff;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:1rem;
+  cursor:pointer;
+}
+.accordion-header i{color:#ff4a4a}
+.accordion-header .arrow{
+  margin-left:auto;
+  transition:transform .3s;
+}
+.accordion-item.active .arrow{transform:rotate(180deg)}
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  padding:0 20px;
+  color:#ccc;
+  transition:max-height .35s ease,padding .35s ease;
+}
+.accordion-item.active .accordion-content{
+  max-height:300px;
+  padding:0 20px 18px;
+}
+/* ===================== */
 
-/* MODAL LOGOWANIA */
-#auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
-#auth-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a1a;padding:25px;border-radius:20px;width:90%;max-width:400px;z-index:100}
-#auth-modal input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#111;color:#fff}
-#auth-modal button{width:100%;padding:12px;margin-top:10px;background:#ff4a4a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:16px;transition: transform 0.2s}
-#auth-modal button:hover{transform:scale(1.05)}
-#auth-toggle-text span:hover{color:#fff;cursor:pointer}
-
-/* FOOTER */
-footer{text-align:center;padding:25px;background:#000;font-size:14px;color:#aaa}
-footer a{color:#ff4a4a;margin:0 8px;text-decoration:none;font-size:20px;transition: color 0.3s, transform 0.3s}
-footer a:hover{color:#fff;transform:scale(1.2)}
-
-/* RESPONSIVE */
-@media(max-width:900px){.products{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.product img{max-height:180px}}
-@media(max-width:600px){header{flex-direction:column;align-items:center;padding:10px}.header-center{margin:10px 0}#cart-icon,#auth-button{margin:5px 0}.products{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.product img{max-height:150px}}
+footer{text-align:center;padding:25px;background:#000;color:#aaa}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -88,102 +91,34 @@ footer a:hover{color:#fff;transform:scale(1.2)}
     <h1>A𒆙M</h1>
     <p>Streetwear • Limited Drop</p>
   </div>
-  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <div id="cart-icon" title="Koszyk"><i class="fas fa-shopping-bag"></i><span id="cart-count">0</span></div>
-    <div id="auth-button">
-      <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
-      <span id="user-info"></span>
-      <button id="logout-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
-    </div>
-  </div>
+  <div id="cart-icon"><i class="fas fa-shopping-bag"></i><span>0</span></div>
 </header>
-
-<div id="menu-overlay"></div>
-<nav id="mobile-menu">
-  <ul>
-    <li>
-      <a href="#">Produkty ▾</a>
-      <ul class="submenu">
-        <li><a href="#white-basic-logo">Biała Koszulka A8M</a></li>
-        <li><a href="#white-basic">Czarna Koszulka A8M</a></li>
-        <li><a href="#fioletova">Fioletowa Koszulka A8M</a></li>
-      </ul>
-    </li>
-    <li><a href="opinie.html">Opinie</a></li>
-    <li><a href="contact.html">Kontakt</a></li>
-    <li><a href="about.html">O nas</a></li>
-    <li><a href="regulamin.html" target="_blank">Regulamin</a></li>
-    <li><a href="rodo.html" target="_blank">RODO</a></li>
-  </ul>
-</nav>
 
 <div class="container" id="products">
   <h2>Koszulki</h2>
   <div class="products">
-    <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')">
+    <div class="product">
       <img src="bialaprzod.png">
       <h3>Biała Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+      <p class="price">115 zł</p>
     </div>
-    <div class="product" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png','Klasyczna czarna koszulka A8M, komfortowa i modna.')">
+    <div class="product">
       <img src="koszulka2.png">
       <h3>Czarna Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+      <p class="price">115 zł</p>
     </div>
-    <div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png','Fioletowa koszulka A8M, wyjątkowa w swoim stylu.')">
+    <div class="product">
       <img src="fioletova.png">
       <h3>Fioletowa Koszulka A8M</h3>
-      <p class="price"><span class="old-price">250 zł</span> <span class="new-price">115 zł</span><span class="discount">-54%</span></p>
+      <p class="price">115 zł</p>
     </div>
   </div>
 </div>
 
-<!-- MODAL PRODUKTU -->
-<div id="overlay" onclick="closeModal()"></div>
-<div id="modal">
-  <div style="display:flex;gap:15px;flex-wrap:wrap;align-items:center">
-    <img id="modal-img" src="" style="width:200px;height:200px;object-fit:cover;border-radius:10px">
-    <div style="flex:1">
-      <h3 id="modal-name"></h3>
-      <p id="modal-price"></p>
-      <p id="modal-desc">Opis produktu...</p>
-      <label>Rozmiar:
-        <select id="modal-size">
-          <option>S</option>
-          <option>M</option>
-          <option>L</option>
-          <option>XL</option>
-        </select>
-      </label>
-      <label>Ilość:
-        <input type="number" id="modal-qty" value="1" min="1" style="width:60px">
-      </label>
-      <button onclick="addToCart()">Dodaj do koszyka</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL LOGOWANIA -->
-<div id="auth-overlay" onclick="closeAuthModal()"></div>
-<div id="auth-modal">
-  <h2 id="auth-title">Login</h2>
-  <input type="text" id="auth-firstname" placeholder="Imię" style="display:none">
-  <input type="text" id="auth-lastname" placeholder="Nazwisko" style="display:none">
-  <input type="email" id="auth-email" placeholder="Email">
-  <input type="password" id="auth-password" placeholder="Hasło">
-  <label id="terms-label" style="display:none"><input type="checkbox" id="auth-terms"> Akceptuję regulamin i politykę prywatności</label>
-  <button id="auth-submit">Zaloguj</button>
-  <p id="auth-toggle-text">Nie masz konta? <span id="toggle-register">Zarejestruj się</span></p>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>Kontakt: <a href="https://www.instagram.com/aspire8more/"><i class="fab fa-instagram"></i></a> <a href="https://www.facebook.com/profile.php?id=61585811125484"><i class="fab fa-facebook"></i></a>
-  <p>© 2025 A8M</p>
-</footer>
-
-  <section class="a8m-accordion" id="info">
-
+<!-- ===================== -->
+<!-- === DODANE: SEKCJA JAK NA ZDJĘCIU === -->
+<!-- ===================== -->
+<section class="a8m-accordion" id="info">
   <h2>Informacje</h2>
 
   <div class="accordion-item">
@@ -193,18 +128,18 @@ footer a:hover{color:#fff;transform:scale(1.2)}
       <i class="fa-solid fa-chevron-down arrow"></i>
     </button>
     <div class="accordion-content">
-      <p>Po złożeniu zamówienia otrzymasz e-mail z potwierdzeniem. Status sprawdzisz na koncie.</p>
+      <p>Status zamówienia sprawdzisz na swoim koncie.</p>
     </div>
   </div>
 
   <div class="accordion-item">
     <button class="accordion-header">
       <i class="fa-solid fa-rotate-left"></i>
-      Zwroty i reklamacje
+      Zwroty
       <i class="fa-solid fa-chevron-down arrow"></i>
     </button>
     <div class="accordion-content">
-      <p>Masz 14 dni na zwrot. Produkt musi być nieużywany i w oryginalnym stanie.</p>
+      <p>Masz 14 dni na zwrot produktu.</p>
     </div>
   </div>
 
@@ -215,7 +150,7 @@ footer a:hover{color:#fff;transform:scale(1.2)}
       <i class="fa-solid fa-chevron-down arrow"></i>
     </button>
     <div class="accordion-content">
-      <p>Dostawa 24–48h na terenie Polski.</p>
+      <p>Dostawa 24–48h.</p>
     </div>
   </div>
 
@@ -226,171 +161,18 @@ footer a:hover{color:#fff;transform:scale(1.2)}
       <i class="fa-solid fa-chevron-down arrow"></i>
     </button>
     <div class="accordion-content">
-      <p>BLIK, karta, szybki przelew.</p>
+      <p>BLIK, karta, szybkie przelewy.</p>
     </div>
   </div>
-
-  <div class="accordion-item">
-    <button class="accordion-header">
-      <i class="fa-solid fa-shirt"></i>
-      Produkty
-      <i class="fa-solid fa-chevron-down arrow"></i>
-    </button>
-    <div class="accordion-content">
-      <p>Limitowane dropy – brak restocków.</p>
-    </div>
-  </div>
-
-  <div class="accordion-item">
-    <button class="accordion-header">
-      <i class="fa-solid fa-user"></i>
-      Moje konto
-      <i class="fa-solid fa-chevron-down arrow"></i>
-    </button>
-    <div class="accordion-content">
-      <p>Dostęp do historii zamówień po zalogowaniu.</p>
-    </div>
-  </div>
-
 </section>
 
 <footer>
   © 2025 A8M
 </footer>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDBnVClzjBir7CHb4SNJwiUX5Wk6tPptps",
-  authDomain: "a8m-store.firebaseapp.com",
-  projectId: "a8m-store",
-  storageBucket: "a8m-store.firebasestorage.app",
-  messagingSenderId: "18266864248",
-  appId: "1:18266864248:web:347cd344e0998066bbcb8d"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-</script>
-
-<script>
-// MENU
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobile-menu');
-const menuOverlay=document.getElementById('menu-overlay');
-hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active');menuOverlay.classList.toggle('active');});
-menuOverlay.addEventListener('click',()=>{mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');});
-
-// MODAL PRODUKTU
-function openModal(name, oldPrice, newPrice, imgSrc, desc="Brak opisu") {
-    document.getElementById('modal-name').textContent = name;
-    document.getElementById('modal-price').textContent = newPrice+" zł (poprzednio "+oldPrice+" zł)";
-    document.getElementById('modal-img').src = imgSrc;
-    document.getElementById('modal-desc').textContent = desc;
-    document.getElementById('modal-qty').value = 1;
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('modal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('modal').style.display = 'none';
-}
-
-function addToCart(){
-    const name = document.getElementById('modal-name').textContent;
-    const price = document.getElementById('modal-price').textContent;
-    const size = document.getElementById('modal-size').value;
-    const qty = document.getElementById('modal-qty').value;
-    alert(`Dodano do koszyka:\nProdukt: ${name}\nRozmiar: ${size}\nIlość: ${qty}\nCena: ${price}`);
-    closeModal();
-}
-
-// AUTH MODAL
-const userIcon = document.getElementById('user-icon');
-const authOverlay = document.getElementById('auth-overlay');
-const authModal = document.getElementById('auth-modal');
-const authSubmit = document.getElementById('auth-submit');
-const authToggle = document.getElementById('toggle-register');
-const authTitle = document.getElementById('auth-title');
-const firstNameInput = document.getElementById('auth-firstname');
-const lastNameInput = document.getElementById('auth-lastname');
-const emailInput = document.getElementById('auth-email');
-const passwordInput = document.getElementById('auth-password');
-const termsLabel = document.getElementById('terms-label');
-const logoutBtn = document.getElementById('logout-icon');
-const userInfo = document.getElementById('user-info');
-
-userIcon.addEventListener('click',()=>{
-    authOverlay.style.display='block';
-    authModal.style.display='block';
-});
-
-function closeAuthModal(){
-    authOverlay.style.display='none';
-    authModal.style.display='none';
-}
-
-let isRegister=false;
-authToggle.addEventListener('click',()=>{
-    isRegister = !isRegister;
-    if(isRegister){
-        authTitle.textContent='Rejestracja';
-        firstNameInput.style.display='block';
-        lastNameInput.style.display='block';
-        termsLabel.style.display='block';
-        authSubmit.textContent='Zarejestruj';
-        authToggle.textContent='Masz konto? Zaloguj się';
-    }else{
-        authTitle.textContent='Login';
-        firstNameInput.style.display='none';
-        lastNameInput.style.display='none';
-        termsLabel.style.display='none';
-        authSubmit.textContent='Zaloguj';
-        authToggle.textContent='Nie masz konta? Zarejestruj się';
-    }
-});
-
-authSubmit.addEventListener('click',()=>{
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    if(isRegister){
-        const firstName = firstNameInput.value;
-        const lastName = lastNameInput.value;
-        const terms = document.getElementById('auth-terms').checked;
-        if(!terms){ alert('Musisz zaakceptować regulamin i politykę prywatności'); return;}
-        auth.createUserWithEmailAndPassword(email,password)
-        .then(userCredential=>{
-            return userCredential.user.updateProfile({displayName:firstName+' '+lastName});
-        })
-        .then(()=>{ alert('Zarejestrowano pomyślnie'); closeAuthModal(); updateUI(); })
-        .catch(err=>alert(err.message));
-    }else{
-        auth.signInWithEmailAndPassword(email,password)
-        .then(()=>{ alert('Zalogowano'); closeAuthModal(); updateUI(); })
-        .catch(err=>alert(err.message));
-    }
-});
-
-logoutBtn.addEventListener('click',()=>{
-    auth.signOut().then(()=>{ updateUI(); });
-});
-
-function updateUI(){
-    const user = auth.currentUser;
-    if(user){
-        userInfo.textContent = user.displayName || user.email;
-        logoutBtn.style.display='inline-block';
-    }else{
-        userInfo.textContent='';
-        logoutBtn.style.display='none';
-    }
-}
-
-auth.onAuthStateChanged(updateUI);
-</script>
-  
+<!-- ===================== -->
+<!-- === DODANE: JS ACCORDION === -->
+<!-- ===================== -->
 <script>
 document.querySelectorAll('.accordion-header').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -405,10 +187,3 @@ document.querySelectorAll('.accordion-header').forEach(btn=>{
 
 </body>
 </html>
-
-
-
-
-
-
-

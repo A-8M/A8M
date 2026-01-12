@@ -11,6 +11,40 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:'Montserrat',sans-serif;background:#0d0d0d;color:#fff;overflow-x:hidden}
+  /* ===== FIX WIDOCZNOŚCI INFO ===== */
+.a8m-info{
+  display:block !important;
+  position:relative;
+  z-index:1;
+  width:100%;
+  min-height:1px;
+  background:#0d0d0d;
+}
+
+.info-grid{
+  display:grid !important;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .a8m-info{
+    margin:60px auto;
+    padding:0 15px;
+  }
+
+  .info-box{
+    padding:20px;
+  }
+
+  .info-box h3{
+    font-size:1.1rem;
+  }
+
+  .info-box p{
+    font-size:.95rem;
+  }
+}
+
 
 /* ================= HEADER ================= */
 header{
@@ -196,3 +230,4 @@ footer{
 
 </body>
 </html>
+

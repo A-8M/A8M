@@ -198,6 +198,7 @@
 
         /* PRODUCTS */
         .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
@@ -441,13 +442,8 @@
         font-size: 0.95rem;
     }
 }
- /* LINKI W INFO BOX */
-    .info-box {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-    }
-</style>
+
+    </style>
 </head>
 
 <body>
@@ -460,15 +456,9 @@
             <p>Streetwear • Limited Drop</p>
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-            
-</div>
-
-        
-<div id="cart-icon" title="Koszyk">
-    <i class="fas fa-shopping-bag"></i><span id="cart-count">0</span>
-</div>
-        
-
+            <div id="cart-icon" title="Koszyk">
+                <i class="fas fa-shopping-bag"></i><span id="cart-count">0</span>
+            </div>
             <div id="auth-button">
                 <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
                 <span id="user-info"></span>
@@ -501,7 +491,7 @@
     <div class="container" id="products">
         <h2>Koszulki</h2>
         <div class="products">
-            <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')">      
+            <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')">
                 <img src="bialaprzod.png">
                 <h3>Biała Koszulka A8M</h3>
                 <p class="price">
@@ -575,45 +565,44 @@
     <h2>Informacje</h2>
     <div class="info-grid">
 
-        <a href="orders.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-box"></i>
             <h3>Zamówienia</h3>
             <p>Status zamówienia sprawdzisz po zalogowaniu na swoje konto.</p>
-        </a>
+        </div>
 
-        <a href="zwroty.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-rotate-left"></i>
             <h3>Zwroty</h3>
             <p>Masz 14 dni na zwrot produktu bez podania przyczyny.</p>
-        </a>
+        </div>
 
-        <a href="dostawa.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-truck"></i>
             <h3>Dostawa</h3>
             <p>Wysyłka realizowana w 24–48 godzin.</p>
-        </a>
+        </div>
 
-        <a href="platnosci.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-credit-card"></i>
             <h3>Płatności</h3>
             <p>BLIK, karta płatnicza, szybki przelew.</p>
-        </a>
+        </div>
 
-        <a href="konto.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-user"></i>
             <h3>Konto</h3>
             <p>Historia zamówień dostępna po zalogowaniu.</p>
-        </a>
+        </div>
 
-        <a href="produkty.html" class="info-box">
+        <div class="info-box">
             <i class="fa-solid fa-shirt"></i>
             <h3>Produkty</h3>
             <p>Limitowane dropy – brak restocków.</p>
-        </a>
+        </div>
 
     </div>
 </section>
-
 
     <!-- FOOTER -->
     <footer>
@@ -776,30 +765,7 @@
         }
 
         auth.onAuthStateChanged(updateUI);
-
-        <script>
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-const favCount = document.getElementById('fav-count');
-
-function updateFavUI() {
-    favCount.textContent = favorites.length;
-    document.querySelectorAll('.fav-btn').forEach(btn => {
-        const name = btn.getAttribute('data-name');
-        if (favorites.includes(name)) {
-            btn.classList.add('active');
-        }
-    });
-}
-</script>
+    </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-

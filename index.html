@@ -198,7 +198,6 @@
 
         /* PRODUCTS */
         .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
-
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
@@ -367,6 +366,51 @@
             .products { grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); }
             .product img { max-height: 150px; }
         }
+        /* ===== ULUBIONE (SERDUSZKO) ===== */
+#favorites-icon {
+    cursor: pointer;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+#favorites-icon:hover {
+    transform: scale(1.15);
+    color: #ff4a4a;
+}
+
+#favorites-icon span {
+    background: #fff;
+    color: #ff1a1a;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+/* SERDUSZKO NA PRODUKCIE */
+.product {
+    position: relative;
+}
+
+.fav-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.fav-btn.active {
+    color: #ff4a4a;
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
 /* ================= INFO SECTION ================= */
 .a8m-info {
     max-width: 1000px;
@@ -461,9 +505,14 @@
             <p>Streetwear • Limited Drop</p>
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-            <div id="cart-icon" title="Koszyk">
-                <i class="fas fa-shopping-bag"></i><span id="cart-count">0</span>
-            </div>
+           <div id="favorites-icon" title="Ulubione">
+    <i class="fas fa-heart"></i><span id="fav-count">0</span>
+</div>
+
+<div id="cart-icon" title="Koszyk">
+    <i class="fas fa-shopping-bag"></i><span id="cart-count">0</span>
+</div>
+
             <div id="auth-button">
                 <i class="fas fa-user" id="user-icon" style="font-size:24px; cursor:pointer;"></i>
                 <span id="user-info"></span>
@@ -497,6 +546,11 @@
         <h2>Koszulki</h2>
         <div class="products">
             <div class="product" onclick="openModal('Biała Koszulka A8M',250,115,'bialaprzod.png','Klasyczna biała koszulka A8M, wygodna i stylowa.')">
+                 <!-- SERDUSZKO -->
+    <i class="fas fa-heart fav-btn"
+       onclick="toggleFavorite(event, 'Biała Koszulka A8M')">
+    </i>
+                
                 <img src="bialaprzod.png">
                 <h3>Biała Koszulka A8M</h3>
                 <p class="price">
@@ -507,6 +561,11 @@
             </div>
 
             <div class="product" onclick="openModal('Czarna Koszulka A8M',250,115,'koszulka2.png','Klasyczna czarna koszulka A8M, komfortowa i modna.')">
+                 <!-- SERDUSZKO -->
+    <i class="fas fa-heart fav-btn"
+       onclick="toggleFavorite(event, 'Czarna Koszulka A8M')">
+    </i>
+                
                 <img src="koszulka2.png">
                 <h3>Czarna Koszulka A8M</h3>
                 <p class="price">
@@ -517,6 +576,11 @@
             </div>
 
             <div class="product" onclick="openModal('Fioletowa Koszulka A8M',250,115,'fioletova.png','Fioletowa koszulka A8M, wyjątkowa w swoim stylu.')">
+                 <!-- SERDUSZKO -->
+    <i class="fas fa-heart fav-btn"
+       onclick="toggleFavorite(event, 'Fioletowa Koszulka A8M')">
+    </i>
+                
                 <img src="fioletova.png">
                 <h3>Fioletowa Koszulka A8M</h3>
                 <p class="price">
@@ -771,9 +835,40 @@
         }
 
         auth.onAuthStateChanged(updateUI);
-    </script>
+
+        <script>
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+const favCount = document.getElementById('fav-count');
+
+function updateFavUI() {
+    favCount.textContent = favorites.length;
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+        const name = btn.getAttribute('data-name');
+        if (favorites.includes(name)) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+function toggleFavorite(e, productName) {
+    e.stopPropagation();
+
+    if (favorites.includes(productName)) {
+        favorites = favorites.filter(p => p !== productName);
+    } else {
+        favorites.push(productName);
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    updateFavUI();
+}
+
+document.addEventListener('DOMContentLoaded', updateFavUI);
+</script>
 
 </body>
 </html>
+
 
 

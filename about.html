@@ -1,38 +1,87 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Przerwa techniczna</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      text-align: center;
-    }
-    .top-banner {
-      background-color: #ff4d4d; /* czerwone tło, żeby było widoczne */
-      color: white;
-      padding: 15px 0;
-      font-size: 24px;
-      font-weight: bold;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-    .content {
-      margin-top: 70px; /* żeby treść nie była pod napisem */
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O nas | A8M</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:#0d0d0d;
+  color:#fff;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background: linear-gradient(135deg,#ff4a4a,#ff1a1a);
+}
+
+header a {
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+  line-height:1.6;
+}
+
+h1 {
+  font-size:2.2rem;
+  margin-bottom:20px;
+}
+
+footer {
+  text-align:center;
+  padding:25px;
+  background:#000;
+  color:#aaa;
+  font-size:14px;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="top-banner">Przerwa techniczna do odwołania</div>
+<header>
+  <a href="index.html">← Powrót</a>
+  <strong>A𒆙M</strong>
+</header>
 
-  <div class="content">
-    <p>Strona będzie dostępna wkrótce. Dziękujemy za cierpliwość!</p>
-  </div>
+<div class="container">
+  <h1>O nas</h1>
+
+  <p>
+    A8M to streetwearowa marka tworzona z pasją i zajawką na detale.
+    Stawiamy na limitowane dropy i wysoką jakość materiałów.
+  </p>
+
+  <p>
+    Każdy projekt powstaje w ograniczonej liczbie sztuk.
+    Zero masówki. 100% charakteru.
+  </p>
+
+  <p>
+    Tworzymy ubrania dla ludzi, którzy chcą się wyróżniać
+    i nie iść utartymi ścieżkami.
+  </p>
+
+  </p>
+</div>
+
+<footer>
+  © 2025 A8M
+</footer>
 
 </body>
 </html>
